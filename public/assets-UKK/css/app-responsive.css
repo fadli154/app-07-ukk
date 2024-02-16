@@ -1,0 +1,30 @@
+/* responsive */
+
+@media screen and (max-width: 991px) {
+    .header-card-buku {
+        display: flex;
+        justify-content: space-between;
+    }
+    .btn-header-card-book {
+        display: flex !important;
+        justify-content: end !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .footer-col-socmed {
+        margin: 50px 0;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .header-card-buku {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .btn-header-card-book {
+        display: flex;
+        justify-content: center;
+    }
+}

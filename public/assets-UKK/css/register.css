@@ -1,0 +1,241 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+
+:root {
+    --main-color: #2c4074;
+    --second-color: #7d9adf;
+    --yellow-color: #facc15;
+    --white-color: #f8faff;
+    --black-color: #1a1a1a;
+    --gray-color: #3b3b3b;
+    --shadow-border: rgba(255, 255, 255, 0.137);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: var(--white-color);
+    font-family: "Poppins", sans-serif;
+}
+
+ul li {
+    list-style: none;
+}
+
+ol,
+ul {
+    padding-left: 0rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.form-group label {
+    color: var(--black-color) !important;
+    font-weight: 450;
+    line-height: 0.8 !important;
+    font-size: 0.8rem !important;
+}
+
+input,
+textarea {
+    background-color: #f1f0ef !important;
+}
+
+small {
+    color: #f1f0ef;
+}
+
+/* register */
+
+#register {
+    background-image: url(../../assets-UKK/img/bg-contact.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: 99;
+    min-height: 100vh;
+    padding: 20px 15px;
+}
+
+#register::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(130deg, var(--main-color), #020407);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+}
+
+.register-wrapper {
+    padding: 40px 35px;
+    border-radius: 10px;
+}
+
+.background {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.404);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.178);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
+.col-img img {
+    height: 70%;
+}
+
+.icon-back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--yellow-color);
+    color: var(--white-color);
+    background-color: var(--main-color);
+    overflow: hidden;
+}
+
+.icon-back::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0%;
+    height: 100%;
+    background-color: var(--yellow-color);
+    border: 1px solid var(--main-color);
+    border-radius: 50%;
+    transition: all 0.5s ease-in-out;
+}
+
+.icon-back:hover::before {
+    width: 100%;
+}
+
+.icon-back i {
+    font-size: 0.7rem;
+    z-index: 3;
+}
+
+.title-register {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--main-color);
+    text-transform: capitalize;
+}
+
+.sub-title {
+    line-height: 0.5;
+    font-size: 0.8rem;
+    color: var(--main-color);
+}
+
+.body-register {
+    margin-top: 40px;
+}
+
+.form-right-icon {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.btn-register {
+    width: 100%;
+    margin-top: 25px;
+    background-color: var(--main-color);
+    border: none;
+    font-size: 0.9rem;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-register span {
+    position: absolute;
+    top: 28%;
+    right: -10px;
+    width: inherit;
+    z-index: 1;
+    color: var(--white-color);
+    font-weight: bold;
+    transition: all 0.6s ease-in-out;
+}
+
+.btn-register i {
+    position: absolute;
+    top: 35%;
+    right: 25px;
+    width: inherit;
+    z-index: 1;
+    color: var(--white-color);
+    font-weight: bold;
+    transition: all 0.6s ease-in-out;
+}
+
+.btn-register:hover {
+    background-color: var(--main-color);
+}
+
+.btn-register:hover i {
+    position: absolute;
+    transform: scale(1.2);
+    z-index: 5;
+    right: -10px;
+    color: var(--main-color);
+}
+
+.btn-register:hover span {
+    position: absolute;
+    right: -300px;
+}
+
+.btn-register::before {
+    content: "";
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: var(--yellow-color);
+    transition: all 0.6s ease;
+}
+
+.btn-register:hover::before {
+    width: 100%;
+}
+
+.btn-sub-title {
+    font-size: 0.8rem;
+}
+
+.btn-sub-title a {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.btn-sub-title a:hover {
+    color: #3351a5;
+    font-weight: bold;
+}

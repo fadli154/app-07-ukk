@@ -1,0 +1,66 @@
+/* responsive */
+
+@media screen and (max-width: 991px) {
+    .img-fitur {
+        display: none;
+    }
+
+    .img-hero-1 {
+        max-height: 100%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .btn-navbar {
+        padding-top: 10px;
+    }
+    .img-hero-1 {
+        display: none;
+    }
+
+    .judul-hero-text {
+        margin-top: 150px;
+    }
+
+    #fitur {
+        background: url(../../assets-UKK/img/bg-rect-light.svg),
+            var(--main-color);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: bottom;
+        background-size: cover;
+    }
+    .footer-col-socmed {
+        margin: 50px 0;
+    }
+
+    #login .row {
+        padding: 0 20px;
+    }
+
+    #register .row {
+        padding: 0 20px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    #hero {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #layanan {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 100px;
+    }
+
+    #fitur {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #kontak .container {
+        padding: 0 15px;
+    }
+}

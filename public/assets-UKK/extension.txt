@@ -1,0 +1,43 @@
+material icon theme
+mobileView
+Multiple cursor case preserve
+path intellisense
+php intelephense
+php namespace resolver
+phpfmt- php formatter
+prettier
+quokka.js
+SVG
+turbo console log
+css peek
+auto rename tag
+bracket pair color DLW
+bracket pair colorization toggler
+bracketeer
+codeium (optional)
+colorize
+draw.io integration
+error lens
+gitLens
+google fonts
+hackTheBox
+image preview
+indent-rainbow
+IntelliSense for CSS class names in
+
+laravel artisan
+laravel blade formatter
+laravel blade snippets
+laravel blade spacer
+laravel blade wrapper
+laravel create view
+laravel extension pack
+laravel extra intellisense
+laravel goto view
+laravel snippets
+laravel-blade
+laravel-goto-components
+laravel-jump-controller
+
+live preview
+live server
