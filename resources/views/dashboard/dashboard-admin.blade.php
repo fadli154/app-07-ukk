@@ -284,7 +284,7 @@
                                 </div>
                                 <div class="px-4">
                                     <button class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Data
-                                        Peminjam</button>
+                                        Users</button>
                                 </div>
                             </div>
                         </div>
