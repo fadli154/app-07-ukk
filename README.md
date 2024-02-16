@@ -5,9 +5,9 @@
 1. Clone repository
 
 ```bash
-git clone https://github.com/Tofu-TheGreat/dispress.git
+git clone https://github.com/fadli154/assets-07-ukk.git
 
-cd dispress
+cd assets-07-ukk
 
 composer install
 
