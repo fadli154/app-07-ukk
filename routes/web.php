@@ -223,3 +223,26 @@ Route::get('/koleksi', function () {
 
     ]);
 });
+
+// profile
+
+Route::get('/profile', function () {
+    return view('pages.profile', [
+        'title' => 'Landing Page',
+        'active' => 'profile',
+    ]);
+});
+
+Route::get('/change-profile', function () {
+    return view('pages.change-profile', [
+        'title' => 'Landing Page',
+        'active' => 'profile',
+    ]);
+});
+
+Route::get('/change-password', function () {
+    return view('pages.change-password', [
+        'title' => 'Landing Page',
+        'active' => 'profile',
+    ]);
+});

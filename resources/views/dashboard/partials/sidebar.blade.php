@@ -71,6 +71,12 @@
                 </li>
 
                 <li class="sidebar-title fw-bold">Pengaturan</li>
+                <li class="sidebar-item {{ $active == 'profile' ? 'active' : '' }}">
+                    <a href="/profile" class='sidebar-link'>
+                        <i class="bi bi-person-fill-gear"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
                 <li class="sidebar-item cursor-pointer">
                     <form action="/logout" method="post" class="form-logout">
                         @csrf

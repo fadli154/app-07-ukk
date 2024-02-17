@@ -15,17 +15,16 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Detail Data Users</h3>
-                        <p class="text-subtitle text-muted">Interface untuk detail data
-                            users.</p>
+                        <h3>Profile Fadli Hifziansyah</h3>
+                        <p class="text-subtitle text-muted">Interface untuk melihat profile data
+                            anda.</p>
                         <hr>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="/users">Data Users</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Detail Users
+                                <li class="breadcrumb-item active" aria-current="page">Profile Users
                                 </li>
                             </ol>
                         </nav>
@@ -72,88 +71,12 @@
                                                 <td>Dilan 1990</td>
                                                 <td>10 buku</td>
                                                 <td>
-                                                    <div class="modal-success me-1 mb-1 d-inline-block">
+                                                    <div class=" me-1 mb-1 d-inline-block">
                                                         <!-- Button trigger for Success theme modal -->
                                                         <button type="button"
-                                                            class="btn btn-outline-success text-capitalize"
-                                                            data-bs-toggle="modal" data-bs-target="#success1">
+                                                            class="btn btn-outline-success text-capitalize">
                                                             Dipinjam
                                                         </button>
-                                                        <!--Success theme Modal -->
-                                                        <div class="modal fade text-left" id="success1" tabindex="-1"
-                                                            role="dialog" aria-labelledby="myModalLabel110"
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable "
-                                                                role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header bg-success">
-                                                                        <h5 class="modal-title white" id="myModalLabel110">
-                                                                            Mengubah status peminjaman
-                                                                            <span class="text-capitalize">
-                                                                                Fadli hifziansyah
-                                                                            </span>
-                                                                        </h5>
-                                                                        <button type="button" class="close"
-                                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                                            <i data-feather="x"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                    <form action="" method="post">
-                                                                        @method('PUT')
-                                                                        @csrf
-                                                                        <div class="modal-body">
-                                                                            <div class="col-12">
-                                                                                <div class="form-group">
-                                                                                    <label for="status1">Status
-                                                                                        Peminjaman</label>
-                                                                                    <select
-                                                                                        class="choices form-select @error('status') is-invalid @enderror"
-                                                                                        id="status1" name="status"
-                                                                                        required>
-                                                                                        <option value="" selected
-                                                                                            disabled>
-                                                                                            Pilih
-                                                                                            Status Peminjaman</option>
-                                                                                        <option value="dikembalikan"
-                                                                                            {{ 'status' == 'dikembalikan' ? 'selected' : '' }}>
-                                                                                            Dikembalikan
-                                                                                        </option>
-                                                                                        <option value="terlambat"
-                                                                                            {{ 'status' == 'terlambat' ? 'selected' : '' }}>
-                                                                                            Terlambat
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <small class="text-danger">
-                                                                                        @error('status')
-                                                                                            {{ $message }}
-                                                                                        @enderror
-                                                                                    </small>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-light-secondary "
-                                                                                data-bs-dismiss="modal"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top" title="Close modal">
-                                                                                <i class="bi bi-x-circle me-1"></i> Close
-                                                                            </button>
-
-                                                                            <button type="submit"
-                                                                                class="btn btn-light-success "
-                                                                                data-bs-dismiss="modal"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                title="Simpan data perubahan">
-                                                                                <i class="bi bi-check-circle-fill me-1"></i>
-                                                                                Simpan
-                                                                            </button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -168,9 +91,8 @@
                             <div class="card-header d-flex justify-content-between">
                                 <div>
                                     <a href="/users" class="position-absolute" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="Kembali"><i
-                                            class="bi bi-arrow-left-circle"></i></a>
-                                    <h4 class="card-title card-title-action ms-4 ">Form Detail Data Users
+                                        data-bs-placement="top" title="Kembali"><i class="bi bi-arrow-left-circle"></i></a>
+                                    <h4 class="card-title card-title-action ms-4 ">Form Profile Data Users
                                     </h4>
                                 </div>
 
@@ -182,17 +104,12 @@
                                             <i class="bi bi-wrench-adjustable me-2"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                            <a class="dropdown-item text-warning" href=""><i
-                                                    class="bi bi-pen-fill me-2"></i>
-                                                Edit</a>
-                                            <form action="" method="post" class="form-destroy">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a class="dropdown-item text-danger btn-destroy" href="#">
-                                                    <is class="fas fa-trash me-2 btn-destroy"></is>
-                                                    Hapus
-                                                </a>
-                                            </form>
+                                            <a class="dropdown-item text-info" href="/change-profile"><i
+                                                    class="bi bi-person-lock me-2"></i>
+                                                Change profile</a>
+                                            <a class="dropdown-item text-warning" href="/change-password"><i
+                                                    class="bi bi-key me-2"></i>
+                                                Change password</a>
                                         </div>
                                     </div>
                                 </div>
@@ -332,8 +249,6 @@
     <script src="{{ asset('assets-UKK/assets-mazer/extensions/choices.js/public/assets/scripts/choices.min.js') }}">
     </script>
     <script src="{{ asset('assets-UKK/assets-mazer/static/js/pages/form-element-select.js') }}"></script>
-
-
 
     <script>
         document.body.addEventListener('click', function(e) {

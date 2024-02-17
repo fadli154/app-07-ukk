@@ -141,6 +141,13 @@ th {
 
 /* data users */
 
+.status-aktif {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 1.3rem;
+}
+
 .img-user-table {
     width: 100px;
     height: 100px;

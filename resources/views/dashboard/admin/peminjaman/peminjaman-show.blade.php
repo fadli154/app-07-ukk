@@ -32,7 +32,7 @@
                     <div class="col-12 col-lg-4">
                         <div class="card">
                             <a href="#" class="position-absolute top-0 left-0 ms-2 mt-1" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Data peminjam"><i class="bi bi-exclamation-circle"></i></a>
+                                data-bs-placement="top" title="Data peminjam"><i class="bi bi-x-circle"></i></a>
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
                                     <div class="avatar avatar-2xl">
