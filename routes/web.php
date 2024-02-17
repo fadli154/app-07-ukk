@@ -220,7 +220,6 @@ Route::get('/koleksi', function () {
     return view('dashboard.peminjam.koleksi.koleksi-index', [
         'title' => 'Landing Page',
         'active' => 'koleksi',
-
     ]);
 });
 
@@ -243,6 +242,6 @@ Route::get('/change-profile', function () {
 Route::get('/change-password', function () {
     return view('pages.change-password', [
         'title' => 'Landing Page',
-        'active' => 'profile',
+        'active' => 'change-password',
     ]);
 });

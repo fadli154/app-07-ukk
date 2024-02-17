@@ -77,6 +77,12 @@
                         <span>Profile</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ $active == 'change-password' ? 'active' : '' }}">
+                    <a href="/change-password" class='sidebar-link'>
+                        <i class="bi bi-key-fill"></i>
+                        <span>Change Password</span>
+                    </a>
+                </li>
                 <li class="sidebar-item cursor-pointer">
                     <form action="/logout" method="post" class="form-logout">
                         @csrf
