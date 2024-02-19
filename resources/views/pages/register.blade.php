@@ -29,7 +29,7 @@
                     <p class="sub-title">Please create your own account</p>
                 </div>
                 <div class="body-register">
-                    <form action="/register-action" method="post" enctype="multipart/form-data">
+                    <form action="/register" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row p-0">
                             <div class="col-sm-12 col-md-6 mb-1">

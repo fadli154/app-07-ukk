@@ -9,8 +9,13 @@ use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\KoleksiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\DashboardAdminController;
+use App\Http\Controllers\DashboardPetugasController;
+use App\Http\Controllers\DashboardPeminjamController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,219 +34,30 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/login', function () {
-    return view('pages.login', [
-        'title' => 'Landing Page',
-    ]);
+route::middleware(['guest'])->group(function () {
+    // Register
+    Route::get('/register', [RegisterController::class, 'register'])->name('register.index');
+    Route::post('/register', [RegisterController::class, 'registerAction'])->name('register.action');
+
+    // login
+    Route::get('/login', [LoginController::class, 'login'])->name('login.index');
+    Route::post('/login', [LoginController::class, 'loginAction'])->name('login.action');
 });
 
-Route::get('/login-action', function () {
-    return view('dashboard.dashboard-admin', [
-        'title' => 'Landing Page',
-        'active' => 'dashboard',
-    ]);
-});
+Route::post('/logout', [LoginController::class, 'logoutAction'])->name('logout.action');
 
-Route::get('/dashboard-admin', function () {
-    return view('dashboard.dashboard-admin', [
-        'title' => 'Landing Page',
-        'active' => 'dashboard',
-    ]);
-});
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/dashboard-admin', [DashboardAdminController::class, 'index'])->name('dashboard.admin.index');
+    });
 
-Route::get('/dashboard-petugas', function () {
-    return view('dashboard.dashboard-petugas', [
-        'title' => 'Landing Page',
-        'active' => 'dashboard',
-    ]);
-});
+    Route::middleware(['petugas'])->group(function () {
+        Route::get('/dashboard-petugas', [DashboardPetugasController::class, 'index'])->name('dashboard.petugas.index');
+    });
 
-Route::get('/dashboard-peminjam', function () {
-    return view('dashboard.dashboard-peminjam', [
-        'title' => 'Landing Page',
-        'active' => 'dashboard',
-    ]);
-});
+    Route::resource('/users', UserController::class);
 
-// users
-
-Route::get('/users', function () {
-    return view('dashboard.admin.users.users-index', [
-        'title' => 'Landing Page',
-        'active' => 'users',
-    ]);
-});
-
-Route::get('/users/create', function () {
-    return view('dashboard.admin.users.users-create', [
-        'title' => 'Landing Page',
-        'active' => 'users',
-    ]);
-});
-
-Route::get('/users/show', function () {
-    return view('dashboard.admin.users.users-show', [
-        'title' => 'Landing Page',
-        'active' => 'users',
-    ]);
-});
-
-Route::get('/users/edit', function () {
-    return view('dashboard.admin.users.users-edit', [
-        'title' => 'Landing Page',
-        'active' => 'users',
-    ]);
-});
-
-Route::get('/users/trash', function () {
-    return view('dashboard.admin.users.users-trash', [
-        'title' => 'Landing Page',
-        'active' => 'users',
-    ]);
-});
-
-// ketegori
-
-Route::get('/kategori', function () {
-    return view('dashboard.admin.kategori.kategori-index', [
-        'title' => 'Landing Page',
-        'active' => 'kategori',
-    ]);
-});
-
-Route::get('/kategori/create', function () {
-    return view('dashboard.admin.kategori.kategori-create', [
-        'title' => 'Landing Page',
-        'active' => 'kategori',
-    ]);
-});
-
-Route::get('/kategori/show', function () {
-    return view('dashboard.admin.kategori.kategori-show', [
-        'title' => 'Landing Page',
-        'active' => 'kategori',
-    ]);
-});
-
-Route::get('/kategori/edit', function () {
-    return view('dashboard.admin.kategori.kategori-edit', [
-        'title' => 'Landing Page',
-        'active' => 'kategori',
-    ]);
-});
-
-Route::get('/kategori/trash', function () {
-    return view('dashboard.admin.kategori.kategori-trash', [
-        'title' => 'Landing Page',
-        'active' => 'kategori',
-    ]);
-});
-
-// buku
-
-Route::get('/buku', function () {
-    return view('dashboard.admin.buku.buku-index', [
-        'title' => 'Landing Page',
-        'active' => 'buku',
-    ]);
-});
-
-Route::get('/buku/create', function () {
-    return view('dashboard.admin.buku.buku-create', [
-        'title' => 'Landing Page',
-        'active' => 'buku',
-    ]);
-});
-
-Route::get('/buku/show', function () {
-    return view('dashboard.admin.buku.buku-show', [
-        'title' => 'Landing Page',
-        'active' => 'buku',
-    ]);
-});
-
-Route::get('/buku/edit', function () {
-    return view('dashboard.admin.buku.buku-edit', [
-        'title' => 'Landing Page',
-        'active' => 'buku',
-    ]);
-});
-
-Route::get('/buku/trash', function () {
-    return view('dashboard.admin.buku.buku-trash', [
-        'title' => 'Landing Page',
-        'active' => 'buku',
-    ]);
-});
-
-// peminjaman
-
-Route::get('/peminjaman', function () {
-    return view('dashboard.admin.peminjaman.peminjaman-index', [
-        'title' => 'Landing Page',
-        'active' => 'peminjaman',
-    ]);
-});
-
-Route::get('/peminjaman/create', function () {
-    return view('dashboard.admin.peminjaman.peminjaman-create', [
-        'title' => 'Landing Page',
-        'active' => 'peminjaman',
-    ]);
-});
-
-Route::get('/peminjaman/show', function () {
-    return view('dashboard.admin.peminjaman.peminjaman-show', [
-        'title' => 'Landing Page',
-        'active' => 'peminjaman',
-    ]);
-});
-
-Route::get('/peminjaman/edit', function () {
-    return view('dashboard.admin.peminjaman.peminjaman-edit', [
-        'title' => 'Landing Page',
-        'active' => 'peminjaman',
-    ]);
-});
-
-// laporan
-
-Route::get('/laporan', function () {
-    return view('dashboard.admin.laporan.laporan-index', [
-        'title' => 'Landing Page',
-        'active' => 'laporan',
-
-    ]);
-});
-
-// koleksi
-
-Route::get('/koleksi', function () {
-    return view('dashboard.peminjam.koleksi.koleksi-index', [
-        'title' => 'Landing Page',
-        'active' => 'koleksi',
-    ]);
-});
-
-// profile
-
-Route::get('/profile', function () {
-    return view('pages.profile', [
-        'title' => 'Landing Page',
-        'active' => 'profile',
-    ]);
-});
-
-Route::get('/change-profile', function () {
-    return view('pages.change-profile', [
-        'title' => 'Landing Page',
-        'active' => 'profile',
-    ]);
-});
-
-Route::get('/change-password', function () {
-    return view('pages.change-password', [
-        'title' => 'Landing Page',
-        'active' => 'change-password',
-    ]);
+    Route::middleware(['peminjam'])->group(function () {
+        Route::get('/dashboard-peminjam', [DashboardPeminjamController::class, 'index'])->name('dashboard.peminjam.index');
+    });
 });

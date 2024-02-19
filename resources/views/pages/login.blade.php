@@ -24,7 +24,7 @@
                     <p class="sub-title">Please enter your credentials</p>
                 </div>
                 <div class="body-login">
-                    <form action="/login-action" method="post" enctype="multipart/form-data">
+                    <form action="/login" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="col-12 mb-3">
                             <div class="form-group has-icon-left">

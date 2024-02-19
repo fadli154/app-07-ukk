@@ -42,7 +42,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('users.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6 col-sm-12 mb-3">
@@ -57,6 +57,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('name')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -75,6 +76,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('username')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -92,6 +94,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('email')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -110,6 +113,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('no_telepon')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -128,6 +132,7 @@
                                         </select>
                                         <small class="text-danger">
                                             @error('jk')
+                                                {{ $message }}
                                             @enderror
                                         </small>
                                     </div>
@@ -149,6 +154,7 @@
                                         </select>
                                         <small class="text-danger">
                                             @error('roles')
+                                                {{ $message }}
                                             @enderror
                                         </small>
                                     </div>
@@ -166,6 +172,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('tanggal_lahir')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -185,6 +192,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('password')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -196,6 +204,7 @@
                                         <textarea class="form-control" id="alamat" rows="3" name="alamat" required>{{ old('alamat') }}</textarea>
                                         <small class="text-danger">
                                             @error('alamat')
+                                                {{ $message }}
                                             @enderror
                                         </small>
                                     </div>
@@ -209,6 +218,7 @@
                                             class="image-preview-filepond">
                                         <small class="text-danger">
                                             @error('foto_user')
+                                                {{ $message }}
                                             @enderror
                                         </small>
                                     </div>

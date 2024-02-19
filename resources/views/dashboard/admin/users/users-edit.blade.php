@@ -36,11 +36,18 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
-                                    <div class="avatar avatar-2xl">
-                                        <img src="{{ asset('assets-UKK/img/no-foto-woman.png') }}" alt="Avatar">
-                                    </div>
+                                    @if ($usersEdit->foto_user)
+                                        <div class="avatar avatar-2xl">
+                                            <img src="{{ asset('storage/foto_user/' . $usersEdit->foto_user) }}"
+                                                alt="Avatar">
+                                        </div>
+                                    @else
+                                        <div class="avatar avatar-2xl">
+                                            <img src="{{ asset('assets-UKK/img/no-foto-woman.png') }}" alt="Avatar">
+                                        </div>
+                                    @endif
                                     <h3 class="mt-3"></h3>
-                                    <p class="text-small">Fadli Hifziansyah | Admin</p>
+                                    <p class="text-small">{{ $usersEdit->name }} | {{ $usersEdit->roles }}</p>
                                 </div>
                             </div>
                         </div>
@@ -56,12 +63,16 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="" method="post" enctype="multipart/form-data">
-                                    @method('')
+                                <form action="{{ route('users.update', $usersEdit->slug) }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @method('PUT')
                                     @csrf
-                                    <input type="text" name="user_id" id="" value="" hidden>
-                                    <input type="text" name="password" id="" value="" hidden>
-                                    <input type="text" name="old_foto" id="" value="" hidden>
+                                    <input type="text" name="user_id" id="" value="{{ $usersEdit->user_id }}"
+                                        hidden>
+                                    <input type="text" name="password" id="" value="{{ $usersEdit->password }}"
+                                        hidden>
+                                    <input type="text" name="old_foto" id=""
+                                        value="{{ $usersEdit->foto_user }}" hidden>
                                     <div class="row">
                                         <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="form-group has-icon-left">
@@ -69,13 +80,14 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('name') is-invalid @enderror"
-                                                        value="" id="name" name="name"
+                                                        value="{{ $usersEdit->name }}" id="name" name="name"
                                                         placeholder="ex: fadli154@gmail.com" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
-                                                    <small class="text-danger">
-                                                    </small>
+                                                    @error('name')
+                                                        {{ $message }}
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -85,12 +97,15 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('username') is-invalid @enderror"
-                                                        value="" id="username" name="username"
+                                                        value="{{ $usersEdit->username }}" id="username" name="username"
                                                         placeholder="ex: fadli154@gmail.com" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person-fill"></i>
                                                     </div>
                                                     <small class="text-danger">
+                                                        @error('username')
+                                                            {{ $message }}
+                                                        @enderror
                                                     </small>
                                                 </div>
                                             </div>
@@ -101,13 +116,15 @@
                                                 <div class="position-relative">
                                                     <input type="email"
                                                         class="form-control @error('email') is-invalid @enderror"
-                                                        value="" id="email" name="email"
+                                                         id="email" name="email"
+                                                        value="{{ $usersEdit->email }}" id="email" name="email"
                                                         placeholder="ex: fadli154@gmail.com" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-envelope-at"></i>
                                                     </div>
-                                                    <small class="text-danger">
-                                                    </small>
+                                                    @error('email')
+                                                        {{ $message }}
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -115,15 +132,16 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="no_telepon" class="form-label">Nomor Telepon</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $usersEdit->no_telepon }}"
                                                         class="form-control @error('no_telepon') is-invalid @enderror"
                                                         id="no_telepon" name="no_telepon"
                                                         placeholder="ex: 0878-2730-33278" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-telephone-fill"></i>
                                                     </div>
-                                                    <small class="text-danger">
-                                                    </small>
+                                                    @error('no_telepon')
+                                                        {{ $message }}
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -133,11 +151,14 @@
                                                 <select class="choices form-select @error('jk') is-invalid @enderror"
                                                     id="jk" name="jk" required>
                                                     <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                                    <option value="L">Laki-laki</option>
-                                                    <option value="P">Perempuan</option>
+                                                    <option value="L" {{ $usersEdit->jk == 'L' ? 'selected' : '' }}>
+                                                        Laki-laki</option>
+                                                    <option value="P" {{ $usersEdit->jk == 'P' ? 'selected' : '' }}>
+                                                        Perempuan</option>
                                                 </select>
-                                                <small class="text-danger">
-                                                </small>
+                                                @error('jk')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12 mb-1">
@@ -146,27 +167,29 @@
                                                 <select class="choices form-select @error('roles') is-invalid @enderror"
                                                     id="roles" name="roles" required>
                                                     <option value="" selected disabled>Pilih Roles Users</option>
-                                                    <option value="admin">Admin</option>
-                                                    <option value="petugas">Petugas</option>
-                                                    <option value="peminjam">Peminjam</option>
+                                                    <option value="admin" {{ $usersEdit->roles == 'admin' ? 'selected' : '' }}>Admin</option>
+                                                    <option value="petugas" {{ $usersEdit->roles == 'petugas' ? 'selected' : '' }}>Petugas</option>
+                                                    <option value="peminjam" {{ $usersEdit->roles == 'peminjam' ? 'selected' : '' }}>Peminjam</option>
                                                 </select>
-                                                <small class="text-danger">
-                                                </small>
+                                                @error('roles')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="form-group has-icon-left">
                                                 <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
                                                 <div class="position-relative">
-                                                    <input type="date" value=""
+                                                    <input type="date" value="{{ $usersEdit->tanggal_lahir }}"
                                                         class="form-control @error('tanggal_lahir') is-invalid @enderror"
                                                         id="tanggal_lahir" name="tanggal_lahir"
                                                         placeholder="ex: 0878-2730-33278" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-calendar-check"></i>
                                                     </div>
-                                                    <small class="text-danger">
-                                                    </small>
+                                                    @error('tanggal_lahir')
+                                                        {{ $message }}
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -177,19 +200,21 @@
                                                     class="choices form-select @error('status_aktif') is-invalid @enderror"
                                                     id="status_aktif" name="status_aktif" required>
                                                     <option value="" selected disabled>Pilih Status Aktif</option>
-                                                    <option value="Y">Aktif</option>
-                                                    <option value="N">Tidak Aktif</option>
+                                                    <option value="Y" {{ $usersEdit->status_aktif == 'Y' ? 'selected' : '' }}>Aktif</option>
+                                                    <option value="N" {{ $usersEdit->status_aktif == 'N' ? 'selected' : '' }}>Tidak Aktif</option>
                                                 </select>
-                                                <small class="text-danger">
-                                                </small>
+                                                @error('status_aktif')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-sm-12 mb-1">
                                             <div class="form-group">
                                                 <label for="alamat">Alamat</label>
-                                                <textarea class="form-control" id="alamat" rows="3" name="alamat" required></textarea>
-                                                <small class="text-danger">
-                                                </small>
+                                                <textarea class="form-control" id="alamat" rows="3" name="alamat" required>{{ $usersEdit->alamat }}</textarea>
+                                                @error('alamat')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -200,8 +225,9 @@
                                                     5 MB</small>
                                                 <input type="file" id="foto_user" name="foto_user"
                                                     class="image-preview-filepond" accept="jpg,jpeg,png,svg">
-                                                <small class="text-danger">
-                                                </small>
+                                                @error('foto_user')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>

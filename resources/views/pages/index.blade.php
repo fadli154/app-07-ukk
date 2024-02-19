@@ -50,7 +50,7 @@
                             </a>
                         @endguest
                         @auth
-                            <a href="/dashboard">
+                            <a href="/dashboard-{{ auth()->user()->roles }}">
                                 <button class="button-secondary"><span>Dashboard</span></button>
                             </a>
                         @endauth
@@ -79,7 +79,7 @@
                                 </a>
                             @endguest
                             @auth
-                                <a href="/dashboard">
+                                <a href="/dashboard-{{ auth()->user()->roles }}">
                                     <button class="button-hero p-3"><i class="bi bi-grid-fill me-2"></i>
                                         <span>Dashboard
                                         </span></button>

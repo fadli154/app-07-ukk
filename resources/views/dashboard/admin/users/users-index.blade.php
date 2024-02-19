@@ -36,7 +36,7 @@
                                 Data Table Users
                             </h5>
                             <div class="col-sm-12 col-md-9 d-flex justify-content-end pe-0">
-                                <a href="" type="button" class="btn btn-primary me-1" data-bs-toggle="tooltip"
+                                <a href="{{ route('users.create') }}" type="button" class="btn btn-primary me-1" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="Tambah data users">
                                     <i class="bi bi-plus-circle"></i>
                                 </a>
@@ -60,69 +60,90 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <td>
-                                    <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}" class="img-user-table"
-                                        alt="foto-man">
-                                </td>
-                                <td class="text-capitalize">fadli hifziansyah</td>
-                                <td>
-                                    <span class="p-2 badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="User active"><i class="bi bi-patch-check "></i>
-                                    </span>
-                                    <span class="p-2 badge bg-danger" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="User tidak active"><i class="bi bi-patch-exclamation "></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-warning"><i class="fas fa-user-tie me-1 p-1"></i>
-                                        Admin</span>
-                                    <span class="badge bg-info"><i class="fas fa-user-shield me-1 p-1"></i>
-                                        Petugas</span>
-                                    <span class="badge bg-secondary"><i class="fas fa-user me-1 p-1"></i>
-                                        Peminjam</span>
-                                </td>
-                                <td>
-                                    <div class="btn-group mb-1">
-                                        <div class="dropdown">
-                                            <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                                id="dropdownMenuButtonIcon" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                                <i class="bi bi-wrench-adjustable me-2"></i> Action
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                                <a class="dropdown-item text-info" href=""><i
-                                                        class="fas fa-eye me-2"></i>
-                                                    Detail</a>
-                                                <a class="dropdown-item text-warning" href=""><i
-                                                        class="bi bi-pen-fill me-2"></i>
-                                                    Edit</a>
-                                                <form action="" method="post" class="form-destroy">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <a class="dropdown-item text-danger btn-destroy" href="#"><i
-                                                            class="fas fa-trash me-2 btn-destroy"></i>
-                                                        Hapus</a>
-                                                </form>
-                                                <form action="" method="post" class="form-active">
-                                                    @method('PUT')
-                                                    @csrf
-                                                    <a class="dropdown-item text-success btn-active" href="#"><i
-                                                            class="fas fa-check-circle me-2 btn-active"></i>
-                                                        active</a>
-                                                </form>
-                                                <form action="" method="post" class="form-unactive">
-                                                    @method('PUT')
-                                                    @csrf
-                                                    <a class="dropdown-item text-danger btn-unactive" href="#"><i
-                                                            class="fas fa-times-circle me-2 btn-unactive"></i>
-                                                        Non active</a>
-                                                </form>
+                            @foreach ($usersList as $users)
+                                <tbody>
+                                    <td>
+                                        @if ($users->foto_user)
+                                            <img src="{{ asset('storage/foto_user/' . $users->foto_user) }}"
+                                                class="img-user-table" alt="foto-man">
+                                        @else
+                                            <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}" class="img-user-table"
+                                                alt="foto-man">
+                                        @endif
+                                    </td>
+                                    <td class="text-capitalize">{{ $users->name }}</td>
+                                    <td>
+                                        @if ($users->status_aktif == 'Y')
+                                            <span class="p-2 badge bg-success" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="User active"><i
+                                                    class="bi bi-patch-check "></i>
+                                            </span>
+                                        @else
+                                            <span class="p-2 badge bg-danger" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="User tidak active"><i
+                                                    class="bi bi-patch-exclamation "></i>
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($users->roles == 'admin')
+                                            <span class="badge bg-warning"><i class="fas fa-user-tie me-1 p-1"></i>
+                                                Admin</span>
+                                        @elseif ($users->roles == 'petugas')
+                                            <span class="badge bg-info"><i class="fas fa-user-shield me-1 p-1"></i>
+                                                Petugas</span>
+                                        @else
+                                            <span class="badge bg-secondary"><i class="fas fa-user me-1 p-1"></i>
+                                                Peminjam</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="btn-group mb-1">
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle me-1" type="button"
+                                                    id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="bi bi-wrench-adjustable me-2"></i> Action
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
+                                                    <a class="dropdown-item text-info" href="{{ route('users.show', $users->slug) }}"><i
+                                                            class="fas fa-eye me-2"></i>
+                                                        Detail</a>
+                                                    <a class="dropdown-item text-warning" href=""><i
+                                                            class="bi bi-pen-fill me-2"></i>
+                                                        Edit</a>
+                                                    <form action="" method="post" class="form-destroy">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <a class="dropdown-item text-danger btn-destroy" href="#"><i
+                                                                class="fas fa-trash me-2 btn-destroy"></i>
+                                                            Hapus</a>
+                                                    </form>
+                                                    @if ($users->status_aktif == 'Y')
+                                                        <form action="" method="post" class="form-unactive">
+                                                            @method('PUT')
+                                                            @csrf
+                                                            <a class="dropdown-item text-danger btn-unactive"
+                                                                href="#"><i
+                                                                    class="fas fa-times-circle me-2 btn-unactive"></i>
+                                                                Non active</a>
+                                                        </form>
+                                                    @else
+                                                        <form action="" method="post" class="form-active">
+                                                            @method('PUT')
+                                                            @csrf
+                                                            <a class="dropdown-item text-success btn-active"
+                                                                href="#"><i
+                                                                    class="fas fa-check-circle me-2 btn-active"></i>
+                                                                active</a>
+                                                        </form>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tbody>
+                                    </td>
+                                </tbody>
+                            @endforeach
                         </table>
                     </div>
                 </div>

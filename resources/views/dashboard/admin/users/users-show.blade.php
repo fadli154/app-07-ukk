@@ -44,13 +44,18 @@
                                 <div class="card-body">
                                     <div
                                         class="d-flex justify-content-center align-items-center flex-column text-capitalize">
+                                        @if ($usersDetail->foto_user)
                                         <div class="avatar avatar-2xl">
-                                            <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}" alt="Avatar">
+                                            <img src="{{ asset('storage/foto_user/' . $usersDetail->foto_user) }}" alt="Avatar">
                                         </div>
-
+                                    @else
+                                        <div class="avatar avatar-2xl">
+                                            <img src="{{ asset('assets-UKK/img/no-foto-woman.png') }}" alt="Avatar">
+                                        </div>
+                                    @endif
                                         <div class="text-center">
-                                            <h3 class="mt-3">Fadlis hifziansyah</h3>
-                                            <p class="text-small">Pdhliii | Admin</p>
+                                            <h3 class="mt-3">{{ $usersDetail->name }}</h3>
+                                            <p class="text-small">{{ $usersDetail->username }} | {{ $usersDetail->roles }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -182,10 +187,10 @@
                                             <i class="bi bi-wrench-adjustable me-2"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                            <a class="dropdown-item text-warning" href=""><i
+                                            <a class="dropdown-item text-warning" href="{{ route('users.edit', $usersDetail->slug) }}"><i
                                                     class="bi bi-pen-fill me-2"></i>
                                                 Edit</a>
-                                            <form action="" method="post" class="form-destroy">
+                                            <form action="{{ route('users.destroy', $usersDetail->slug) }}" method="post" class="form-destroy">
                                                 @method('DELETE')
                                                 @csrf
                                                 <a class="dropdown-item text-danger btn-destroy" href="#">
@@ -206,7 +211,7 @@
                                                 <div class="position-relative">
                                                     <input type="email"
                                                         class="form-control @error('email') is-invalid @enderror"
-                                                        value="" id="email" name="email"
+                                                        value="{{ $usersDetail->email }}" id="email" name="email"
                                                         placeholder="ex: fadli154@gmail.com" disabled>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-envelope-at"></i>
@@ -222,7 +227,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="no_telepon" class="form-label">Nomor Telepon</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $usersDetail->no_telepon }}"
                                                         class="form-control @error('no_telepon') is-invalid @enderror"
                                                         id="no_telepon" name="no_telepon"
                                                         placeholder="ex: 0878-2730-33278" disabled>
@@ -242,10 +247,10 @@
                                                 <select class="choices form-select @error('jk') is-invalid @enderror"
                                                     id="jk" name="jk" disabled>
                                                     <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                                    <option value="L" disabled {{ 'L' == 'L' ? 'selected' : '' }}>
+                                                    <option value="L" disabled {{ $usersDetail->jk == 'L' ? 'selected' : '' }}>
                                                         Laki-laki
                                                     </option>
-                                                    <option value="P" disabled {{ 'P' == 'P' ? 'selected' : '' }}>
+                                                    <option value="P" disabled {{ $usersDetail->jk == 'P' ? 'selected' : '' }}>
                                                         Perempuan
                                                     </option>
                                                 </select>
@@ -262,14 +267,14 @@
                                                     id="roles" name="roles" disabled>
                                                     <option value="" selected disabled>Pilih Roles Users</option>
                                                     <option value="admin" disabled
-                                                        {{ 'role' == 'admin' ? 'selected' : '' }}>Admin
+                                                        {{ $usersDetail->roles == 'admin' ? 'selected' : '' }}>Admin
                                                     </option>
                                                     <option value="petugas" disabled
-                                                        {{ 'role' == 'petugas' ? 'selected' : '' }}>
+                                                        {{ $usersDetail->roles == 'petugas' ? 'selected' : '' }}>
                                                         Petugas
                                                     </option>
                                                     <option value="peminjam" disabled
-                                                        {{ 'role' == 'peminjam' ? 'selected' : '' }}>
+                                                        {{ $usersDetail->roles == 'peminjam' ? 'selected' : '' }}>
                                                         Peminjam
                                                     </option>
                                                 </select>
@@ -283,7 +288,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value="tanggal_lahir"
+                                                    <input type="text" value="{{ $usersDetail->tanggal_lahir }}"
                                                         class="form-control @error('tanggal_lashir') is-invalid @enderror"
                                                         id="tanggal_lahir" name="tanggal_lahir"
                                                         placeholder="ex: 0878-2730-33278" disabled>
@@ -300,7 +305,7 @@
                                         <div class="col-sm-12 mb-1">
                                             <div class="form-group">
                                                 <label for="alamat">Alamat</label>
-                                                <textarea class="form-control" id="alamat" rows="3" name="alamat" disabled>Alamat</textarea>
+                                                <textarea class="form-control" id="alamat" rows="3" name="alamat" disabled>{{ $usersDetail->alamat }}</textarea>
                                                 <small class="text-danger">
                                                     @error('alamat')
                                                     @enderror
