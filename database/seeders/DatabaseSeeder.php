@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Buku;
 use App\Models\Kategori;
+use App\Models\Peminjaman;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -64,9 +65,21 @@ class DatabaseSeeder extends Seeder
             'penulis' => 'Pidi Baiq',
             'penerbit' => 'Gramedia',
             'tahun_terbit' => '2015',
-            'stok_buku' => '15 ',
+            'stok_buku' => '20',
             'sampul_buku' => 'ada',
             'sinopsis' => 'Dilan adalah seorang siswa SMA di Bandung, sedangkan Milea adalah siswa baru, pindahan dari Jakarta. Sejak kali pertama mengetahui Milea, Dilan tertarik lalu mendekatinya. Cara Dilan untuk mendekati Milea sangatlah unik. Cara Dilan untuk mendekati Milea ini lama-lama berbalas. Meskipun Milea saat itu memiliki pacar di Jakarta bernama Beni. Awalnya Milea ragu untuk membalas perasaan pada Dilan karena dia telah memiliki Beni. Namun, kejadian saat Milea ke Jakarta membuatnya mengakhiri hubungan dengan Beni',
+            'created_by' => '1',
+            'updated_by' => '1',
+        ]);
+
+        Peminjaman::factory()->create([
+            'user_id' => '1',
+            'buku_id' => '1',
+            'tanggal_pinjam' => '2022-12-11',
+            'tanggal_kembali' => '2022-12-11',
+            'tanggal_kembali_fisik' => '2022-12-11',
+            'jumlah_pinjam' => '15 ',
+            'status' => 'dipinjam',
             'created_by' => '1',
             'updated_by' => '1',
         ]);

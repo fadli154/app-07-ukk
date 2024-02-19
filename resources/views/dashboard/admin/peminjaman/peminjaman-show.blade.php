@@ -32,16 +32,23 @@
                     <div class="col-12 col-lg-4">
                         <div class="card">
                             <a href="#" class="position-absolute top-0 left-0 ms-2 mt-1" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Data peminjam"><i class="bi bi-x-circle"></i></a>
+                                data-bs-placement="top" title="Data peminjam"><i class="bi bi-question-circle"></i></a>
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
-                                    <div class="avatar avatar-2xl">
-                                        <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}" alt="Avatar">
-                                    </div>
-
+                                    @if ($peminjamanDetail->user->foto_user)
+                                        <div class="avatar avatar-2xl">
+                                            <img src="{{ asset('storage/foto_user/' . $peminjamanDetail->user->foto_user) }}"
+                                                alt="Avatar">
+                                        </div>
+                                    @else
+                                        <div class="avatar avatar-2xl">
+                                            <img src="{{ asset('assets-UKK/img/no-foto-woman.png') }}" alt="Avatar">
+                                        </div>
+                                    @endif
                                     <div class="text-center">
                                         <h3 class="mt-3"></h3>
-                                        <p class="text-small"> | </p>
+                                        <p class="text-small">{{ $peminjamanDetail->user->name }} |
+                                            {{ $peminjamanDetail->user->roles }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -49,17 +56,22 @@
                         <div class="card">
                             <a href="#" class="position-absolute top-0 left-0 ms-2 mt-1" data-bs-toggle="tooltip"
                                 data-bs-placement="top" title="Data buku yang dipinjam"><i
-                                    class="bi bi-exclamation-circle"></i></a>
+                                    class="bi bi-question-circle"></i></a>
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
                                     <div class="wrapper-sampul-buku d-flex justify-content-center ">
-                                        <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
-                                            class="w-50 rounded-3">
+                                        @if ($peminjamanDetail->buku->sampul_buku)
+                                            <img src="{{ asset('storage/sampul_buku/' . $peminjamanDetail->buku->sampul_buku) }}" alt="sampul-buku"
+                                                class="w-50 rounded-3">
+                                        @else
+                                            <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
+                                                class="w-50 rounded-3">
+                                        @endif
                                     </div>
 
                                     <div class="text-center">
-                                        <h3 class="mt-3"></h3>
-                                        <p class="text-small"> | </p>
+                                        <h3 class="mt-3">{{ $peminjamanDetail->buku->judul }}</h3>
+                                        <p class="text-small">{{ $peminjamanDetail->buku->penulis}} | {{ $peminjamanDetail->buku->penerbit }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -83,10 +95,10 @@
                                             <i class="bi bi-wrench-adjustable me-2"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                            <a class="dropdown-item text-warning" href="#"><i
+                                            <a class="dropdown-item text-warning" href="{{ route('peminjaman.edit', $peminjamanDetail->slug) }}"><i
                                                     class="bi bi-pen-fill me-2"></i>
                                                 Edit</a>
-                                            <form action="#" method="post" class="form-destroy">
+                                            <form action="{{ route('peminjaman.destroy', $peminjamanDetail->slug) }}" method="post" class="form-destroy">
                                                 @method('DELETE')
                                                 @csrf
                                                 <a class="dropdown-item text-danger btn-destroy" href="#">
@@ -107,7 +119,7 @@
                                                 <div class="position-relative">
                                                     <input type="name"
                                                         class="form-control @error('name') is-invalid @enderror"
-                                                        value="" id="name" name="name"
+                                                        value="{{ $peminjamanDetail->user->name }}" id="name" name="name"
                                                         placeholder="ex: fadli154@gmail.com" disabled>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
@@ -121,7 +133,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="buku_id" class="form-label">Buku yang dipinjam</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $peminjamanDetail->buku->judul }}"
                                                         class="form-control @error('buku_id') is-invalid @enderror"
                                                         id="buku_id" name="buku_id" placeholder="ex: 0878-2730-33278"
                                                         disabled>
@@ -137,7 +149,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="tanggal_pinjam" class="form-label">Tanggal Pinjam</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $peminjamanDetail->tanggal_pinjam }}"
                                                         class="form-control @error('tanggal_pinjam') is-invalid @enderror"
                                                         id="tanggal_pinjam" name="tanggal_pinjam"
                                                         placeholder="ex: 0878-2730-33278" disabled>
@@ -153,7 +165,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="tanggal_kembali" class="form-label">Tanggal Kembali</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $peminjamanDetail->tanggal_kembali }}"
                                                         class="form-control @error('tanggal_kembali') is-invalid @enderror"
                                                         id="tanggal_kembali" name="tanggal_kembali"
                                                         placeholder="ex: 0878-2730-33278" disabled>
@@ -170,7 +182,7 @@
                                                 <label for="tanggal_kembali_fisik" class="form-label">Tanggal
                                                     Kembali Fisik </label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $peminjamanDetail->tanggal_kembali_fisik }}"
                                                         class="form-control @error('tanggal_kembali_fisik') is-invalid @enderror"
                                                         id="tanggal_kembali_fisik" name="tanggal_kembali_fisik"
                                                         placeholder="ex: 0878-2730-33278" disabled>
@@ -186,7 +198,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="jumlah_pinjam" class="form-label">Jumlah Pinjam</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $peminjamanDetail->jumlah_pinjam }}"
                                                         class="form-control @error('jumlah_pinjam') is-invalid @enderror"
                                                         id="jumlah_pinjam" name="jumlah_pinjam"
                                                         placeholder="ex: 0878-2730-33278" disabled>
@@ -202,7 +214,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="status" class="form-label">Status</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $peminjamanDetail->status }}"
                                                         class="form-control @error('status') is-invalid @enderror"
                                                         id="status" name="status" placeholder="ex: 0878-2730-33278"
                                                         disabled>
@@ -218,7 +230,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="created_by" class="form-label">Created By</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $created_by }}"
                                                         class="form-control @error('created_by') is-invalid @enderror"
                                                         id="created_by" name="created_by"
                                                         placeholder="ex: 0878-2730-33278" disabled>
@@ -235,7 +247,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="updated_by" class="form-label">Updated By</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value=""
+                                                    <input type="text" value="{{ $updated_by }}"
                                                         class="form-control @error('updated_by') is-invalid @enderror"
                                                         id="updated_by" name="updated_by"
                                                         placeholder="ex: 0878-2730-33278" disabled>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('buku_id')->references('buku_id')->on('buku')->cascadeOnDelete();
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali');
-            $table->date('tanggal_kembali_fisik');
+            $table->date('tanggal_kembali_fisik')->nullable();
             $table->integer('jumlah_pinjam');
             $table->enum('status', ['dipinjam', 'dikembalikan', 'terlambat'])->default('dipinjam');
             $table->string('slug', 255)->nullable();

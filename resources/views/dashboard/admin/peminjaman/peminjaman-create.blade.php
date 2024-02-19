@@ -42,7 +42,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('peminjaman.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6 col-sm-12 mb-1">
@@ -50,12 +50,16 @@
                                         <label for="user_id">Nama Peminjam</label>
                                         <select class="choices form-select @error('user_id') is-invalid @enderror"
                                             id="user_id" name="user_id" required>
-                                            <option value="" {{ old('user_id') == '1' ? 'selected' : '' }}>
-                                                Fauzi abdullah
-                                            </option>
+                                            @foreach ($userList as $user)
+                                                <option value="{{ $user->user_id }}"
+                                                    {{ old('user_id') == $user->user_id ? 'selected' : '' }}>
+                                                    {{ $user->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <small class="text-danger">
                                             @error('user_id')
+                                            {{ $message }}
                                             @enderror
                                         </small>
                                     </div>
@@ -65,12 +69,15 @@
                                         <label for="buku_id">Buku ingin dipinjam</label>
                                         <select class="choices form-select @error('buku_id') is-invalid @enderror"
                                             id="buku_id" name="buku_id" required>
-                                            <option value="" {{ old('buku_id') == '1' ? 'selected' : '' }}>
-                                                Dilan 1990 | Gramedia
-                                            </option>
+                                            @foreach ($bukuList as $buku)
+                                                <option value="{{ $buku->buku_id }}" {{ old('buku_id') ==  $buku->buku_id ? 'selected' : '' }}>
+                                                    {{  $buku->judul }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <small class="text-danger">
                                             @error('buku_id')
+                                            {{ $message }}
                                             @enderror
                                         </small>
                                     </div>
@@ -88,6 +95,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('jumlah_pinjam')
+                                                {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>

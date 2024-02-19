@@ -36,7 +36,7 @@
                                 Data Table Peminjaman
                             </h5>
                             <div class="col-sm-12 col-md-6 d-flex justify-content-end pe-0">
-                                <a href="" type="button" class="btn btn-primary me-1" data-bs-toggle="tooltip"
+                                <a href="{{ route('peminjaman.create') }}" type="button" class="btn btn-primary me-1" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="Tambah data peminjaman">
                                     <i class="bi bi-plus-circle"></i>
                                 </a>
@@ -57,112 +57,128 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-capitalize">Fadli Hifziansyah</td>
-                                    <td>Dilan 1990</td>
-                                    <td>10 buku</td>
-                                    <td>
-                                        <div class="modal-success me-1 mb-1 d-inline-block">
-                                            <!-- Button trigger for Success theme modal -->
-                                            <button type="button" class="btn btn-outline-success text-capitalize"
-                                                data-bs-toggle="modal" data-bs-target="#success1">
-                                                Dipinjam
-                                            </button>
-                                            <!--Success theme Modal -->
-                                            <div class="modal fade text-left" id="success1" tabindex="-1" role="dialog"
-                                                aria-labelledby="myModalLabel110" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable "
-                                                    role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header bg-success">
-                                                            <h5 class="modal-title white" id="myModalLabel110">
-                                                                Mengubah status peminjaman
-                                                                <span class="text-capitalize">
-                                                                    Fadli hifziansyah
-                                                                </span>
-                                                            </h5>
-                                                            <button type="button" class="close" data-bs-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <i data-feather="x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <form action="" method="post">
-                                                            @method('PUT')
-                                                            @csrf
-                                                            <div class="modal-body">
-                                                                <div class="col-12">
-                                                                    <div class="form-group">
-                                                                        <label for="status1">Status
-                                                                            Peminjaman</label>
-                                                                        <select
-                                                                            class="choices form-select @error('status') is-invalid @enderror"
-                                                                            id="status1" name="status" required>
-                                                                            <option value="" selected disabled>
-                                                                                Pilih
-                                                                                Status Peminjaman</option>
-                                                                            <option value="dikembalikan"
-                                                                                {{ 'status' == 'dikembalikan' ? 'selected' : '' }}>
-                                                                                Dikembalikan
-                                                                            </option>
-                                                                            <option value="terlambat"
-                                                                                {{ 'status' == 'terlambat' ? 'selected' : '' }}>
-                                                                                Terlambat
-                                                                            </option>
-                                                                        </select>
-                                                                        <small class="text-danger">
-                                                                            @error('status')
-                                                                                {{ $message }}
-                                                                            @enderror
-                                                                        </small>
-                                                                    </div>
+                                @foreach ($peminjamanList as $peminjaman)
+                                    <tr>
+                                        <td class="text-capitalize">{{ $peminjaman->user->name }}</td>
+                                        <td>{{ $peminjaman->buku->judul }}</td>
+                                        <td>{{ $peminjaman->jumlah_pinjam }} buku</td>
+                                        <td>
+                                            <div class="modal-success me-1 mb-1 d-inline-block">
+                                                @if ($peminjaman->status == 'dikembalikan')
+                                                    <button type="button"
+                                                        class="btn btn-outline-success text-capitalize disabled"
+                                                        data-bs-toggle="modal" data-bs-target="#success1">
+                                                        dikembalikan
+                                                    </button>
+                                                @else
+                                                    <!-- Button trigger for Success theme modal -->
+                                                    <button type="button" class="btn btn-outline-success text-capitalize"
+                                                        data-bs-toggle="modal" data-bs-target="#success{{ $peminjaman->pemijaman_id }}">
+                                                        Dipinjam
+                                                    </button>
+                                                    <!--Success theme Modal -->
+                                                    <div class="modal fade text-left" id="success{{ $peminjaman->pemijaman_id }}" tabindex="-1"
+                                                        role="dialog" aria-labelledby="myModalLabel110" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable "
+                                                            role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-success">
+                                                                    <h5 class="modal-title white" id="myModalLabel110">
+                                                                        Mengubah status peminjaman
+                                                                        <span class="text-capitalize">
+                                                                            Fadli hifziansyah
+                                                                        </span>
+                                                                    </h5>
+                                                                    <button type="button" class="close"
+                                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                                        <i data-feather="x"></i>
+                                                                    </button>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-light-secondary "
-                                                                    data-bs-dismiss="modal" data-bs-toggle="tooltip"
-                                                                    data-bs-placement="top" title="Close modal">
-                                                                    <i class="bi bi-x-circle me-1"></i> Close
-                                                                </button>
+                                                                <form action="{{ route('peminjaman.edit.status') }}" method="post">
+                                                                    @method('PUT')
+                                                                    @csrf
+                                                                    <div class="modal-body">
+                                                                        <div class="col-12">
+                                                                            <div class="form-group">
+                                                                                <label for="status1">Status
+                                                                                    Peminjaman</label>
+                                                                                <select
+                                                                                    class="choices form-select @error('status') is-invalid @enderror"
+                                                                                    id="status1" name="status" required>
+                                                                                    <option value="" selected
+                                                                                        disabled>
+                                                                                        Pilih
+                                                                                        Status Peminjaman</option>
+                                                                                    <option value="dikembalikan"
+                                                                                        {{ 'status' == 'dikembalikan' ? 'selected' : '' }}>
+                                                                                        Dikembalikan
+                                                                                    </option>
+                                                                                    <option value="terlambat"
+                                                                                        {{ 'status' == 'terlambat' ? 'selected' : '' }}>
+                                                                                        Terlambat
+                                                                                    </option>
+                                                                                </select>
+                                                                                <small class="text-danger">
+                                                                                    @error('status')
+                                                                                        {{ $message }}
+                                                                                    @enderror
+                                                                                </small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-light-secondary "
+                                                                            data-bs-dismiss="modal" data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top" title="Close modal">
+                                                                            <i class="bi bi-x-circle me-1"></i> Close
+                                                                        </button>
 
-                                                                <button type="submit" class="btn btn-light-success "
-                                                                    data-bs-dismiss="modal" data-bs-toggle="tooltip"
-                                                                    data-bs-placement="top" title="Simpan data perubahan">
-                                                                    <i class="bi bi-check-circle-fill me-1"></i> Simpan
-                                                                </button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-light-success "
+                                                                            data-bs-dismiss="modal" data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            title="Simpan data perubahan">
+                                                                            <i class="bi bi-check-circle-fill me-1"></i>
+                                                                            Simpan
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group mb-1">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle me-1" type="button"
+                                                        id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="bi bi-wrench-adjustable me-2"></i> Action
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
+                                                        <a class="dropdown-item text-info" href="{{ route('peminjaman.show', $peminjaman->slug) }}"><i
+                                                                class="fas fa-eye me-2"></i>
+                                                            Detail</a>
+                                                        <a class="dropdown-item text-warning" href="{{ route('peminjaman.edit', $peminjaman->slug) }}"><i
+                                                                class="bi bi-pen-fill me-2"></i>
+                                                            Edit</a>
+                                                        <form action="{{ route('peminjaman.destroy', $peminjaman->slug) }}" method="post" class="form-destroy">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <a class="dropdown-item text-danger btn-destroy"
+                                                                href="#"><i
+                                                                    class="fas fa-trash me-2 btn-destroy"></i>
+                                                                Hapus</a>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group mb-1">
-                                            <div class="dropdown">
-                                                <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                                    id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <i class="bi bi-wrench-adjustable me-2"></i> Action
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                                    <a class="dropdown-item text-info" href=""><i
-                                                            class="fas fa-eye me-2"></i>
-                                                        Detail</a>
-                                                    <a class="dropdown-item text-warning" href=""><i
-                                                            class="bi bi-pen-fill me-2"></i>
-                                                        Edit</a>
-                                                    <form action="" method="post" class="form-destroy">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <a class="dropdown-item text-danger btn-destroy" href="#"><i
-                                                                class="fas fa-trash me-2 btn-destroy"></i>
-                                                            Hapus</a>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

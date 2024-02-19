@@ -37,34 +37,46 @@
                     <div class="col-12 col-lg-4">
                         <div class="card">
                             <a href="#" class="position-absolute top-0 left-0 ms-2 mt-1" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Data peminjam"><i class="bi bi-exclamation-circle"></i></a>
+                                data-bs-placement="top" title="Data peminjam"><i class="bi bi-question-circle"></i></a>
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
-                                    <div class="avatar avatar-2xl">
-                                        <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}" alt="Avatar">
-                                    </div>
-
+                                    @if ($peminjamanEdit->user->foto_user)
+                                        <div class="avatar avatar-2xl">
+                                            <img src="{{ asset('storage/foto_user/' . $peminjamanEdit->user->foto_user) }}"
+                                                alt="Avatar">
+                                        </div>
+                                    @else
+                                        <div class="avatar avatar-2xl">
+                                            <img src="{{ asset('assets-UKK/img/no-foto-woman.png') }}" alt="Avatar">
+                                        </div>
+                                    @endif
                                     <div class="text-center">
                                         <h3 class="mt-3"></h3>
-                                        <p class="text-small"> | </p>
+                                        <p class="text-small">{{ $peminjamanEdit->user->name }} |
+                                            {{ $peminjamanEdit->user->roles }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card">
                             <a href="#" class="position-absolute top-0 left-0 ms-2 mt-1" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Data peminjaman yang dipinjam"><i
-                                    class="bi bi-exclamation-circle"></i></a>
+                                data-bs-placement="top" title="Data buku yang dipinjam"><i
+                                    class="bi bi-question-circle"></i></a>
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
-                                    <div class="wrapper-sampul-peminjaman d-flex justify-content-center ">
-                                        <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-peminjaman"
-                                            class="w-50 rounded-3">
+                                    <div class="wrapper-sampul-buku d-flex justify-content-center ">
+                                        @if ($peminjamanEdit->buku->sampul_buku)
+                                            <img src="{{ asset('storage/sampul_buku/' . $peminjamanEdit->buku->sampul_buku) }}" alt="sampul-buku"
+                                                class="w-50 rounded-3">
+                                        @else
+                                            <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
+                                                class="w-50 rounded-3">
+                                        @endif
                                     </div>
 
                                     <div class="text-center">
-                                        <h3 class="mt-3"></h3>
-                                        <p class="text-small"> | </p>
+                                        <h3 class="mt-3">{{ $peminjamanEdit->buku->judul }}</h3>
+                                        <p class="text-small">{{ $peminjamanEdit->buku->penulis}} | {{ $peminjamanEdit->buku->penerbit }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -81,10 +93,12 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="#" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('peminjaman.update', $peminjamanEdit->slug) }}" method="post"
+                                    enctype="multipart/form-data">
                                     @method('PUT')
                                     @csrf
-                                    <input type="text" name="peminjaman_id" id="" value="" hidden>
+                                    <input type="text" name="peminjaman_id" id=""
+                                        value="{{ $peminjamanEdit->peminjaman_id }}" hidden>
                                     <div class="row">
                                         <div class="col-md-6 col-sm-12 mb-1">
                                             <div class="form-group">
@@ -92,6 +106,12 @@
                                                 <select class="choices form-select @error('user_id') is-invalid @enderror"
                                                     id="user_id" name="user_id" required>
                                                     <option value="" selected disabled>Select User</option>
+                                                    @foreach ($userList as $user)
+                                                        <option value="{{ $user->user_id }}"
+                                                            {{ $peminjamanEdit->user->user_id == $user->user_id ? 'selected' : '' }}>
+                                                            {{ $user->name }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 <small class="text-danger">
                                                 </small>
@@ -103,6 +123,12 @@
                                                 <select class="choices form-select @error('buku_id') is-invalid @enderror"
                                                     id="buku_id" name="buku_id" required>
                                                     <option value="" selected disabled>Select Book</option>
+                                                    @foreach ($bukuList as $buku)
+                                                        <option value="{{ $buku->buku_id }}"
+                                                            {{ $peminjamanEdit->buku->buku_id == $buku->buku_id ? 'selected' : '' }}>
+                                                            {{ $buku->judul }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 <small class="text-danger">
                                                 </small>
