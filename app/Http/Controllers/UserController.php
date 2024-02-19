@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
@@ -93,36 +94,80 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, string $slug)
     {
-        $validateData = $request->all();
+        $validateData = $request->validated();
 
-        if ($validateData) {
-            if ($request->hasFile('foto_user')) {
-                $image = $request->file('foto_user');
-                $image->storeAs('public/foto_user/', $image->hashName());
-                $validateData['foto_user'] = $image->hashName();
-
-                $imgFile = Image::make($image->getRealPath());
-                $imgFile->resize(1200, 1200, function ($constraint) {
-                    $constraint->upsize();
-                })->save(storage_path("app/public/foto_user/") . $validateData['foto_user']);
-            }
-
-            $validateData['roles'] = $request->roles;
-
-            User::create($validateData);
-            return redirect()->intended('/users')->with('success', 'Berhasil menambah data user.');
+        if (
+            $validateData['status_aktif'] == 'N' &&
+            $validateData['roles'] == 'admin'
+        ) {
+            return redirect('/users')->with('error', 'Gagal mengubah data user!');
         }
 
-        return redirect()->back()->with('error', 'Gagal menambah data user.');
+        if ($request->file('foto_user')) {
+            if ($request->old_foto) {
+                // Delete the old photo
+                Storage::delete('public/foto_user/' . $request->old_foto);
+            }
+
+            $image = $request->file('foto_user');
+            $image->storeAs('public/foto_user/', $image->hashName());
+            $validateData['foto_user'] = $image->hashName();
+
+            $imgFile = Image::make($image->getRealPath());
+            $imgFile->resize(1200, 1200, function ($constraint) {
+                $constraint->upsize();
+            })->save(storage_path("app/public/foto_user/") . $validateData['foto_user']);
+        }
+
+        User::where('slug', $slug)->update($validateData);
+        return redirect('/users')->with('success', 'Berhasil mengubah data user!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $slug)
     {
-        //
+        $user = User::where('slug', $slug)->first();
+
+        if ($user['foto_user']) {
+            Storage::delete('public/foto_user/' . $user->foto_user);
+        }
+
+        if ($user['user_id'] == 1) {
+            return redirect()->back()->with('error', 'Tidak bisa menghapus user ini');
+        }
+
+        $user->delete();
+
+        return redirect('/users')->with('success', 'Berhasil menghapus data user!');
+    }
+
+    public function userNonActive(string $slug)
+    {
+        $user = User::where('slug', $slug)->first();
+
+        if ($user['user_id'] == 1) {
+            return redirect()->back()->with('error', 'Tidak bisa non aktifkan user ini');
+        }
+
+        $user->update([
+            'status_aktif' => 'N',
+        ]);
+
+        return redirect('/users')->with('success', 'Berhasil non active user!');
+    }
+
+    public function userActive(string $slug)
+    {
+        $user = User::where('slug', $slug)->first();
+
+        $user->update([
+            'status_aktif' => 'Y',
+        ]);
+
+        return redirect('/users')->with('success', 'Berhasil mengaktifkan user!');
     }
 }

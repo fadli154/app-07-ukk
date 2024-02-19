@@ -45,17 +45,19 @@
                                     <div
                                         class="d-flex justify-content-center align-items-center flex-column text-capitalize">
                                         @if ($usersDetail->foto_user)
-                                        <div class="avatar avatar-2xl">
-                                            <img src="{{ asset('storage/foto_user/' . $usersDetail->foto_user) }}" alt="Avatar">
-                                        </div>
-                                    @else
-                                        <div class="avatar avatar-2xl">
-                                            <img src="{{ asset('assets-UKK/img/no-foto-woman.png') }}" alt="Avatar">
-                                        </div>
-                                    @endif
+                                            <div class="avatar avatar-2xl">
+                                                <img src="{{ asset('storage/foto_user/' . $usersDetail->foto_user) }}"
+                                                    alt="Avatar">
+                                            </div>
+                                        @else
+                                            <div class="avatar avatar-2xl">
+                                                <img src="{{ asset('assets-UKK/img/no-foto-woman.png') }}" alt="Avatar">
+                                            </div>
+                                        @endif
                                         <div class="text-center">
                                             <h3 class="mt-3">{{ $usersDetail->name }}</h3>
-                                            <p class="text-small">{{ $usersDetail->username }} | {{ $usersDetail->roles }}</p>
+                                            <p class="text-small">{{ $usersDetail->username }} | {{ $usersDetail->roles }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -151,7 +153,8 @@
                                                                                 data-bs-toggle="tooltip"
                                                                                 data-bs-placement="top"
                                                                                 title="Simpan data perubahan">
-                                                                                <i class="bi bi-check-circle-fill me-1"></i>
+                                                                                <i
+                                                                                    class="bi bi-check-circle-fill me-1"></i>
                                                                                 Simpan
                                                                             </button>
                                                                         </div>
@@ -179,28 +182,32 @@
                                     </h4>
                                 </div>
 
-                                <div class="btn-group ">
-                                    <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                            id="dropdownMenuButtonIcon" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="bi bi-wrench-adjustable me-2"></i>
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                            <a class="dropdown-item text-warning" href="{{ route('users.edit', $usersDetail->slug) }}"><i
-                                                    class="bi bi-pen-fill me-2"></i>
-                                                Edit</a>
-                                            <form action="{{ route('users.destroy', $usersDetail->slug) }}" method="post" class="form-destroy">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a class="dropdown-item text-danger btn-destroy" href="#">
-                                                    <is class="fas fa-trash me-2 btn-destroy"></is>
-                                                    Hapus
-                                                </a>
-                                            </form>
+                                @can('admin')
+                                    <div class="btn-group ">
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle me-1" type="button"
+                                                id="dropdownMenuButtonIcon" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i class="bi bi-wrench-adjustable me-2"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
+                                                <a class="dropdown-item text-warning"
+                                                    href="{{ route('users.edit', $usersDetail->slug) }}"><i
+                                                        class="bi bi-pen-fill me-2"></i>
+                                                    Edit</a>
+                                                <form action="{{ route('users.destroy', $usersDetail->slug) }}"
+                                                    method="post" class="form-destroy">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <a class="dropdown-item text-danger btn-destroy" href="#">
+                                                        <is class="fas fa-trash me-2 btn-destroy"></is>
+                                                        Hapus
+                                                    </a>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endcan
                             </div>
                             <div class="card-body">
                                 <form action="#" method="get">
@@ -247,10 +254,12 @@
                                                 <select class="choices form-select @error('jk') is-invalid @enderror"
                                                     id="jk" name="jk" disabled>
                                                     <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                                    <option value="L" disabled {{ $usersDetail->jk == 'L' ? 'selected' : '' }}>
+                                                    <option value="L" disabled
+                                                        {{ $usersDetail->jk == 'L' ? 'selected' : '' }}>
                                                         Laki-laki
                                                     </option>
-                                                    <option value="P" disabled {{ $usersDetail->jk == 'P' ? 'selected' : '' }}>
+                                                    <option value="P" disabled
+                                                        {{ $usersDetail->jk == 'P' ? 'selected' : '' }}>
                                                         Perempuan
                                                     </option>
                                                 </select>

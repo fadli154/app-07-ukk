@@ -55,9 +55,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard-petugas', [DashboardPetugasController::class, 'index'])->name('dashboard.petugas.index');
     });
 
-    Route::resource('/users', UserController::class);
-
     Route::middleware(['peminjam'])->group(function () {
         Route::get('/dashboard-peminjam', [DashboardPeminjamController::class, 'index'])->name('dashboard.peminjam.index');
     });
+
+    Route::resource('/users', UserController::class);
+    Route::post('/users-nonactive/{slug}', [UserController::class, 'userNonActive'])->name('users.unactive');
+    Route::post('/users-active/{slug}', [UserController::class, 'userActive'])->name('users.active');
+    Route::get('/users-trash', [DashboardPeminjamController::class, 'index'])->name('dashboard.peminjam.index');
+
 });

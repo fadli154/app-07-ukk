@@ -19,7 +19,11 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
+                                    @if (auth()->user()->foto_user)
+                                        <img src="{{ asset('storage/foto_user/' . auth()->user()->foto_user) }}">
+                                    @else
+                                        <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
+                                    @endif
                                 </div>
                             </div>
                         </div>

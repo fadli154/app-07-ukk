@@ -36,8 +36,8 @@
                                 Data Table Users
                             </h5>
                             <div class="col-sm-12 col-md-9 d-flex justify-content-end pe-0">
-                                <a href="{{ route('users.create') }}" type="button" class="btn btn-primary me-1" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Tambah data users">
+                                <a href="{{ route('users.create') }}" type="button" class="btn btn-primary me-1"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah data users">
                                     <i class="bi bi-plus-circle"></i>
                                 </a>
                                 <a href="" type="button" class="btn btn-success" data-bs-toggle="tooltip"
@@ -106,38 +106,41 @@
                                                     <i class="bi bi-wrench-adjustable me-2"></i> Action
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                                    <a class="dropdown-item text-info" href="{{ route('users.show', $users->slug) }}"><i
+                                                    <a class="dropdown-item text-info"
+                                                        href="{{ route('users.show', $users->slug) }}"><i
                                                             class="fas fa-eye me-2"></i>
                                                         Detail</a>
-                                                    <a class="dropdown-item text-warning" href=""><i
-                                                            class="bi bi-pen-fill me-2"></i>
-                                                        Edit</a>
-                                                    <form action="" method="post" class="form-destroy">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <a class="dropdown-item text-danger btn-destroy" href="#"><i
-                                                                class="fas fa-trash me-2 btn-destroy"></i>
-                                                            Hapus</a>
-                                                    </form>
-                                                    @if ($users->status_aktif == 'Y')
-                                                        <form action="" method="post" class="form-unactive">
-                                                            @method('PUT')
+                                                    @can('admin')
+                                                        <a class="dropdown-item text-warning"
+                                                            href="{{ route('users.edit', $users->slug) }}"><i
+                                                                class="bi bi-pen-fill me-2"></i>
+                                                            Edit</a>
+                                                        <form action="{{ route('users.destroy', $users->slug) }} " method="post" class="form-destroy">
+                                                            @method('DELETE')
                                                             @csrf
-                                                            <a class="dropdown-item text-danger btn-unactive"
-                                                                href="#"><i
-                                                                    class="fas fa-times-circle me-2 btn-unactive"></i>
-                                                                Non active</a>
+                                                            <a class="dropdown-item text-danger btn-destroy" href="#"><i
+                                                                    class="fas fa-trash me-2 btn-destroy"></i>
+                                                                Hapus</a>
                                                         </form>
-                                                    @else
-                                                        <form action="" method="post" class="form-active">
-                                                            @method('PUT')
-                                                            @csrf
-                                                            <a class="dropdown-item text-success btn-active"
-                                                                href="#"><i
-                                                                    class="fas fa-check-circle me-2 btn-active"></i>
-                                                                active</a>
-                                                        </form>
-                                                    @endif
+                                                        @if ($users->status_aktif == 'Y')
+                                                            <form action="{{ route('users.unactive', $users->slug) }}"
+                                                                method="post" class="form-unactive">
+                                                                @csrf
+                                                                <a class="dropdown-item text-danger btn-unactive"
+                                                                    href="#"><i
+                                                                        class="fas fa-times-circle me-2 btn-unactive"></i>
+                                                                    Non active</a>
+                                                            </form>
+                                                        @else
+                                                            <form action="{{ route('users.active', $users->slug) }}" method="post" class="form-active">
+                                                                @csrf
+                                                                <a class="dropdown-item text-success btn-active"
+                                                                    href="#"><i
+                                                                        class="fas fa-check-circle me-2 btn-active"></i>
+                                                                    active</a>
+                                                            </form>
+                                                        @endif
+                                                    @endcan
                                                 </div>
                                             </div>
                                         </div>
@@ -190,7 +193,7 @@
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Iya, hapus!",
+                    confirmButtonText: "Iya, non aktifkan!",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         element.closest('form').submit();
@@ -206,7 +209,7 @@
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Iya, hapus!",
+                    confirmButtonText: "Iya, aktifkan!",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         element.closest('form').submit();
