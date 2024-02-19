@@ -40,7 +40,7 @@
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah data users">
                                     <i class="bi bi-plus-circle"></i>
                                 </a>
-                                <a href="" type="button" class="btn btn-success" data-bs-toggle="tooltip"
+                                <a href="{{ route('users.trash') }}" type="button" class="btn btn-success" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="Data yang dihapus">
                                     <i class="bi bi-recycle"></i>
                                 </a>

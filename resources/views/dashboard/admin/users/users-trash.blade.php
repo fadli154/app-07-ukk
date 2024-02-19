@@ -54,44 +54,61 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}" class="img-user-table"
-                                            alt="foto-user">
-                                    </td>
-                                    <td>Fadli</td>
-                                    <td>
-                                        <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="User active"><i class="bi bi-patch-check "></i>
-                                        </span>
-                                        <span class="badge bg-danger" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="User tidak active"><i class="bi bi-patch-exclamation "></i>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-warning"><i class="fas fa-user-tie me-1 p-1"></i>
-                                            Admin</span>
-                                        <span class="badge bg-info"><i class="fas fa-user-shield me-1 p-1"></i>
-                                            Petugas</span>
-                                        <span class="badge bg-info"><i class="fas fa-user me-1 p-1"></i>
-                                            Peminjam</span>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-sm btn-success btn-destroy text-white btn-destroy"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Restore data user"
-                                            href=""><i class="bi bi-arrow-counterclockwise "></i>
-                                        </a>
-                                        <form action="" method="post" class="form-destroy d-inline-block">
-                                            @method('DELETE')
-                                            @csrf
-                                            <a class="btn btn-sm btn-danger btn-destroy text-white btn-destroy"
-                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="Hapus permanen data user" href="#"><i
-                                                    class="fas fa-trash btn-destroy "></i>
+                                @foreach ($usersList as $users)
+                                    <tr>
+                                        <td>
+                                            @if ($users->foto_user)
+                                                <img src="{{ asset('storage/foto_user/' . $users->foto_user) }}"
+                                                    class="img-user-table" alt="foto-man">
+                                            @else
+                                                <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}"
+                                                    class="img-user-table" alt="foto-man">
+                                            @endif
+                                        </td>
+                                        <td class="text-capitalize">{{ $users->name }}</td>
+
+                                        <td>
+                                            @if ($users->status_aktif == 'Y')
+                                                <span class="p-2 badge bg-success" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="User active"><i
+                                                        class="bi bi-patch-check "></i>
+                                                </span>
+                                            @else
+                                                <span class="p-2 badge bg-danger" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="User tidak active"><i
+                                                        class="bi bi-patch-exclamation "></i>
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($users->roles == 'admin')
+                                                <span class="badge bg-warning"><i class="fas fa-user-tie me-1 p-1"></i>
+                                                    Admin</span>
+                                            @elseif ($users->roles == 'petugas')
+                                                <span class="badge bg-info"><i class="fas fa-user-shield me-1 p-1"></i>
+                                                    Petugas</span>
+                                            @else
+                                                <span class="badge bg-secondary"><i class="fas fa-user me-1 p-1"></i>
+                                                    Peminjam</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-success btn-destroy text-white btn-destroy"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="Restore data user"
+                                                href="{{ route('users.restore', $users->slug) }}"><i class="bi bi-arrow-counterclockwise "></i>
                                             </a>
-                                        </form>
-                                    </td>
-                                </tr>
+                                            <form action="{{ route('users.delete.permanent', $users->slug) }}" method="post" class="form-destroy d-inline-block">
+                                                @method('DELETE')
+                                                @csrf
+                                                <a class="btn btn-sm btn-danger btn-destroy text-white btn-destroy"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Hapus permanen data user" href="#"><i
+                                                        class="fas fa-trash btn-destroy "></i>
+                                                </a>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

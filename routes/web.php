@@ -62,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/users', UserController::class);
     Route::post('/users-nonactive/{slug}', [UserController::class, 'userNonActive'])->name('users.unactive');
     Route::post('/users-active/{slug}', [UserController::class, 'userActive'])->name('users.active');
-    Route::get('/users-trash', [DashboardPeminjamController::class, 'index'])->name('dashboard.peminjam.index');
+    Route::get('/users-trash', [UserController::class, 'trash'])->name('users.trash');
+    Route::get('/users-restore/{slug}', [UserController::class, 'restore'])->name('users.restore');
+    Route::delete('/users-delete-permanent/{slug}', [UserController::class, 'deletePermanent'])->name('users.delete.permanent');
 
 });

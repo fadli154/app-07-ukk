@@ -170,4 +170,30 @@ class UserController extends Controller
 
         return redirect('/users')->with('success', 'Berhasil mengaktifkan user!');
     }
+
+    public function trash()
+    {
+        $users = User::onlyTrashed()->get();
+
+        return view('dashboard.admin.users.users-trash', [
+            'title' => 'Users Trash',
+            'active' => 'users',
+            "usersList" => $users
+        ]);
+    }
+
+    public function restore(string $slug)
+    {
+        User::onlyTrashed()->where('slug', $slug)->restore();
+
+        return redirect('/users')->with('success', 'Berhasil restore data user!');
+    }
+
+    public function deletePermanent(string $slug)
+    {
+        User::onlyTrashed()->where('slug', $slug)->forceDelete();
+
+        return redirect('/users')->with('success', 'Berhasil menghapus permanen data user!');
+    }
+
 }
