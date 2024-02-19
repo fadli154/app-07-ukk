@@ -35,6 +35,7 @@
                             <h5 class="card-title col-sm-12 col-md-3 align-self-center">
                                 Data Table Users
                             </h5>
+                            @can('admin')
                             <div class="col-sm-12 col-md-9 d-flex justify-content-end pe-0">
                                 <a href="{{ route('users.create') }}" type="button" class="btn btn-primary me-1"
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah data users">
@@ -45,6 +46,7 @@
                                     <i class="bi bi-recycle"></i>
                                 </a>
                             </div>
+                            @endcan
                         </div>
                     </div>
                 </div>

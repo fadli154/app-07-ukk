@@ -41,7 +41,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('kategori.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-12 mb-3">
@@ -57,6 +57,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('nama_kategori')
+                                                {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>

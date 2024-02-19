@@ -42,14 +42,19 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
                                     <div class="wrapper-sampul-buku d-flex justify-content-center ">
-                                        <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
-                                            class="w-50 rounded-3">
+                                        @if ($bukuEdit->sampul_buku)
+                                            <img src="{{ asset('storage/sampul_buku/' . $bukuEdit->sampul_buku) }}"
+                                                alt="sampul-buku" class="w-50 rounded-3">
+                                        @else
+                                            <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
+                                                class="w-50 rounded-3">
+                                        @endif
                                     </div>
 
                                     <div class="text-center">
-                                        <h3 class="mt-3">Dilan 1990</h3>
-                                        <small class="text-small">Pidi Baiq |
-                                            Gramedia</small>
+                                        <h3 class="mt-3">{{ $bukuEdit->judul }}</h3>
+                                        <small class="text-small">{{ $bukuEdit->penulis }} |
+                                            {{ $bukuEdit->penerbit }}</small>
                                     </div>
                                 </div>
                             </div>
@@ -66,13 +71,16 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="" method="post" enctype="multipart/form-data" novalidate>
+                                <form action="{{ route('buku.update', $bukuEdit->slug) }}" method="post"
+                                    enctype="multipart/form-data" novalidate>
                                     @method('PUT')
                                     @csrf
-                                    <input type="text" name="old_foto" id="" value="" hidden>
-                                    <input type="text" name="buku_id" id="" value="" hidden>
-                                    <input type="hidden" name="created_by" value="">
-                                    <input type="hidden" name="updated_by" value="">
+                                    <input type="text" name="old_foto" id=""
+                                        value="{{ $bukuEdit->sampul_buku }}" hidden>
+                                    <input type="text" name="buku_id" id="" value="{{ $bukuEdit->buku_id }}"
+                                        hidden>
+                                    <input type="hidden" name="created_by" value="{{ auth()->user()->user_id }}">
+                                    <input type="hidden" name="updated_by" value="{{ auth()->user()->user_id }}">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="form-group has-icon-left">
@@ -80,13 +88,14 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('isbn') is-invalid @enderror"
-                                                        id="isbn" value="978-602-7870-41-3" name="isbn"
-                                                        placeholder="ex: 978-602-7870-41-3" required>
+                                                        id="isbn" value="{{ $bukuEdit->isbn }}" name="isbn"
+                                                        placeholder="ex: 978-602-7870-41-3">
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-list-ol"></i>
                                                     </div>
                                                     <small class="text-danger">
                                                         @error('isbn')
+                                                            {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>
@@ -98,13 +107,14 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('judul') is-invalid @enderror"
-                                                        id="judul" value="Dilan 1990" name="judul"
+                                                        id="judul" value="{{ $bukuEdit->judul }}" name="judul"
                                                         placeholder="ex: Dilan 1990" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-journal-check"></i>
                                                     </div>
                                                     <small class="text-danger">
                                                         @error('judul')
+                                                            {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>
@@ -116,13 +126,14 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('penulis') is-invalid @enderror"
-                                                        id="penulis" value="Pidi Baiq" name="penulis"
+                                                        id="penulis" value="{{ $bukuEdit->penulis }}" name="penulis"
                                                         placeholder="ex: Pidi Baiq" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
                                                     <small class="text-danger">
                                                         @error('penulis')
+                                                            {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>
@@ -134,13 +145,14 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('penerbit') is-invalid @enderror"
-                                                        id="penerbit" value="Pastel Books" name="penerbit"
+                                                        id="penerbit" value="{{ $bukuEdit->penerbit }}" name="penerbit"
                                                         placeholder="ex: Pastel Books" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-building-gear"></i>
                                                     </div>
                                                     <small class="text-danger">
                                                         @error('penerbit')
+                                                            {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>
@@ -152,13 +164,14 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('tahun_terbit') is-invalid @enderror"
-                                                        id="tahun_terbit" value="2015" name="tahun_terbit"
-                                                        placeholder="ex: 2015" required>
+                                                        id="tahun_terbit" value="{{ $bukuEdit->tahun_terbit }}"
+                                                        name="tahun_terbit" placeholder="ex: 2015" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-calendar-date"></i>
                                                     </div>
                                                     <small class="text-danger">
                                                         @error('tahun_terbit')
+                                                            {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>
@@ -170,13 +183,14 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('stok_buku') is-invalid @enderror"
-                                                        id="stok_buku" value="20" name="stok_buku"
-                                                        placeholder="ex: 20" required>
+                                                        id="stok_buku" value="{{ $bukuEdit->stok_buku }}"
+                                                        name="stok_buku" placeholder="ex: 20" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-journal-x"></i>
                                                     </div>
                                                     <small class="text-danger">
                                                         @error('stok_buku')
+                                                            {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>
@@ -186,9 +200,10 @@
                                             <div class="form-group">
                                                 <label for="sinopsis">Sinopsis</label>
                                                 <textarea class="form-control summernote" placeholder="Tuliskan Sinopsis" id="sinopsis" cols="30"
-                                                    rows="10" name="sinopsis" required></textarea>
+                                                    rows="10" name="sinopsis" required>{{ $bukuEdit->sinopsis }}</textarea>
                                                 <small class="text-danger">
                                                     @error('sinopsis')
+                                                        {{ $message }}
                                                     @enderror
                                                 </small>
                                             </div>
@@ -199,13 +214,16 @@
                                                 <select
                                                     class="choices form-select @error('kategori_id') is-invalid @enderror multiple-remove"
                                                     multiple id="kategori_id" name="kategori_id[]" required>
-                                                    <option value=""
-                                                        {{ 'kategori' == 'kategori' ? 'selected' : '' }}>
-                                                        Romance
-                                                    </option>
+                                                    @foreach ($kategoriList as $kategori)
+                                                        <option value="{{ $kategori->kategori_id }}"
+                                                            {{ in_array($kategori->kategori_id, $bukuEdit->kategori->pluck('kategori_id')->toArray()) ? 'selected' : '' }}>
+                                                            {{ $kategori->nama_kategori }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 <small class="text-danger">
                                                     @error('kategori_id')
+                                                        {{ $message }}
                                                     @enderror
                                                 </small>
                                             </div>
@@ -220,6 +238,7 @@
                                                     class="image-preview-filepond">
                                                 <small class="text-danger">
                                                     @error('sampul_buku')
+                                                        {{ $message }}
                                                     @enderror
                                                 </small>
                                             </div>

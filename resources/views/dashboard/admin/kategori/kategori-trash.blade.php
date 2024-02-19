@@ -52,24 +52,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Romansa</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-success btn-destroy text-white btn-destroy"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Restore data kategori"
-                                            href=""><i class="bi bi-arrow-counterclockwise"></i>
-                                        </a>
-                                        <form action="" method="post" class="form-destroy d-inline-block">
-                                            @method('DELETE')
-                                            @csrf
-                                            <a class="btn btn-sm btn-danger btn-destroy text-white btn-destroy"
+                                @foreach ($kategoriList as $kategori)
+                                    <tr>
+                                        <td>{{ $kategori->nama_kategori }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-success btn-destroy text-white btn-destroy"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="Hapus permanen data kategori" href="#"><i
-                                                    class="fas fa-trash btn-destroy "></i>
+                                                title="Restore data kategori"
+                                                href="{{ route('kategori.restore', $kategori->slug) }}"><i
+                                                    class="bi bi-arrow-counterclockwise"></i>
                                             </a>
-                                        </form>
-                                    </td>
-                                </tr>
+                                            <form action="{{ route('kategori.delete.permanent', $kategori->slug) }}" method="post" class="form-destroy d-inline-block">
+                                                @method('DELETE')
+                                                @csrf
+                                                <a class="btn btn-sm btn-danger btn-destroy text-white btn-destroy"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Hapus permanen data kategori" href="#"><i
+                                                        class="fas fa-trash btn-destroy "></i>
+                                                </a>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

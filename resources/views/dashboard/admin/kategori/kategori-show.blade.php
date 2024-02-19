@@ -39,28 +39,30 @@
                                     </h4>
                                 </div>
 
-                                <div class="btn-group ">
-                                    <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                            id="dropdownMenuButtonIcon" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="bi bi-wrench-adjustable me-2"></i>
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                            <a class="dropdown-item text-warning" href=""><i
-                                                    class="bi bi-pen-fill me-2"></i>
-                                                Edit</a>
-                                            <form action="" method="post" class="form-destroy">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a class="dropdown-item text-danger btn-destroy" href="#">
-                                                    <is class="fas fa-trash me-2 btn-destroy"></is>
-                                                    Hapus
-                                                </a>
-                                            </form>
+                                @can('admin-petugas')
+                                    <div class="btn-group ">
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle me-1" type="button"
+                                                id="dropdownMenuButtonIcon" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i class="bi bi-wrench-adjustable me-2"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
+                                                <a class="dropdown-item text-warning" href="{{ route('kategori.edit', $kategoriDetail->slug) }}"><i
+                                                        class="bi bi-pen-fill me-2"></i>
+                                                    Edit</a>
+                                                <form action="{{ route('kategori.destroy', $kategoriDetail->slug) }}" method="post" class="form-destroy">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <a class="dropdown-item text-danger btn-destroy" href="#">
+                                                        <is class="fas fa-trash me-2 btn-destroy"></is>
+                                                        Hapus
+                                                    </a>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endcan
                             </div>
                             <div class="card-body">
                                 <form action="#" method="get">
@@ -69,7 +71,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="nama_kategori" class="form-label">Nama Kategori</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value="Romansa"
+                                                    <input type="text" value="{{ $kategoriDetail->nama_kategori }}"
                                                         class="form-control @error('nama_kategori') is-invalid @enderror"
                                                         id="nama_kategori" name="nama_kategori" placeholder="ex: Romansa"
                                                         disabled>
@@ -87,7 +89,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="created_by" class="form-label">Created By</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value="Fadli hifziansyah"
+                                                    <input type="text" value="{{ $created_by }}"
                                                         class="form-control @error('created_by') is-invalid @enderror"
                                                         id="created_by" name="created_by" placeholder="ex: Romansa"
                                                         disabled>
@@ -105,7 +107,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="updated_by" class="form-label">Updated By</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value="Fadli hifziansyah"
+                                                    <input type="text" value="{{ $updated_by }}"
                                                         class="form-control @error('updated_by') is-invalid @enderror"
                                                         id="updated_by" name="updated_by" placeholder="ex: Romansa"
                                                         disabled>

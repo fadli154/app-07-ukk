@@ -63,7 +63,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users-nonactive/{slug}', [UserController::class, 'userNonActive'])->name('users.unactive');
     Route::post('/users-active/{slug}', [UserController::class, 'userActive'])->name('users.active');
     Route::get('/users-trash', [UserController::class, 'trash'])->name('users.trash');
-    Route::get('/users-restore/{slug}', [UserController::class, 'restore'])->name('users.restore');
-    Route::delete('/users-delete-permanent/{slug}', [UserController::class, 'deletePermanent'])->name('users.delete.permanent');
+    Route::get('/users-restore/{slug}', [UserController::class, 'restore'])->name('users.restore')->middleware('admin');
+    Route::delete('/users-delete-permanent/{slug}', [UserController::class, 'deletePermanent'])->name('users.delete.permanent')->middleware('admin');
 
+    Route::resource('/kategori', KategoriController::class);
+    Route::get('/kategori-trash', [KategoriController::class, 'trash'])->name('kategori.trash');
+    Route::get('/kategori-restore/{slug}', [KategoriController::class, 'restore'])->name('kategori.restore')->middleware('admin');
+    Route::delete('/kategori-delete-permanent/{slug}', [KategoriController::class, 'deletePermanent'])->name('kategori.delete.permanent')->middleware('admin');
+
+    Route::resource('/buku', BukuController::class);
+    Route::get('/buku-trash', [BukuController::class, 'trash'])->name('buku.trash');
+    Route::get('/buku-search', [BukuController::class, 'search'])->name('buku.search');
+    Route::get('/buku-restore/{slug}', [BukuController::class, 'restore'])->name('buku.restore')->middleware('admin');
+    Route::delete('/buku-delete-permanent/{slug}', [BukuController::class, 'deletePermanent'])->name('buku.delete.permanent')->middleware('admin');
 });

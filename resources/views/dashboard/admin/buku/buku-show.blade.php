@@ -55,10 +55,10 @@
                                             <i class="bi bi-wrench-adjustable me-2"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                            <a class="dropdown-item text-warning" href=""><i
+                                            <a class="dropdown-item text-warning" href="{{ route('buku.edit', $bukuDetail->slug) }}"><i
                                                     class="bi bi-pen-fill me-2"></i>
                                                 Edit</a>
-                                            <form action="" method="post" class="form-destroy">
+                                            <form action="{{ route('buku.destroy', $bukuDetail->slug) }}" method="post" class="form-destroy">
                                                 @method('DELETE')
                                                 @csrf
                                                 <a class="dropdown-item text-danger btn-destroy" href="#">
@@ -75,33 +75,33 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <p> <i class="bi bi-journal-check me-2 text-bold"></i>
-                                                <span class="me-2 text-bold">Judul buku: <span class="text-primary">Dilan
-                                                        1990</span></span>
+                                                <span class="me-2 text-bold">Judul buku: <span
+                                                        class="text-primary">{{ $bukuDetail->judul }}</span></span>
                                                 <span class="text-primary"></span>
                                             </p>
                                             <p> <i class="bi bi-person-check-fill me-2 text-bold"></i>
-                                                <span class="me-2 text-bold">Penulis buku: <span class="text-primary">Pidi
-                                                        Baiq</span></span>
+                                                <span class="me-2 text-bold">Penulis buku: <span
+                                                        class="text-primary">{{ $bukuDetail->penulis }}</span></span>
                                                 <span class="text-primary"></span>
                                             </p>
                                             <p> <i class="bi bi-building-gear me-2 text-bold"></i>
                                                 <span class="me-2 text-bold">Penerbit buku: <span
-                                                        class="text-primary">Gramedia</span></span>
+                                                        class="text-primary">{{ $bukuDetail->penerbit }}</span></span>
                                                 <span class="text-primary"></span>
                                             </p>
                                             <p> <i class="bi bi-calendar-date me-2 text-bold"></i>
                                                 <span class="me-2 text-bold">Tahun terbit buku: <span class="text-primary">
-                                                        2015</span></span>
+                                                        {{ $bukuDetail->tahun_terbit }}</span></span>
                                                 <span class="text-primary"></span>
                                             </p>
                                             <p> <i class="bi bi-list-ol me-2 text-bold"></i>
                                                 <span class="me-2 text-bold">ISBN buku: <span
-                                                        class="text-primary">978-602-7870-41-3</span></span>
+                                                        class="text-primary">{{ $bukuDetail->isbn }}</span></span>
                                                 <span class="text-primary"></span>
                                             </p>
                                             <p> <i class="bi bi-journal-x me-2 text-bold"></i>
                                                 <span class="me-2 text-bold">Stok buku: <span
-                                                        class="text-primary">10</span></span>
+                                                        class="text-primary">{{ $bukuDetail->stok_buku }}</span></span>
                                                 <span class="text-primary"></span>
                                             </p>
                                         </div>
@@ -109,9 +109,10 @@
                                             <div class="form-group">
                                                 <label for="sinopsis" class="form-label title-label">Sinopsis</label>
                                                 <textarea class="form-control mt-3 summernote-disabled" id="sinopsis" cols="30" rows="10" name="sinopsis"
-                                                    readonly></textarea>
+                                                    readonly>{{ $bukuDetail->sinopsis }}</textarea>
                                                 <small class="text-danger">
                                                     @error('sinopsis')
+                                                        {{ $message }}
                                                     @enderror
                                                 </small>
                                             </div>
@@ -123,10 +124,14 @@
                                                 <select
                                                     class="choices form-select @error('kategori_id') is-invalid @enderror multiple"
                                                     multiple="" id="kategori_id" name="kategori_id[]" disabled>
-                                                    <option value=""
-                                                        {{ 'kategori' == 'kategori' ? 'selected' : '' }}>
-                                                        akkakz
-                                                    </option>
+                                                    @foreach ($kategoriList as $kategori)
+                                                        @foreach ($bukuDetail->kategori as $kategori_buku)
+                                                            <option value="{{ $kategori->kategori_id }}"
+                                                                {{ $kategori->kategori_id == $kategori_buku->kategori_id ? 'selected' : '' }}>
+                                                                {{ $kategori->nama_kategori }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endforeach
                                                 </select>
                                                 <small class="text-danger">
                                                     @error('kategori_id')
@@ -167,14 +172,19 @@
                                 </form>
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
                                     <div class="wrapper-sampul-buku d-flex justify-content-center ">
-                                        <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
-                                            class="w-50 rounded-3">
+                                        @if ($bukuDetail)
+                                            <img src="{{ asset('storage/sampul_buku/' . $bukuDetail->sampul_buku) }}" alt="sampul-buku"
+                                                class="w-50 rounded-3">
+                                        @else
+                                            <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
+                                                class="w-50 rounded-3">
+                                        @endif
                                     </div>
 
                                     <div class="text-center">
-                                        <h3 class="mt-3">Dilan 1990</h3>
-                                        <small class="text-small">Pidi Baiq |
-                                            Gramedia</small>
+                                        <h3 class="mt-3">{{ $bukuDetail->judul }}</h3>
+                                        <small class="text-small">{{ $bukuDetail->penulis }} |
+                                            {{ $bukuDetail->penerbit }}</small>
                                     </div>
 
                                 </div>

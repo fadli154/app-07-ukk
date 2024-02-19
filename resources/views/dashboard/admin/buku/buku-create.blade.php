@@ -43,10 +43,10 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data" novalidate>
+                        <form action="{{ route('buku.store') }}" method="post" enctype="multipart/form-data" novalidate>
                             @csrf
-                            <input type="hidden" name="created_by" value="">
-                            <input type="hidden" name="updated_by" value="">
+                            <input type="hidden" name="created_by" value="{{ auth()->user()->user_id }}">
+                            <input type="hidden" name="updated_by" value="{{ auth()->user()->user_id }}">
                             <div class="row">
                                 <div class="col-md-6 col-sm-12 mb-3">
                                     <div class="form-group has-icon-left">
@@ -54,12 +54,13 @@
                                         <div class="position-relative">
                                             <input type="text" class="form-control @error('isbn') is-invalid @enderror"
                                                 id="isbn" value="{{ old('isbn') }}" name="isbn"
-                                                placeholder="ex: 978-602-7870-41-3" required>
+                                                placeholder="ex: 978-602-7870-41-3">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-list-ol"></i>
                                             </div>
                                             <small class="text-danger">
                                                 @error('isbn')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -77,6 +78,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('judul')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -95,6 +97,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('penulis')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -113,6 +116,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('penerbit')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -131,6 +135,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('tahun_terbit')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -149,6 +154,7 @@
                                             </div>
                                             <small class="text-danger">
                                                 @error('stok_buku')
+                                                    {{ $message }}
                                                 @enderror
                                             </small>
                                         </div>
@@ -161,6 +167,7 @@
                                             rows="10" name="sinopsis" required>{{ old('sinopsis') }}</textarea>
                                         <small class="text-danger">
                                             @error('sinopsis')
+                                                {{ $message }}
                                             @enderror
                                         </small>
                                     </div>
@@ -171,13 +178,16 @@
                                         <select
                                             class="choices form-select @error('kategori_id') is-invalid @enderror multiple-remove"
                                             multiple="" id="kategori_id" name="kategori_id[]" required>
-                                            <option value=""
-                                                {{ old('kategori_id') == 'kategori' ? 'selected' : '' }}>
-                                                romansa
-                                            </option>
+                                            @foreach ($kategoriList as $kategori)
+                                                <option value="{{ $kategori->kategori_id }}"
+                                                    {{ old('kategori_id') == 'kategori' ? 'selected' : '' }}>
+                                                    {{ $kategori->nama_kategori }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <small class="text-danger">
                                             @error('kategori_id')
+                                                {{ $message }}
                                             @enderror
                                         </small>
                                     </div>
@@ -191,6 +201,7 @@
                                             class="image-preview-filepond" required>
                                         <small class="text-danger">
                                             @error('sampul_buku')
+                                                {{ $message }}
                                             @enderror
                                         </small>
                                     </div>

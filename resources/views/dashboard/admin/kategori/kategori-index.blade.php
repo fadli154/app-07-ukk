@@ -35,16 +35,18 @@
                             <h5 class="card-title col-sm-12 col-md-6 align-self-center">
                                 Data Table Kategori
                             </h5>
-                            <div class="col-sm-12 col-md-6 d-flex justify-content-end pe-0">
-                                <a href="" type="button" class="btn btn-primary me-1" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Tambah data kategori">
-                                    <i class="bi bi-plus-circle"></i>
-                                </a>
-                                <a href="" type="button" class="btn btn-success" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Data yang dihapus">
-                                    <i class="bi bi-recycle"></i>
-                                </a>
-                            </div>
+                            @can('admin-petugas')
+                                <div class="col-sm-12 col-md-6 d-flex justify-content-end pe-0">
+                                    <a href="{{ route('kategori.create') }}" type="button" class="btn btn-primary me-1"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah data kategori">
+                                        <i class="bi bi-plus-circle"></i>
+                                    </a>
+                                    <a href="{{ route('kategori.trash') }}" type="button" class="btn btn-success" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Data yang dihapus">
+                                        <i class="bi bi-recycle"></i>
+                                    </a>
+                                </div>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -60,37 +62,49 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Romansa</td>
-                                    <td>Fadli hifziansyah</td>
-                                    <td>Fadli hifziansyah</td>
-                                    <td>
-                                        <div class="btn-group mb-1">
-                                            <div class="dropdown">
-                                                <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                                    id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <i class="bi bi-wrench-adjustable me-2"></i> Action
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                                    <a class="dropdown-item text-info" href=""><i
-                                                            class="fas fa-eye me-2"></i>
-                                                        Detail</a>
-                                                    <a class="dropdown-item text-warning" href=""><i
-                                                            class="bi bi-pen-fill me-2"></i>
-                                                        Edit</a>
-                                                    <form action="" method="post" class="form-destroy">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <a class="dropdown-item text-danger btn-destroy" href="#"><i
-                                                                class="fas fa-trash me-2 btn-destroy"></i>
-                                                            Hapus</a>
-                                                    </form>
+                                @foreach ($kategoriList as $kategori)
+                                    <tr>
+                                        <td>{{ $kategori->nama_kategori }}</td>
+                                        @foreach ($usersList as $users)
+                                            @if ($users->user_id == $kategori->created_by)
+                                                <td>{{ $users->name }}</td>
+                                            @endif
+                                        @endforeach
+                                        @foreach ($usersList as $users)
+                                            @if ($users->user_id == $kategori->updated_by)
+                                                <td>{{ $users->name }}</td>
+                                            @endif
+                                        @endforeach
+                                        <td>
+                                            <div class="btn-group mb-1">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle me-1" type="button"
+                                                        id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="bi bi-wrench-adjustable me-2"></i> Action
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
+                                                        <a class="dropdown-item text-info" href="{{ route('kategori.show', $kategori->slug) }}"><i
+                                                                class="fas fa-eye me-2"></i>
+                                                            Detail</a>
+                                                        @can('admin-petugas')
+                                                            <a class="dropdown-item text-warning" href="{{ route('kategori.edit', $kategori->slug) }}"><i
+                                                                    class="bi bi-pen-fill me-2"></i>
+                                                                Edit</a>
+                                                            <form action="{{ route('kategori.destroy', $kategori->slug) }}" method="post" class="form-destroy">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <a class="dropdown-item text-danger btn-destroy"
+                                                                    href="#"><i class="fas fa-trash me-2 btn-destroy"></i>
+                                                                    Hapus</a>
+                                                            </form>
+                                                        @endcan
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

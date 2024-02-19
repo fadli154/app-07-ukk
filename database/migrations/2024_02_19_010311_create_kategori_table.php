@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kategori', function (Blueprint $table) {
             $table->id('kategori_id');
             $table->string('slug', 255 )->nullable();
-            $table->string('nama_kategori', 50 );
+            $table->string('nama_kategori', 50)->unique();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();

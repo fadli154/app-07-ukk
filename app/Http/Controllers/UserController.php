@@ -29,6 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize("admin");
+
         return view('dashboard.admin.users.users-create', [
             'title' => 'Users Create',
             'active' => 'users',
@@ -40,6 +42,8 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        $this->authorize("admin");
+
         $validateData = $request->all();
 
         if ($validateData) {
@@ -82,6 +86,8 @@ class UserController extends Controller
      */
     public function edit(string $slug)
     {
+        $this->authorize("admin");
+
         $user = User::where('slug', $slug)->firstOrFail();
 
         return view('dashboard.admin.users.users-edit', [
@@ -96,6 +102,8 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, string $slug)
     {
+        $this->authorize("admin");
+
         $validateData = $request->validated();
 
         if (
@@ -130,6 +138,8 @@ class UserController extends Controller
      */
     public function destroy(string $slug)
     {
+        $this->authorize("admin");
+
         $user = User::where('slug', $slug)->first();
 
         if ($user['foto_user']) {
@@ -147,6 +157,8 @@ class UserController extends Controller
 
     public function userNonActive(string $slug)
     {
+        $this->authorize("admin");
+
         $user = User::where('slug', $slug)->first();
 
         if ($user['user_id'] == 1) {
@@ -162,6 +174,8 @@ class UserController extends Controller
 
     public function userActive(string $slug)
     {
+        $this->authorize("admin");
+
         $user = User::where('slug', $slug)->first();
 
         $user->update([
@@ -173,6 +187,8 @@ class UserController extends Controller
 
     public function trash()
     {
+        $this->authorize("admin");
+
         $users = User::onlyTrashed()->get();
 
         return view('dashboard.admin.users.users-trash', [
@@ -184,6 +200,8 @@ class UserController extends Controller
 
     public function restore(string $slug)
     {
+        $this->authorize("admin");
+
         User::onlyTrashed()->where('slug', $slug)->restore();
 
         return redirect('/users')->with('success', 'Berhasil restore data user!');
@@ -191,6 +209,8 @@ class UserController extends Controller
 
     public function deletePermanent(string $slug)
     {
+        $this->authorize("admin");
+
         User::onlyTrashed()->where('slug', $slug)->forceDelete();
 
         return redirect('/users')->with('success', 'Berhasil menghapus permanen data user!');

@@ -45,10 +45,11 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('kategori.update', $kategoriEdit->slug) }}" method="post"
+                                    enctype="multipart/form-data">
                                     @method('PUT')
                                     @csrf
-                                    <input type="hidden" name="kategori_id" value="">
+                                    <input type="hidden" name="kategori_id" value="{{ $kategoriEdit->kategori_id }}">
                                     <div class="row">
                                         <div class="col-sm-12 mb-3">
                                             <div class="form-group has-icon-left">
@@ -56,13 +57,14 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('nama_kategori') is-invalid @enderror"
-                                                        value="Romansa" id="nama_kategori" name="nama_kategori"
-                                                        placeholder="ex: Romansa" required>
+                                                        value="{{ $kategoriEdit->nama_kategori }}" id="nama_kategori"
+                                                        name="nama_kategori" placeholder="ex: Romansa" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-tag-fill"></i>
                                                     </div>
                                                     <small class="text-danger">
                                                         @error('nama_kategori')
+                                                            {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>

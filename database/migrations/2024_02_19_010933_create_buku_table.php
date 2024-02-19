@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('judul', 60 );
             $table->string('penulis', 85 );
             $table->string('penerbit', 80 );
-            $table->date('tahun_terbit' );
+            $table->text('sinopsis');
+            $table->year('tahun_terbit');
             $table->integer('stok_buku');
             $table->string('sampul_buku', 255);
             $table->unsignedBigInteger('created_by');
