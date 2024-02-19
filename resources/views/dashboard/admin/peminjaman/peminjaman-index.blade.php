@@ -94,8 +94,7 @@
                                                                         <i data-feather="x"></i>
                                                                     </button>
                                                                 </div>
-                                                                <form action="{{ route('peminjaman.edit.status') }}" method="post">
-                                                                    @method('PUT')
+                                                                <form action="{{ route('peminjaman.edit.status', $peminjaman->slug) }}" method="post">
                                                                     @csrf
                                                                     <div class="modal-body">
                                                                         <div class="col-12">

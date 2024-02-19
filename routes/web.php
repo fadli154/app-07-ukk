@@ -78,7 +78,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/buku-delete-permanent/{slug}', [BukuController::class, 'deletePermanent'])->name('buku.delete.permanent')->middleware('admin');
 
     Route::resource('/peminjaman', PeminjamanController::class);
-    Route::get('/peminjaman-edit-status', [PeminjamanController::class, 'editStatus'])->name('peminjaman.edit.status');
+    Route::post('/peminjaman-edit-status/{slug}', [PeminjamanController::class, 'editStatus'])->name('peminjaman.edit.status');
     Route::get('/peminjaman-trash', [PeminjamanController::class, 'trash'])->name('peminjaman.trash');
     Route::get('/peminjaman-restore/{slug}', [PeminjamanController::class, 'restore'])->name('peminjaman.restore')->middleware('admin');
     Route::delete('/peminjaman-delete-permanent/{slug}', [PeminjamanController::class, 'deletePermanent'])->name('peminjaman.delete.permanent')->middleware('admin');
