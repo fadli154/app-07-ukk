@@ -217,7 +217,7 @@ class BukuController extends Controller
 
     public function trash()
     {
-        $this->authorize('admin-petugas');
+        $this->authorize('admin');
 
         $trashList = Buku::onlyTrashed()->get();
 
@@ -231,7 +231,7 @@ class BukuController extends Controller
 
     public function restore(string $slug)
     {
-        $this->authorize('admin-petugas');
+        $this->authorize('admin');
 
         Buku::withTrashed()->where('slug', $slug)->restore();
 
@@ -240,7 +240,7 @@ class BukuController extends Controller
 
     public function deletePermanent(string $slug)
     {
-        $this->authorize('admin-petugas');
+        $this->authorize('admin');
 
         $buku = Buku::withTrashed()->where('slug', $slug)->get();
 

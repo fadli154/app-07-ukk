@@ -63,12 +63,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('profile.update', $passwordEdit->slug) }}" method="post" enctype="multipart/form-data">
-                                    @method('PUT')
+                                <form action="{{ route('password.update', $passwordEdit->slug) }}" method="post" enctype="multipart/form-data">
                                     @csrf
-                                    <input type="text" name="user_id" id="" value="{{ $passwordEdit->user_id }}" hidden>
-                                    <input type="text" name="password" id="" value="{{ $passwordEdit->password }}" hidden>
-                                    <input type="text" name="old_foto" id="" value="{{ $passwordEdit->foto_user }}" hidden>
                                     <div class="row mb-2">
                                         <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="form-group has-icon-left">
@@ -83,7 +79,8 @@
                                                         <i class="bi bi-lock"></i>
                                                     </div>
                                                     <small class="text-danger">
-                                                        @error('password')
+                                                        @error('password_lama')
+                                                        {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>
@@ -102,7 +99,8 @@
                                                         <i class="bi bi-lock"></i>
                                                     </div>
                                                     <small class="text-danger">
-                                                        @error('password')
+                                                        @error('password_baru')
+                                                        {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>
@@ -124,7 +122,8 @@
                                                         <i class="bi bi-lock"></i>
                                                     </div>
                                                     <small class="text-danger">
-                                                        @error('password')
+                                                        @error('konfirmasi_password_baru')
+                                                        {{ $message }}
                                                         @enderror
                                                     </small>
                                                 </div>
@@ -175,6 +174,30 @@
                         position: 'topRight'
                     });
                 @endforeach
+            });
+        </script>
+    @endif
+
+     @if (Session::has('success'))
+        <script>
+            $(document).ready(function() {
+                iziToast.success({
+                    title: 'Success',
+                    message: "{{ Session::get('success') }}",
+                    position: 'topRight'
+                })
+            });
+        </script>
+    @endif
+
+    @if (Session::has('error'))
+        <script>
+            $(document).ready(function() {
+                iziToast.error({
+                    title: 'Error',
+                    message: "{{ Session::get('error') }}",
+                    position: 'topRight'
+                })
             });
         </script>
     @endif

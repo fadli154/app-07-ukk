@@ -12,6 +12,7 @@ class KoleksiController extends Controller
 {
     public function index()
     {
+
         $koleksiList = Koleksi::where('user_id', auth()->user()->user_id)->with('buku', 'user')->paginate(6);
 
         return view('dashboard.peminjam.koleksi.koleksi-index', [
@@ -23,6 +24,7 @@ class KoleksiController extends Controller
 
     public function search(Request $request)
     {
+
         $search = $request->input('search');
 
         if ($search) {
@@ -56,6 +58,7 @@ class KoleksiController extends Controller
 
     public function store(Request $request)
     {
+
         $validateData = $request->validate([
             'buku_id' => 'required',
         ]);

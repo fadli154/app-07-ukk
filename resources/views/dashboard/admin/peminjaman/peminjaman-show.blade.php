@@ -61,8 +61,8 @@
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
                                     <div class="wrapper-sampul-buku d-flex justify-content-center ">
                                         @if ($peminjamanDetail->buku->sampul_buku)
-                                            <img src="{{ asset('storage/sampul_buku/' . $peminjamanDetail->buku->sampul_buku) }}" alt="sampul-buku"
-                                                class="w-50 rounded-3">
+                                            <img src="{{ asset('storage/sampul_buku/' . $peminjamanDetail->buku->sampul_buku) }}"
+                                                alt="sampul-buku" class="w-50 rounded-3">
                                         @else
                                             <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
                                                 class="w-50 rounded-3">
@@ -71,7 +71,8 @@
 
                                     <div class="text-center">
                                         <h3 class="mt-3">{{ $peminjamanDetail->buku->judul }}</h3>
-                                        <p class="text-small">{{ $peminjamanDetail->buku->penulis}} | {{ $peminjamanDetail->buku->penerbit }}</p>
+                                        <p class="text-small">{{ $peminjamanDetail->buku->penulis }} |
+                                            {{ $peminjamanDetail->buku->penerbit }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -86,29 +87,32 @@
                                     <h4 class="card-title card-title-action ms-4 ">Form Detail Data Peminjaman
                                     </h4>
                                 </div>
-
-                                <div class="btn-group ">
-                                    <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                            id="dropdownMenuButtonIcon" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="bi bi-wrench-adjustable me-2"></i>
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                            <a class="dropdown-item text-warning" href="{{ route('peminjaman.edit', $peminjamanDetail->slug) }}"><i
-                                                    class="bi bi-pen-fill me-2"></i>
-                                                Edit</a>
-                                            <form action="{{ route('peminjaman.destroy', $peminjamanDetail->slug) }}" method="post" class="form-destroy">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a class="dropdown-item text-danger btn-destroy" href="#">
-                                                    <is class="fas fa-trash me-2 btn-destroy"></is>
-                                                    Hapus
-                                                </a>
-                                            </form>
+                                @can('admin-petugas')
+                                    <div class="btn-group ">
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle me-1" type="button"
+                                                id="dropdownMenuButtonIcon" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i class="bi bi-wrench-adjustable me-2"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
+                                                <a class="dropdown-item text-warning"
+                                                    href="{{ route('peminjaman.edit', $peminjamanDetail->slug) }}"><i
+                                                        class="bi bi-pen-fill me-2"></i>
+                                                    Edit</a>
+                                                <form action="{{ route('peminjaman.destroy', $peminjamanDetail->slug) }}"
+                                                    method="post" class="form-destroy">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <a class="dropdown-item text-danger btn-destroy" href="#">
+                                                        <is class="fas fa-trash me-2 btn-destroy"></is>
+                                                        Hapus
+                                                    </a>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endcan
                             </div>
                             <div class="card-body">
                                 <form action="#" method="get">
@@ -119,8 +123,8 @@
                                                 <div class="position-relative">
                                                     <input type="name"
                                                         class="form-control @error('name') is-invalid @enderror"
-                                                        value="{{ $peminjamanDetail->user->name }}" id="name" name="name"
-                                                        placeholder="ex: fadli154@gmail.com" disabled>
+                                                        value="{{ $peminjamanDetail->user->name }}" id="name"
+                                                        name="name" placeholder="ex: fadli154@gmail.com" disabled>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
@@ -165,7 +169,8 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="tanggal_kembali" class="form-label">Tanggal Kembali</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value="{{ $peminjamanDetail->tanggal_kembali }}"
+                                                    <input type="text"
+                                                        value="{{ $peminjamanDetail->tanggal_kembali }}"
                                                         class="form-control @error('tanggal_kembali') is-invalid @enderror"
                                                         id="tanggal_kembali" name="tanggal_kembali"
                                                         placeholder="ex: 0878-2730-33278" disabled>
@@ -182,7 +187,8 @@
                                                 <label for="tanggal_kembali_fisik" class="form-label">Tanggal
                                                     Kembali Fisik </label>
                                                 <div class="position-relative">
-                                                    <input type="text" value="{{ $peminjamanDetail->tanggal_kembali_fisik }}"
+                                                    <input type="text"
+                                                        value="{{ $peminjamanDetail->tanggal_kembali_fisik }}"
                                                         class="form-control @error('tanggal_kembali_fisik') is-invalid @enderror"
                                                         id="tanggal_kembali_fisik" name="tanggal_kembali_fisik"
                                                         placeholder="ex: 0878-2730-33278" disabled>

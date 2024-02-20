@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -81,5 +82,29 @@ class ProfileController extends Controller
             'active' => 'change-password',
             'passwordEdit' => $user,
         ]);
+    }
+
+    public function updatePassword(Request $request, string $slug)
+    {
+        $validateData = $request->validate([
+            'password_lama' => 'required|min:5|max:255',
+            'password_baru' => 'required|min:5|max:255',
+            'konfirmasi_password_baru' => 'required|min:5|max:255',
+        ]);
+
+        #Match The Old Password
+        if (!Hash::check($request->password_lama, auth()->user()->password)) {
+            return back()->with("error", "Password lama tidak cocok!");
+        }
+
+        #Check the new password
+        if (strcmp($request->password_baru, $request->konfirmasi_password_baru) != 0) {
+            return back()->with("error", "Password baru tidak cocok!");
+        }
+
+        User::where('slug', $slug)->update([
+            'password' => Hash::make($request->password_baru),
+        ]);
+        return redirect('/profile')->with('success', 'Berhasil mengubah password!');
     }
 }

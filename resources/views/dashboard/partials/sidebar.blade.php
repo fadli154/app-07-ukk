@@ -65,14 +65,12 @@
                     </li>
                 @endcan
 
-                @can('peminjam')
-                    <li class="sidebar-item {{ $active == 'koleksi' ? 'active' : '' }}">
-                        <a href="/koleksi" class='sidebar-link'>
-                            <i class="bi bi-bookmark-heart-fill"></i>
-                            <span>Koleksi</span>
-                        </a>
-                    </li>
-                @endcan
+                <li class="sidebar-item {{ $active == 'koleksi' ? 'active' : '' }}">
+                    <a href="/koleksi" class='sidebar-link'>
+                        <i class="bi bi-bookmark-heart-fill"></i>
+                        <span>Koleksi</span>
+                    </a>
+                </li>
 
                 <li class="sidebar-title fw-bold">Pengaturan</li>
                 <li class="sidebar-item {{ $active == 'profile' ? 'active' : '' }}">

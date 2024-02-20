@@ -53,10 +53,12 @@
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah data buku">
                                         <i class="bi bi-plus-circle"></i>
                                     </a>
-                                    <a href="" type="button" class="btn btn-success" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="Data yang dihapus">
-                                        <i class="bi bi-recycle"></i>
-                                    </a>
+                                    @can('admin')
+                                        <a href="{{ route('buku.trash') }}" type="button" class="btn btn-success"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Data yang dihapus">
+                                            <i class="bi bi-recycle"></i>
+                                        </a>
+                                    @endcan
                                 @endcan
                             </div>
                         </div>

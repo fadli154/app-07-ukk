@@ -46,7 +46,6 @@
                         <table class="table table-striped" id="table1">
                             <thead>
                                 <tr>
-                                    <th>Sampul Buku</th>
                                     <th>Judul</th>
                                     <th>Penulis</th>
                                     <th>Penerbit</th>
@@ -54,32 +53,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="{{ asset('assets-UKK/img/no-image.png') }}" class="img-user-table"
-                                            alt="sampul-buku">
-                                    </td>
-                                    <td>Dilan 1991</td>
-                                    <td class="text-capitalize">Pidi Baiq</td>
-                                    <td>Gramedia</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-success btn-destroy text-white btn-destroy"
-                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="Hapus permanen data buku" href="/buku-restore"><i
-                                                class="bi bi-arrow-counterclockwise"></i>
-                                        </a>
-                                        <form action="/buku-delete-permanent" method="post"
-                                            class="form-destroy d-inline-block">
-                                            @method('DELETE')
-                                            @csrf
-                                            <a class="btn btn-sm btn-danger btn-destroy text-white btn-destroy"
+                                @foreach ($trashList as $trash)
+                                    <tr>
+                                        <td>{{ $trash->judul }}</td>
+                                        <td class="text-capitalize">{{ $trash->penulis }}</td>
+                                        <td>{{ $trash->penerbit }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-success btn-destroy text-white btn-destroy"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="Hapus permanen data buku" href="#"><i
-                                                    class="fas fa-trash btn-destroy "></i>
+                                                title="Hapus permanen data buku" href="{{ route('buku.restore', $trash->slug) }}"><i
+                                                    class="bi bi-arrow-counterclockwise"></i>
                                             </a>
-                                        </form>
-                                    </td>
-                                </tr>
+                                            <form action="{{ route('buku.delete.permanent', $trash->slug) }}" method="post"
+                                                class="form-destroy d-inline-block">
+                                                @method('DELETE')
+                                                @csrf
+                                                <a class="btn btn-sm btn-danger btn-destroy text-white btn-destroy"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Hapus permanen data buku" href="#"><i
+                                                        class="fas fa-trash btn-destroy "></i>
+                                                </a>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

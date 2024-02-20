@@ -14,6 +14,8 @@ class LaporanController extends Controller
 {
     public function index()
     {
+        $this->authorize('admin-petugas');
+
         $laporanList = Peminjaman::with('user', 'buku')->get();
 
         return view('dashboard.admin.laporan.laporan-index', [
@@ -26,6 +28,8 @@ class LaporanController extends Controller
 
     public function filterLaporan(Request $request)
     {
+        $this->authorize('admin-petugas');
+
         $tanggal = $request->input('tanggal');
         $status = $request->input('status');
 
@@ -61,6 +65,8 @@ class LaporanController extends Controller
 
     public function exportLaporan(Request $request)
     {
+        $this->authorize('admin-petugas');
+
         $tanggal = $request->input('tanggal');
         $status = $request->input('status');
 
