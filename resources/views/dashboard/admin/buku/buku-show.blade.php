@@ -323,16 +323,40 @@
                                                 </p>
                                                 <div class="wrapper-ulasan-buku my-2">
                                                     @if ($ulasan->foto_ulasan)
-                                                        <img src="{{ asset('storage/foto_ulasan/' . $ulasan->foto_ulasan) }}"
-                                                            alt="sampul-buku" class="w-50 rounded-3">
+                                                        <a href="#">
+                                                            <img src="{{ asset('storage/foto_ulasan/' . $ulasan->foto_ulasan) }}"
+                                                                alt="sampul-buku" class="w-50 rounded-3"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modalUlasan{{ $ulasan->slug }}">
+                                                        </a>
                                                     @else
-                                                        <img src="{{ asset('assets-UKK/img/no-image.png') }}"
-                                                            alt="sampul-buku" class="w-50 rounded-3">
+                                                        <a href="#">
+                                                            <img src="{{ asset('assets-UKK/img/no-image.png') }}"
+                                                                alt="sampul-buku" class="w-50 rounded-3"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modalUlasan{{ $ulasan->slug }}">
+                                                        </a>
                                                     @endif
                                                 </div>
                                                 <small>
                                                     {{ date('d-M-Y', strtotime($ulasan->created_at)) }}
                                                 </small>
+                                                @if ($ulasan->user->user_id == auth()->user()->user_id)
+                                                    <div class="comment-actions mt-2">
+                                                        <button class="btn icon icon-left btn-warning me-2 text-nowrap"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalEdit{{ $ulasan->slug }}"><i
+                                                                class="bi bi-pencil-square"></i> Edit</button>
+                                                        <form action="{{ route('ulasan.destroy', $ulasan->slug) }} "
+                                                            method="post" class="form-hapus-ulasan">
+                                                            @csrf
+                                                            <button type="button"
+                                                                class="btn icon icon-left btn-danger me-2 text-nowrap btn-hapus-ulasan"><i
+                                                                    class="bi bi-x-circle btn-hapus-ulasan"></i>
+                                                                Remove</button>
+                                                        </form>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     @endforeach
@@ -344,6 +368,116 @@
             </section>
         </div>
     </div>
+
+    @foreach ($ulasanList as $ulasan)
+        <!-- Modal -->
+        <div class="modal fade" id="modalUlasan{{ $ulasan->slug }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    @if ($ulasan->foto_ulasan)
+                        <img src="{{ asset('storage/foto_ulasan/' . $ulasan->foto_ulasan) }}" alt="sampul-buku"
+                            class="w-100 rounded-3">
+                    @else
+                        <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku" class="w-100 rounded-3">
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    @foreach ($ulasanList as $ulasan)
+        <!-- Modal -->
+        <div class="modal fade" id="modalEdit{{ $ulasan->slug }}" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Ulasan</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('ulasan.update', $ulasan->slug) }}" enctype="multipart/form-data" method="post">
+                            @csrf
+                            <input type="hidden" name="buku_id" value="{{ $bukuDetail->buku_id }}">
+                            <input type="hidden" name="old_foto" value="{{ $ulasan->foto_ulasan }}">
+                            <div class="col-sm-12 mb-1">
+                                <div class="form-group">
+                                    <textarea class="form-control summernote" placeholder="Tuliskan Ulasan" id="ulasan" cols="30"
+                                        rows="10" name="ulasan">{{ $ulasan->ulasan }}</textarea>
+                                    <small class="text-danger">
+                                        @error('ulasan')
+                                        @enderror
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mb-1">
+                                <div class="form-group">
+                                    <label for="foto_ulasan">Foto ulasan</label>
+                                    <small class="d-block">Note: masukkan foto format PNG, JPG, JPEG, maksimal
+                                        5 MB</small>
+                                    <input type="file" id="foto-user" name="foto_ulasan"
+                                        class="image-preview-filepond">
+                                    <small class="text-danger">
+                                        @error('foto_ulasan')
+                                        @enderror
+                                    </small>
+                                </div>
+                            </div>
+                            <label for="rating" class="form-label title-label">Rating buku Dilan 1990</label>
+                            <div class="rating mt-2 position-absolute left-0">
+                                <input type="radio" id="star-1{{ $ulasan->slug }}" name="rating" value="5">
+                                <label for="star-1{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                                <input type="radio" id="star-2{{ $ulasan->slug }}" name="rating" value="4">
+                                <label for="star-2{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                                <input type="radio" id="star-3{{ $ulasan->slug }}" name="rating" value="3">
+                                <label for="star-3{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                                <input type="radio" id="star-4{{ $ulasan->slug }}" name="rating" value="2">
+                                <label for="star-4{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                                <input type="radio" id="star-5{{ $ulasan->slug }}" name="rating" value="1">
+                                <label for="star-5{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                            </div>
+                            <div class="modal-footer mt-5">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success " data-bs-dismiss="modal"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Simpan data perubahan">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 
 @section('script')
@@ -370,6 +504,7 @@
             const formDestroy = document.body.querySelector(".form-destroy");
             const formKoleksi = document.body.querySelector(".form-koleksi");
             const formUnkolek = document.body.querySelector(".form-unkolek");
+            const formHapusUlasan = document.body.querySelector(".form-hapus-ulasan");
 
             // console.log(element);
 
@@ -414,6 +549,22 @@
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Iya, hapus koleksi!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        element.closest('form').submit();
+                    }
+                });
+            }
+
+            if (element.classList.contains('btn-hapus-ulasan')) {
+                Swal2.fire({
+                    title: "Apa anda yakin?",
+                    text: "Ingin menghapus ulasan anda!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Iya, hapus ulasan!",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         element.closest('form').submit();

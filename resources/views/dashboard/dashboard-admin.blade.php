@@ -37,7 +37,7 @@
                                             </div>
                                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7  ">
                                                 <h6 class="text-muted font-semibold">Peminjam</h6>
-                                                <h6 class="font-extrabold mb-0">112</h6>
+                                                <h6 class="font-extrabold mb-0">{{ $getAllCountPeminjam }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -55,7 +55,7 @@
                                             </div>
                                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7 ">
                                                 <h6 class="text-muted font-semibold">Petugas</h6>
-                                                <h6 class="font-extrabold mb-0">183</h6>
+                                                <h6 class="font-extrabold mb-0">{{ $getAllCountPetugas }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
                                             </div>
                                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7 ">
                                                 <h6 class="text-muted font-semibold">Buku</h6>
-                                                <h6 class="font-extrabold mb-0">80</h6>
+                                                <h6 class="font-extrabold mb-0">{{ $getAllCountBuku }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -91,7 +91,7 @@
                                             </div>
                                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7 ">
                                                 <h6 class="text-muted font-semibold" style="width: 100px">Peminjaman</h6>
-                                                <h6 class="font-extrabold mb-0">80</h6>
+                                                <h6 class="font-extrabold mb-0">{{ $getAllCountPeminjaman }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -111,136 +111,66 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-xl-4">
-                                <div class="card">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h4 class="mt-2">Kategori</h4>
-                                        <a href="/kategori" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="Lihat kategori"><i class="bi bi-arrow-right-circle fs-5"></i></a>
-                                    </div>
-                                    <div class="card-body mt-2">
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <div class="d-flex align-items-center">
-                                                    <svg class="bi text-primary" width="32" height="32"
-                                                        fill="blue" style="width:10px">
-                                                        <use
-                                                            xlink:href="assets/static/images/bootstrap-icons.svg#circle-fill" />
-                                                    </svg>
-                                                    <h5 class="mb-0 ms-3">Romansa</h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-5">
-                                                <h5 class="mb-0 text-end">862</h5>
-                                            </div>
-                                            <div class="col-12">
-                                                <div id="chart-europe"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <div class="d-flex align-items-center">
-                                                    <svg class="bi text-success" width="32" height="32"
-                                                        fill="blue" style="width:10px">
-                                                        <use
-                                                            xlink:href="assets/static/images/bootstrap-icons.svg#circle-fill" />
-                                                    </svg>
-                                                    <h5 class="mb-0 ms-3">Komedi</h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-5">
-                                                <h5 class="mb-0 text-end">375</h5>
-                                            </div>
-                                            <div class="col-12">
-                                                <div id="chart-america"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <div class="d-flex align-items-center">
-                                                    <svg class="bi text-success" width="32" height="32"
-                                                        fill="blue" style="width:10px">
-                                                        <use
-                                                            xlink:href="assets/static/images/bootstrap-icons.svg#circle-fill" />
-                                                    </svg>
-                                                    <h5 class="mb-0 ms-3">Fiksi</h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-5">
-                                                <h5 class="mb-0 text-end">625</h5>
-                                            </div>
-                                            <div class="col-12">
-                                                <div id="chart-india"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <div class="d-flex align-items-center">
-                                                    <svg class="bi text-danger" width="32" height="32"
-                                                        fill="blue" style="width:10px">
-                                                        <use
-                                                            xlink:href="assets/static/images/bootstrap-icons.svg#circle-fill" />
-                                                    </svg>
-                                                    <h5 class="mb-0 ms-3">Non Fiksi</h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-5">
-                                                <h5 class="mb-0 text-end">1025</h5>
-                                            </div>
-                                            <div class="col-12">
-                                                <div id="chart-indonesia"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-xl-8">
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="card-header ">
                                         <h4>Ulasan terakhir</h4>
-
                                     </div>
                                     <div class="card-body position-relative">
-                                        <div class="ulasan-user">
-                                            <div class="d-flex">
-                                                <div class="avatar avatar-lg avatar-ulasan">
-                                                    <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
-                                                </div>
-                                                <div class="align-self-center text-capitalize mt-2">
-                                                    <h6 class="mb-0">Fadli Hifziansyah</h6>
-                                                    <p class="mb-0 text-sm text-primary">Admin</p>
-                                                </div>
+                                        @if (count($ulasanList) == 0)
+                                            <div class="d-flex justify-content-center">
+                                                <img src="{{ asset('assets-UKK/img/No data-rafiki.png') }}" class="w-50"
+                                                    alt="no-data-img">
                                             </div>
-                                            <div class="d-block p-4">
-                                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing
-                                                    elit.
-                                                    Molestias error nostrum at possimus voluptatem porro pariatur quos eos
-                                                    magnam
-                                                    dolorum?</p>
-                                                <small>12-12-2022</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body position-relative">
-                                        <div class="ulasan-user">
-                                            <div class="d-flex">
-                                                <div class="avatar avatar-lg avatar-ulasan">
-                                                    <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
+                                        @else
+                                            @foreach ($ulasanList as $ulasan)
+                                                <div class="ulasan-user mb-4">
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-lg avatar-ulasan">
+                                                            @if ($ulasan->user->foto_user)
+                                                                <img
+                                                                    src="{{ asset('storage/foto_user/' . $ulasan->user->foto_user) }}">
+                                                            @else
+                                                                <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
+                                                            @endif
+                                                        </div>
+                                                        <div class="align-self-center text-capitalize mt-2">
+                                                            <h6 class="mb-0">{{ $ulasan->user->name }}</h6>
+                                                            <p class="mb-0 text-sm text-primary">{{ $ulasan->user->roles }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-block p-4">
+                                                        @for ($i = 0; $i < $ulasan->rating; $i++)
+                                                            <i class="bi bi-star-fill text-warning"></i>
+                                                        @endfor
+                                                        <p class="card-text mt-3">
+                                                            {!! strip_tags(Str::limit($ulasan->ulasan, 30)) !!}
+                                                        </p>
+                                                        <div class="wrapper-ulasan-buku my-2">
+                                                            @if ($ulasan->foto_ulasan)
+                                                                <a href="#">
+                                                                    <img src="{{ asset('storage/foto_ulasan/' . $ulasan->foto_ulasan) }}"
+                                                                        alt="sampul-buku" class="w-50 rounded-3"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#modalUlasan{{ $ulasan->slug }}">
+                                                                </a>
+                                                            @else
+                                                                <a href="#">
+                                                                    <img src="{{ asset('assets-UKK/img/no-image.png') }}"
+                                                                        alt="sampul-buku" class="w-50 rounded-3"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#modalUlasan{{ $ulasan->slug }}">
+                                                                </a>
+                                                            @endif
+                                                        </div>
+                                                        <small>
+                                                            {{ date('d-M-Y', strtotime($ulasan->created_at)) }}
+                                                        </small>
+                                                    </div>
                                                 </div>
-                                                <div class="align-self-center text-capitalize mt-2">
-                                                    <h6 class="mb-0">Fadli Hifziansyah</h6>
-                                                    <p class="mb-0 text-sm text-primary">Admin</p>
-                                                </div>
-                                            </div>
-                                            <div class="d-block p-4">
-                                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing
-                                                    elit.
-                                                    Molestias error nostrum at possimus voluptatem porro pariatur quos eos
-                                                    magnam
-                                                    dolorum?</p>
-                                                <small>12-12-2022</small>
-                                            </div>
-                                        </div>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -273,18 +203,24 @@
                                 <h4>User Terbaru</h4>
                             </div>
                             <div class="card-content pb-4">
-                                <div class="recent-message d-flex px-4 py-3">
-                                    <div class="avatar avatar-lg">
-                                        <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
+                                @foreach ($getNewstUser as $user)
+                                    <div class="recent-message d-flex px-4 py-3">
+                                        <div class="avatar avatar-lg">
+                                            @if ($user->foto_user)
+                                                <img src="{{ asset('storage/foto_user/' . $user->foto_user) }}">
+                                            @else
+                                                <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="name ms-4">
+                                            <h5 class="mb-1">{{ $user->name }}</h5>
+                                            <h6 class="text-muted mb-0">{{ $user->roles }}</h6>
+                                        </div>
                                     </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">Pasya nada</h5>
-                                        <h6 class="text-muted mb-0">psyaaNada</h6>
-                                    </div>
-                                </div>
+                                @endforeach
                                 <div class="px-4">
-                                    <button class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Data
-                                        Users</button>
+                                    <a href="{{ route('users.index') }}" class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Data
+                                        Users</a>
                                 </div>
                             </div>
                         </div>

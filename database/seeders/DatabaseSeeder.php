@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Buku;
 use App\Models\Kategori;
 use App\Models\Peminjaman;
+use App\Models\Ulasan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -82,6 +83,13 @@ class DatabaseSeeder extends Seeder
             'status' => 'dipinjam',
             'created_by' => '1',
             'updated_by' => '1',
+        ]);
+
+        Ulasan::factory()->create([
+            'user_id' => '1',
+            'buku_id' => '1',
+            'rating' => '5',
+            'ulasan' => 'sangat bagus',
         ]);
     }
 }

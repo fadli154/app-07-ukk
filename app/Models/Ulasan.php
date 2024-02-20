@@ -27,7 +27,7 @@ class Ulasan extends Model
     {
         return [
             'slug' => [
-                'source' => ['buku.judul', 'user.name']
+                'source' => ['buku.judul']
             ]
         ];
     }

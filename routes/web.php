@@ -95,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/ulasan-search', [UlasanController::class, 'search'])->name('ulasan.search');
     Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
+    Route::post('/ulasan-edit/{slug}', [UlasanController::class, 'update'])->name('ulasan.update');
     Route::post('/ulasan-destroy/{slug}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
@@ -103,5 +104,4 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/change-password', [ProfileController::class, 'editPassword'])->name('password.edit');
     Route::post('/password-update/{slug}', [ProfileController::class, 'updatePassword'])->name('password.update');
-
 });
