@@ -51,4 +51,24 @@ class Peminjaman extends Model
     {
         return $this->belongsTo(Buku::class, 'buku_id', 'buku_id');
     }
+
+    /**
+     * Get the createBy that owns the Buku
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'user_id');
+    }
+
+    /**
+     * Get the updateBy that owns the Buku
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'user_id');
+    }
 }

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ asset('assets-UKK/assets-mazer/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets-UKK/assets-mazer/compiled/css/table-datatable.css') }}">
     <link rel="stylesheet" href="{{ asset('assets-UKK/modules/izitoast/css/iziToast.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets-UKK/assets-mazer/extensions/flatpickr/flatpickr.min.css') }}">
 @endsection
 
 @section('content')
@@ -39,8 +40,19 @@
                                     <h5 class="card-title col-12 mb-5">
                                         Filter Table Laporan
                                     </h5>
-                                    <form action="#" method="get">
+                                    <form action="{{ route('laporan.filter') }}" method="post" novalidate >
+                                        @csrf
                                         <div class="col-sm-12 mb-1">
+                                            <div class="form-group">
+                                                <label for="tanggal">Tanggal</label>
+                                                <input type="date" class="form-control flatpickr-range mb-3"
+                                                    name="tanggal" placeholder="Select date..">
+                                                <small class="text-danger">
+                                                    @error('tanggal')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </small>
+                                            </div>
                                             <div class="form-group">
                                                 <label for="status">Status</label>
                                                 <select class="choices form-select @error('status') is-invalid @enderror"
@@ -60,13 +72,16 @@
                                                     </option>
                                                 </select>
                                                 <small class="text-danger">
+                                                    @error('status')
+                                                        {{ $message }}
+                                                    @enderror
                                                 </small>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-end">
                                             <button type="submit" class="btn btn-primary btn-login "
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="Filter table peminjaman"><i class="fas fa-filter me-1"></i>
+                                                title="Filter table laporan"><i class="fas fa-filter me-1"></i>
                                             </button>
                                         </div>
                                     </form>
@@ -79,8 +94,19 @@
                                     <h5 class="card-title col-12 mb-5">
                                         Export Table Laporan
                                     </h5>
-                                    <form action="#" method="get">
+                                    <form action="{{ route('laporan.export') }}" method="post" novalidate>
+                                        @csrf
                                         <div class="col-sm-12 mb-1">
+                                            <div class="form-group">
+                                                <label for="tanggal">Tanggal</label>
+                                                <input type="date" class="form-control flatpickr-range mb-3"
+                                                    name="tanggal" placeholder="Select date..">
+                                                <small class="text-danger">
+                                                    @error('tanggal')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </small>
+                                            </div>
                                             <div class="form-group">
                                                 <label for="status2">Status</label>
                                                 <select class="choices form-select @error('status') is-invalid @enderror"
@@ -100,6 +126,9 @@
                                                     </option>
                                                 </select>
                                                 <small class="text-danger">
+                                                    @error('status')
+                                                        {{ $message }}
+                                                    @enderror
                                                 </small>
                                             </div>
                                         </div>
@@ -134,6 +163,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($laporanList as $laporan)
+                                            <tr {{ $laporan->status == 'dikembalikan' ? 'class=table-success' : 'class=table-danger' }}>
+                                                <td class="text-capitalize">{{ $laporan->user->name }}</td>
+                                                <td>{{ $laporan->buku->judul }}</td>
+                                                <td>{{ $laporan->jumlah_pinjam }} buku</td>
+                                                <td>{{ $laporan->tanggal_pinjam }} </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -153,6 +190,8 @@
     <script src="{{ asset('assets-UKK/assets-mazer/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets-UKK/assets-mazer/static/js/pages/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets-UKK/modules/izitoast/js/iziToast.min.js') }}"></script>
+    <script src="{{ asset('assets-UKK/assets-mazer/extensions/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('assets-UKK/assets-mazer/static/js/pages/date-picker.js') }}"></script>
 
     <script>
         document.body.addEventListener('click', function(e) {

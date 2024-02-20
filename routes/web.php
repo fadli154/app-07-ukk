@@ -84,4 +84,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/peminjaman-delete-permanent/{slug}', [PeminjamanController::class, 'deletePermanent'])->name('peminjaman.delete.permanent')->middleware('admin');
 
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::post('/laporan-filter', [LaporanController::class, 'filterLaporan'])->name('laporan.filter');
+    Route::post('/laporan-export', [LaporanController::class, 'exportLaporan'])->name('laporan.export');
 });
