@@ -47,30 +47,33 @@
                                     </h4>
                                 </div>
 
-                                <div class="btn-group ">
-                                    <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                            id="dropdownMenuButtonIcon" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="bi bi-wrench-adjustable me-2"></i>
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                            <a class="dropdown-item text-warning"
-                                                href="{{ route('buku.edit', $bukuDetail->slug) }}"><i
-                                                    class="bi bi-pen-fill me-2"></i>
-                                                Edit</a>
-                                            <form action="{{ route('buku.destroy', $bukuDetail->slug) }}" method="post"
-                                                class="form-destroy">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a class="dropdown-item text-danger btn-destroy" href="#">
-                                                    <is class="fas fa-trash me-2 btn-destroy"></is>
-                                                    Hapus
-                                                </a>
-                                            </form>
+                                @can('admin-petugas')
+                                    <div class="btn-group ">
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle me-1" type="button"
+                                                id="dropdownMenuButtonIcon" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i class="bi bi-wrench-adjustable me-2"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
+                                                <a class="dropdown-item text-warning"
+                                                    href="{{ route('buku.edit', $bukuDetail->slug) }}"><i
+                                                        class="bi bi-pen-fill me-2"></i>
+                                                    Edit</a>
+                                                <form action="{{ route('buku.destroy', $bukuDetail->slug) }}" method="post"
+                                                    class="form-destroy">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <a class="dropdown-item text-danger btn-destroy" href="#">
+                                                        <is class="fas fa-trash me-2 btn-destroy"></is>
+                                                        Hapus
+                                                    </a>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endcan
+
                             </div>
                             <div class="card-body">
                                 <form action="#" method="get">

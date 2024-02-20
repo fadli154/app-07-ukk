@@ -71,4 +71,15 @@ class ProfileController extends Controller
         User::where('slug', $slug)->update($validateData);
         return redirect('/profile')->with('success', 'Berhasil mengubah data profile!');
     }
+
+    public function editPassword()
+    {
+        $user = User::where('slug', auth()->user()->slug)->firstOrFail();
+
+        return view('pages.change-password', [
+            'title' => 'Password Edit',
+            'active' => 'change-password',
+            'passwordEdit' => $user,
+        ]);
+    }
 }

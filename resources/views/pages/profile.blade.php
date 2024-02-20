@@ -123,7 +123,7 @@
                                             <a class="dropdown-item text-info" href="{{ route('profile.edit') }}"><i
                                                     class="bi bi-person-lock me-2"></i>
                                                 Change profile</a>
-                                            <a class="dropdown-item text-warning" href="/change-password"><i
+                                            <a class="dropdown-item text-warning" href="{{ route('password.edit') }}"><i
                                                     class="bi bi-key me-2"></i>
                                                 Change password</a>
                                         </div>

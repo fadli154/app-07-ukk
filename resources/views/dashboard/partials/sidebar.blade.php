@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item {{ $active == 'dashboard' ? 'active' : '' }}">
-                    <a href="/dashboard-admin" class='sidebar-link'>
+                    <a href="/dashboard-{{ auth()->user()->roles }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
@@ -56,19 +56,23 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ $active == 'laporan' ? 'active' : '' }}">
-                    <a href="/laporan" class='sidebar-link'>
-                        <i class="bi bi-filetype-xlsx"></i>
-                        <span>Laporan</span>
-                    </a>
-                </li>
+                @can('admin-petugas')
+                    <li class="sidebar-item {{ $active == 'laporan' ? 'active' : '' }}">
+                        <a href="/laporan" class='sidebar-link'>
+                            <i class="bi bi-filetype-xlsx"></i>
+                            <span>Laporan</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="sidebar-item {{ $active == 'koleksi' ? 'active' : '' }}">
-                    <a href="/koleksi" class='sidebar-link'>
-                        <i class="bi bi-bookmark-heart-fill"></i>
-                        <span>Koleksi</span>
-                    </a>
-                </li>
+                @can('peminjam')
+                    <li class="sidebar-item {{ $active == 'koleksi' ? 'active' : '' }}">
+                        <a href="/koleksi" class='sidebar-link'>
+                            <i class="bi bi-bookmark-heart-fill"></i>
+                            <span>Koleksi</span>
+                        </a>
+                    </li>
+                @endcan
 
                 <li class="sidebar-title fw-bold">Pengaturan</li>
                 <li class="sidebar-item {{ $active == 'profile' ? 'active' : '' }}">

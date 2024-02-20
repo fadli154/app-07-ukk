@@ -67,6 +67,8 @@ class BukuController extends Controller
      */
     public function create()
     {
+        $this->authorize('admin-petugas');
+
         $kategoriList = Kategori::get();
 
         return view('dashboard.admin.buku.buku-create', [
@@ -82,6 +84,8 @@ class BukuController extends Controller
      */
     public function store(BukuRequest $request)
     {
+        $this->authorize('admin-petugas');
+
         // mengambil data dari request yang sudah divalidasi
         $validateData = $request->validated();
 
@@ -133,6 +137,8 @@ class BukuController extends Controller
      */
     public function edit(string $slug)
     {
+        $this->authorize('admin-petugas');
+
         $bukuEdit = buku::where('slug', $slug)->get();
         $kategoriList = Kategori::get();
 
@@ -150,6 +156,8 @@ class BukuController extends Controller
      */
     public function update(BukuRequest $request, string $slug)
     {
+        $this->authorize('admin-petugas');
+
         // mengambil data dari request
         $validateData = $request->validated();
 
@@ -190,6 +198,8 @@ class BukuController extends Controller
      */
     public function destroy(string $slug)
     {
+        $this->authorize('admin-petugas');
+
         $buku = Buku::where('slug', $slug)->get();
 
         if ($buku[0]->sampul_buku) {
@@ -207,6 +217,8 @@ class BukuController extends Controller
 
     public function trash()
     {
+        $this->authorize('admin-petugas');
+
         $trashList = Buku::onlyTrashed()->get();
 
         return view('dashboard.admin.buku.buku-trash', [
@@ -219,6 +231,8 @@ class BukuController extends Controller
 
     public function restore(string $slug)
     {
+        $this->authorize('admin-petugas');
+
         Buku::withTrashed()->where('slug', $slug)->restore();
 
         return back()->with('success', "Berhasil mengembalikan data buku yang dihapus!");
@@ -226,6 +240,8 @@ class BukuController extends Controller
 
     public function deletePermanent(string $slug)
     {
+        $this->authorize('admin-petugas');
+
         $buku = Buku::withTrashed()->where('slug', $slug)->get();
 
         if ($buku[0]->sampul_buku) {

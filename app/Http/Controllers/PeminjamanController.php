@@ -16,7 +16,11 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        $peminjamanList = Peminjaman::with('user')->get();
+        if (auth()->user()->roles == 'admin' || auth()->user()->roles == 'petugas') {
+            $peminjamanList = Peminjaman::with('user')->get();
+        } else {
+            $peminjamanList = Peminjaman::with('user')->where('user_id', auth()->user()->user_id)->get();
+        }
 
         return view('dashboard.admin.peminjaman.peminjaman-index', [
             'title' => 'Peminjaman Index',
@@ -31,6 +35,8 @@ class PeminjamanController extends Controller
      */
     public function create()
     {
+        $this->authorize('admin-petugas');
+
         $userList = User::where('roles', 'peminjam')->get();
         $bukuList = Buku::get();
 
@@ -48,6 +54,8 @@ class PeminjamanController extends Controller
      */
     public function store(PeminjamanRequest $request)
     {
+        $this->authorize('admin-petugas');
+
         $validateData = $request->validated();
 
         // mengisi field tanggal_pinjam, tanggal_kembali, status dengan sistem
@@ -106,8 +114,11 @@ class PeminjamanController extends Controller
      */
     public function show(string $slug)
     {
-
-        $peminjamanDetail = Peminjaman::where('slug', $slug)->with('user', 'buku')->get();
+        if (auth()->user()->roles == 'admin' || auth()->user()->roles == 'petugas') {
+            $peminjamanDetail = Peminjaman::where('slug', $slug)->with('user', 'buku')->get();
+        } else {
+            $peminjamanDetail = Peminjaman::where('slug', $slug)->where('user_id', auth()->user()->user_id)->with('user', 'buku')->get();
+        }
 
         $created_by_id = $peminjamanDetail[0]->created_by;
         $updated_by_id = $peminjamanDetail[0]->updated_by;
@@ -130,6 +141,8 @@ class PeminjamanController extends Controller
      */
     public function edit(string $slug)
     {
+        $this->authorize('admin-petugas');
+
         $peminjamanEdit = Peminjaman::where('slug', $slug)->with('user', 'buku')->get();
         $userList = User::where('roles', 'peminjam')->get();
         $bukuList = Buku::get();
@@ -149,6 +162,8 @@ class PeminjamanController extends Controller
      */
     public function update(PeminjamanRequest $request, string $slug)
     {
+        $this->authorize('admin-petugas');
+
         $validateData = $request->validated();
 
         $validateData['updated_by'] = auth()->user()->user_id;
@@ -206,6 +221,8 @@ class PeminjamanController extends Controller
      */
     public function destroy(string $slug)
     {
+        $this->authorize('admin-petugas');
+
         $peminjam = Peminjaman::where('slug', $slug)->first();
 
         if ($peminjam->status == 'dipinjam') {
@@ -219,6 +236,8 @@ class PeminjamanController extends Controller
 
     public function trash()
     {
+        $this->authorize('admin-petugas');
+
         $trashList = Peminjaman::onlyTrashed()->get();
 
         return view('dashboard.admin.peminjaman.peminjaman-trash', [
@@ -231,6 +250,8 @@ class PeminjamanController extends Controller
 
     public function editStatus(Request $request, string $slug)
     {
+        $this->authorize('admin-petugas');
+
         $validateData = $request->validate([
             'status' => 'required'
         ]);

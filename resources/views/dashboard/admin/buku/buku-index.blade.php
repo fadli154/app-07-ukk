@@ -48,14 +48,16 @@
                                         </button>
                                     </div>
                                 </form>
-                                <a href="{{ route('buku.create') }}" type="button" class="btn btn-primary me-2"
-                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah data buku">
-                                    <i class="bi bi-plus-circle"></i>
-                                </a>
-                                <a href="" type="button" class="btn btn-success" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Data yang dihapus">
-                                    <i class="bi bi-recycle"></i>
-                                </a>
+                                @can('admin-petugas')
+                                    <a href="{{ route('buku.create') }}" type="button" class="btn btn-primary me-2"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah data buku">
+                                        <i class="bi bi-plus-circle"></i>
+                                    </a>
+                                    <a href="" type="button" class="btn btn-success" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Data yang dihapus">
+                                        <i class="bi bi-recycle"></i>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -79,8 +81,8 @@
                                                     </a>
                                                 </form>
                                             @else
-                                                <form action="{{ route('koleksi.destroy', $buku->slug) }}"
-                                                    method="post" class="form-unkolek">
+                                                <form action="{{ route('koleksi.destroy', $buku->slug) }}" method="post"
+                                                    class="form-unkolek">
                                                     @csrf
                                                     <a href="#" class="position-absolute btn-koleksi btn-unkolek"
                                                         data-bs-toggle="tooltip" data-bs-placement="top"
@@ -118,29 +120,32 @@
                                                         {!! strip_tags(Str::limit($buku->sinopsis, 70)) !!}
                                                     </p>
                                                 </div>
-                                                <div class="btn-action-group">
-                                                    <a class="btn btn-info btn-detail text-white" data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" title="Detail data buku"
-                                                        href="{{ route('buku.show', $buku->slug) }}"><i
-                                                            class="fas fa-eye ms-2"></i>
-                                                    </a>
-                                                    <a class="btn btn-warning btn-edit text-white"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="Edit data buku"
-                                                        href="{{ route('buku.edit', $buku->slug) }}"><i
-                                                            class="bi bi-pen-fill"></i>
-                                                    </a>
-                                                    <form action="{{ route('buku.destroy', $buku->slug) }}"
-                                                        method="post" class="form-destroy">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <a class="btn btn-danger btn-destroy text-white btn-destroy"
-                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                            title="Hapus data buku" href="#"><i
-                                                                class="fas fa-trash btn-destroy ms-2"></i>
+                                                @can('admin-petugas')
+                                                    <div class="btn-action-group">
+                                                        <a class="btn btn-info btn-detail text-white" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" title="Detail data buku"
+                                                            href="{{ route('buku.show', $buku->slug) }}"><i
+                                                                class="fas fa-eye ms-2"></i>
                                                         </a>
-                                                    </form>
-                                                </div>
+                                                        <a class="btn btn-warning btn-edit text-white"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="Edit data buku"
+                                                            href="{{ route('buku.edit', $buku->slug) }}"><i
+                                                                class="bi bi-pen-fill"></i>
+                                                        </a>
+                                                        <form action="{{ route('buku.destroy', $buku->slug) }}"
+                                                            method="post" class="form-destroy">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <a class="btn btn-danger btn-destroy text-white btn-destroy"
+                                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                title="Hapus data buku" href="#"><i
+                                                                    class="fas fa-trash btn-destroy ms-2"></i>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                @endcan
+
 
                                                 <div class="d-flex justify-content-between">
                                                     <small class="kategori-buku text-info align-self-end w-75">

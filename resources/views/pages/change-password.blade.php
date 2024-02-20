@@ -36,9 +36,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
-                                    @if ($profileEdit->foto_user)
+                                    @if ($passwordEdit->foto_user)
                                         <div class="avatar avatar-2xl">
-                                            <img src="{{ asset('storage/foto_user/' . $profileEdit->foto_user) }}"
+                                            <img src="{{ asset('storage/foto_user/' . $passwordEdit->foto_user) }}"
                                                 alt="Avatar">
                                         </div>
                                     @else
@@ -47,7 +47,7 @@
                                         </div>
                                     @endif
                                     <h3 class="mt-3"></h3>
-                                    <p class="text-small">{{ $profileEdit->name }} | {{ $profileEdit->roles }}</p>
+                                    <p class="text-small">{{ $passwordEdit->name }} | {{ $passwordEdit->roles }}</p>
                                 </div>
                             </div>
                         </div>
@@ -63,12 +63,12 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('profile.update', $profileEdit->slug) }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('profile.update', $passwordEdit->slug) }}" method="post" enctype="multipart/form-data">
                                     @method('PUT')
                                     @csrf
-                                    <input type="text" name="user_id" id="" value="{{ $profileEdit->user_id }}" hidden>
-                                    <input type="text" name="password" id="" value="{{ $profileEdit->password }}" hidden>
-                                    <input type="text" name="old_foto" id="" value="{{ $profileEdit->foto_user }}" hidden>
+                                    <input type="text" name="user_id" id="" value="{{ $passwordEdit->user_id }}" hidden>
+                                    <input type="text" name="password" id="" value="{{ $passwordEdit->password }}" hidden>
+                                    <input type="text" name="old_foto" id="" value="{{ $passwordEdit->foto_user }}" hidden>
                                     <div class="row mb-2">
                                         <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="form-group has-icon-left">

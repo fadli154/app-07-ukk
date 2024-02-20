@@ -100,4 +100,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile-change', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile-update/{slug}', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/change-password', [ProfileController::class, 'editPassword'])->name('password.edit');
 });
