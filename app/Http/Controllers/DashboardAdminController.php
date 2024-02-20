@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\StatistikPeminjaman;
 use App\Models\Buku;
 use App\Models\User;
 use App\Models\Ulasan;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 
 class DashboardAdminController extends Controller
 {
-    public function index()
+    public function index(StatistikPeminjaman $chart)
     {
         $getAllCountPeminjam = User::where('roles', 'peminjam')->count();
         $getAllCountPetugas = User::where('roles', 'petugas')->count();
@@ -19,8 +20,7 @@ class DashboardAdminController extends Controller
 
         $getNewstUser = User::orderBy('created_at', 'desc')->limit(5)->get();
 
-        $ulasanList = Ulasan::paginate(6);
-
+        $ulasanList = Ulasan::limit(5)->paginate(6);
         return view('dashboard.dashboard-admin', [
             'title' => 'Dashboard Admin',
             'active' => 'dashboard',
@@ -29,7 +29,8 @@ class DashboardAdminController extends Controller
             'getAllCountBuku' => $getAllCountBuku,
             'getAllCountPeminjaman' => $getAllCountPeminjaman,
             'getNewstUser' => $getNewstUser,
-            'ulasanList' => $ulasanList
+            'ulasanList' => $ulasanList,
+            'chart' => $chart->build(),
         ]);
     }
 }

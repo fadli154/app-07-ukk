@@ -184,8 +184,8 @@
                                         <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}" alt="Face 1">
                                     </div>
                                     <div class="ms-3 name">
-                                        <h5 class="font-bold">Fadli Hifziansyah</h5>
-                                        <h6 class="text-muted mb-0">Pdhli</h6>
+                                        <h5 class="font-bold">{{ auth()->user()->name }}</h5>
+                                        <h6 class="text-muted mb-0">{{ auth()->user()->username }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +219,8 @@
                                     </div>
                                 @endforeach
                                 <div class="px-4">
-                                    <a href="{{ route('users.index') }}" class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Data
+                                    <a href="{{ route('users.index') }}"
+                                        class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Data
                                         Users</a>
                                 </div>
                             </div>
@@ -235,6 +236,54 @@
     <script src="{{ asset('assets-UKK/modules/izitoast/js/iziToast.min.js') }}"></script>
     <script src="{{ asset('assets-UKK/assets-mazer/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets-UKK/assets-mazer/static/js/pages/dashboard.js') }}"></script>
+
+    {{-- statistik dashboard --}}
+    <script>
+        var peminjamanData = {
+            annotations: {
+                position: "back",
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            chart: {
+                type: "bar",
+                height: 300,
+            },
+            fill: {
+                opacity: 1,
+            },
+            plotOptions: {},
+            series: [{
+                name: "sales",
+                data: [9, 20, 30, 20, 10, 20, 30, 20, 10, 20, 30, 20],
+            }, ],
+            colors: "#435ebe",
+            xaxis: {
+                categories: [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                ],
+            },
+        };
+
+        var chartPeminjaman = new ApexCharts(
+            document.querySelector("#chart-peminjaman"),
+            peminjamanData
+        );
+
+        chartPeminjaman.render();
+    </script>
 
     @if ($errors->any())
         <script>
