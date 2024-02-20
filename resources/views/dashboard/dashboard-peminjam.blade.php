@@ -187,6 +187,44 @@
     <script src="{{ asset('assets-UKK/assets-mazer/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets-UKK/assets-mazer/static/js/pages/simple-datatables.js') }}"></script>
 
+    {{-- statistik dashboard --}}
+    <script>
+        const dataBulans = {!! json_encode($dataBulan) !!}
+        const getAllCountPeminjaman = {!! json_encode($getAllCountPeminjaman) !!}
+
+        var peminjamanData = {
+            annotations: {
+                position: "back",
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            chart: {
+                type: "bar",
+                height: 300,
+            },
+            fill: {
+                opacity: 1,
+            },
+            plotOptions: {},
+            series: [{
+                name: "sales",
+                data: [getAllCountPeminjaman],
+            }, ],
+            colors: "#435ebe",
+            xaxis: {
+                categories: dataBulans,
+            },
+        };
+
+        var chartPeminjaman = new ApexCharts(
+            document.querySelector("#chart-peminjaman"),
+            peminjamanData
+        );
+
+        chartPeminjaman.render();
+    </script>
+
     @if ($errors->any())
         <script>
             $(document).ready(function() {

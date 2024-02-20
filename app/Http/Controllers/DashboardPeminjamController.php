@@ -16,13 +16,29 @@ class DashboardPeminjamController extends Controller
         $getAllCountkoleksi = Koleksi::where('user_id', auth()->user()->id)->count();
         $peminjamanList = Peminjaman::with('user')->where('user_id', auth()->user()->user_id)->get();
 
+        $dataBulan = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ];
+
         return view('dashboard.dashboard-peminjam', [
             'title' => 'Dashboard Peminjam',
             'active' => 'dashboard',
             'getAllCountPeminjaman' => $getAllCountPeminjaman,
             'getAllCountUlasan' => $getAllCountUlasan,
             'getAllCountkoleksi' => $getAllCountkoleksi,
-            'peminjamanList' => $peminjamanList
+            'peminjamanList' => $peminjamanList,
+            'dataBulan' => $dataBulan,
         ]);
     }
 }

@@ -21,8 +21,23 @@ class DashboardAdminController extends Controller
         $getNewstUser = User::orderBy('created_at', 'desc')->limit(5)->get();
 
         $ulasanList = Ulasan::limit(5)->paginate(6);
+        $dataBulan = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ];
 
-        $dataBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $getUserFemale = User::where('jk', 'P')->count();
+        $getUserMale = User::where('jk', 'L')->count();
 
         return view('dashboard.dashboard-admin', [
             'title' => 'Dashboard Admin',
@@ -33,6 +48,9 @@ class DashboardAdminController extends Controller
             'getAllCountPeminjaman' => $getAllCountPeminjaman,
             'getNewstUser' => $getNewstUser,
             'ulasanList' => $ulasanList,
+            'dataBulan' => $dataBulan,
+            'getUserFemale' => $getUserFemale,
+            'getUserMale' => $getUserMale,
         ]);
     }
 }

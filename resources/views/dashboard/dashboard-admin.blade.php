@@ -172,6 +172,23 @@
                                             @endforeach
                                         @endif
                                     </div>
+                                    @foreach ($ulasanList as $ulasan)
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalUlasan{{ $ulasan->slug }}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    @if ($ulasan->foto_ulasan)
+                                                        <img src="{{ asset('storage/foto_ulasan/' . $ulasan->foto_ulasan) }}"
+                                                            alt="sampul-buku" class="w-100 rounded-3">
+                                                    @else
+                                                        <img src="{{ asset('assets-UKK/img/no-image.png') }}"
+                                                            alt="sampul-buku" class="w-100 rounded-3">
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -239,6 +256,9 @@
 
     {{-- statistik dashboard --}}
     <script>
+        const dataBulans = {!! json_encode($dataBulan) !!}
+        const getAllCountPeminjaman = {!! json_encode($getAllCountPeminjaman) !!}
+
         var peminjamanData = {
             annotations: {
                 position: "back",
@@ -256,24 +276,11 @@
             plotOptions: {},
             series: [{
                 name: "sales",
-                data: [9, 20, 30, 20, 10, 20, 30, 20, 10, 20, 30, 20],
+                data: [getAllCountPeminjaman],
             }, ],
             colors: "#435ebe",
             xaxis: {
-                categories: [
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                    "May",
-                    "Jun",
-                    "Jul",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec",
-                ],
+                categories: dataBulans,
             },
         };
 
@@ -283,6 +290,39 @@
         );
 
         chartPeminjaman.render();
+    </script>
+
+    <script>
+        const getUserFemale = {!! json_encode($getUserFemale) !!}
+        const getUserMale = {!! json_encode($getUserMale) !!}
+
+        let optionsVisitorsProfile = {
+            series: [getUserMale, getUserFemale],
+            labels: ["Male", "Female"],
+            colors: ["#435ebe", "#55c6e8"],
+            chart: {
+                type: "donut",
+                width: "100%",
+                height: "350px",
+            },
+            legend: {
+                position: "bottom",
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: "30%",
+                    },
+                },
+            },
+        };
+
+        var chartVisitorsProfile = new ApexCharts(
+            document.getElementById("chart-visitors-profile"),
+            optionsVisitorsProfile
+        );
+
+        chartVisitorsProfile.render();
     </script>
 
     @if ($errors->any())

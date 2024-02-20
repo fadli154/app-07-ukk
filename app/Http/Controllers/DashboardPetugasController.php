@@ -21,7 +21,23 @@ class DashboardPetugasController extends Controller
 
         $ulasanList = Ulasan::limit(5)->paginate(6);
 
+        $dataBulan = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ];
 
+        $getUserFemale = User::where('jk', 'P')->count();
+        $getUserMale = User::where('jk', 'L')->count();
 
         return view('dashboard.dashboard-petugas', [
             'title' => 'Dashboard Petugas',
@@ -31,7 +47,10 @@ class DashboardPetugasController extends Controller
             'getAllCountBuku' => $getAllCountBuku,
             'getAllCountPeminjaman' => $getAllCountPeminjaman,
             'getNewstUser' => $getNewstUser,
-            'ulasanList' => $ulasanList
+            'ulasanList' => $ulasanList,
+            'dataBulan' => $dataBulan,
+            'getUserFemale' => $getUserFemale,
+            'getUserMale' => $getUserMale
         ]);
     }
 }

@@ -1,24 +1,5 @@
 
-let optionsVisitorsProfile = {
-    series: [70, 30],
-    labels: ["Male", "Female"],
-    colors: ["#435ebe", "#55c6e8"],
-    chart: {
-        type: "donut",
-        width: "100%",
-        height: "350px",
-    },
-    legend: {
-        position: "bottom",
-    },
-    plotOptions: {
-        pie: {
-            donut: {
-                size: "30%",
-            },
-        },
-    },
-};
+
 
 var optionsEurope = {
     series: [
@@ -97,10 +78,7 @@ let optionsIndonesia = {
 };
 
 
-var chartVisitorsProfile = new ApexCharts(
-    document.getElementById("chart-visitors-profile"),
-    optionsVisitorsProfile
-);
+
 var chartEurope = new ApexCharts(
     document.querySelector("#chart-europe"),
     optionsEurope
@@ -123,4 +101,3 @@ chartIndonesia.render();
 chartAmerica.render();
 chartIndia.render();
 chartEurope.render();
-chartVisitorsProfile.render();
