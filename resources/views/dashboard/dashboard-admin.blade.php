@@ -275,7 +275,7 @@
             },
             plotOptions: {},
             series: [{
-                name: "sales",
+                name: "Peminjaman",
                 data: [getAllCountPeminjaman],
             }, ],
             colors: "#435ebe",
