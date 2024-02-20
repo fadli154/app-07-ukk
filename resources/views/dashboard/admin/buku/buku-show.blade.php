@@ -177,7 +177,7 @@
                                 @endif
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
                                     <div class="wrapper-sampul-buku d-flex justify-content-center ">
-                                        @if ($bukuDetail)
+                                        @if ($bukuDetail->sampul_buku)
                                             <img src="{{ asset('storage/sampul_buku/' . $bukuDetail->sampul_buku) }}"
                                                 alt="sampul-buku" class="w-50 rounded-3">
                                         @else
@@ -289,34 +289,51 @@
                                     Dilan 1990</label>
                             </div>
                             <div class="card-body position-relative">
-                                @foreach ($ulasanList as $ulasan)
-                                    <div class="ulasan-user">
-                                        <div class="d-flex">
-                                            <div class="avatar avatar-lg avatar-ulasan">
-                                                @if ($ulasan->user->foto_user)
-                                                    <img src="{{ asset('storage/foto_user/' . $ulasan->user->foto_user) }}">
-                                                @else
-                                                    <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
-                                                @endif
-                                            </div>
-                                            <div class="align-self-center text-capitalize mt-2">
-                                                <h6 class="mb-0">{{ $ulasan->user->name }}</h6>
-                                                <p class="mb-0 text-sm text-primary">{{ $ulasan->user->roles }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-block p-4">
-                                            @for ($i = 0; $i < $ulasan->rating; $i++)
-                                                <i class="bi bi-star-fill text-warning"></i>
-                                            @endfor
-                                            <p class="card-text mt-3">
-                                                {!! strip_tags(Str::limit($ulasan->ulasan, 30)) !!}
-                                            </p>
-                                            <small>
-                                                {{ date('m-D-Y', strtotime($ulasan->created_at)) }}
-                                            </small>
-                                        </div>
+                                @if (count($ulasanList) == 0)
+                                    <div class="d-flex justify-content-center">
+                                        <img src="{{ asset('assets-UKK/img/No data-rafiki.png') }}" class="w-50"
+                                            alt="no-data-img">
                                     </div>
-                                @endforeach
+                                @else
+                                    @foreach ($ulasanList as $ulasan)
+                                        <div class="ulasan-user mb-4">
+                                            <div class="d-flex">
+                                                <div class="avatar avatar-lg avatar-ulasan">
+                                                    @if ($ulasan->user->foto_user)
+                                                        <img
+                                                            src="{{ asset('storage/foto_user/' . $ulasan->user->foto_user) }}">
+                                                    @else
+                                                        <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
+                                                    @endif
+                                                </div>
+                                                <div class="align-self-center text-capitalize mt-2">
+                                                    <h6 class="mb-0">{{ $ulasan->user->name }}</h6>
+                                                    <p class="mb-0 text-sm text-primary">{{ $ulasan->user->roles }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="d-block p-4">
+                                                @for ($i = 0; $i < $ulasan->rating; $i++)
+                                                    <i class="bi bi-star-fill text-warning"></i>
+                                                @endfor
+                                                <p class="card-text mt-3">
+                                                    {!! strip_tags(Str::limit($ulasan->ulasan, 30)) !!}
+                                                </p>
+                                                <div class="wrapper-ulasan-buku my-2">
+                                                    @if ($ulasan->foto_ulasan)
+                                                        <img src="{{ asset('storage/foto_ulasan/' . $ulasan->foto_ulasan) }}"
+                                                            alt="sampul-buku" class="w-50 rounded-3">
+                                                    @else
+                                                        <img src="{{ asset('assets-UKK/img/no-image.png') }}"
+                                                            alt="sampul-buku" class="w-50 rounded-3">
+                                                    @endif
+                                                </div>
+                                                <small>
+                                                    {{ date('d-M-Y', strtotime($ulasan->created_at)) }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                             {{ $ulasanList->links() }}
                         </div>

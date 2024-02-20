@@ -36,11 +36,18 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
-                                    <div class="avatar avatar-2xl">
-                                        <img src="{{ asset('assets-UKK/img/no-foto-woman.png') }}" alt="Avatar">
-                                    </div>
+                                    @if ($profileEdit->foto_user)
+                                        <div class="avatar avatar-2xl">
+                                            <img src="{{ asset('storage/foto_user/' . $profileEdit->foto_user) }}"
+                                                alt="Avatar">
+                                        </div>
+                                    @else
+                                        <div class="avatar avatar-2xl">
+                                            <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}" alt="Avatar">
+                                        </div>
+                                    @endif
                                     <h3 class="mt-3"></h3>
-                                    <p class="text-small">Fadli Hifziansyah | Admin</p>
+                                    <p class="text-small">{{ $profileEdit->name }} | {{ $profileEdit->roles }}</p>
                                 </div>
                             </div>
                         </div>
@@ -56,12 +63,15 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="" method="post" enctype="multipart/form-data">
-                                    @method('')
+                                <form action="{{ route('profile.update', $profileEdit->slug) }}" method="post"
+                                    enctype="multipart/form-data">
                                     @csrf
-                                    <input type="text" name="user_id" id="" value="" hidden>
-                                    <input type="text" name="password" id="" value="" hidden>
-                                    <input type="text" name="old_foto" id="" value="" hidden>
+                                    <input type="text" name="user_id" id="" value="{{ $profileEdit->user_id }}"
+                                        hidden>
+                                    <input type="text" name="password" id=""
+                                        value="{{ $profileEdit->password }}" hidden>
+                                    <input type="text" name="old_foto" id=""
+                                        value="{{ $profileEdit->foto_user }}" hidden>
                                     <div class="row">
                                         <div class="col-md-6 col-sm-12 mb-3">
                                             <div class="form-group has-icon-left">
@@ -69,12 +79,15 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('name') is-invalid @enderror"
-                                                        value="" id="name" name="name"
+                                                        value="{{ $profileEdit->name }}" id="name" name="name"
                                                         placeholder="ex: fadli154@gmail.com" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
                                                     <small class="text-danger">
+                                                        @error('name')
+                                                            {{ $message }}
+                                                        @enderror
                                                     </small>
                                                 </div>
                                             </div>
@@ -85,12 +98,15 @@
                                                 <div class="position-relative">
                                                     <input type="text"
                                                         class="form-control @error('username') is-invalid @enderror"
-                                                        value="" id="username" name="username"
+                                                        value="{{ $profileEdit->username }}" id="username" name="username"
                                                         placeholder="ex: fadli154@gmail.com" required>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person-fill"></i>
                                                     </div>
                                                     <small class="text-danger">
+                                                        @error('username')
+                                                            {{ $message }}
+                                                        @enderror
                                                     </small>
                                                 </div>
                                             </div>
@@ -104,6 +120,9 @@
                                                 <input type="file" id="foto_user" name="foto_user"
                                                     class="image-preview-filepond" accept="jpg,jpeg,png,svg">
                                                 <small class="text-danger">
+                                                    @error('foto_user')
+                                                        {{ $message }}
+                                                    @enderror
                                                 </small>
                                             </div>
                                         </div>

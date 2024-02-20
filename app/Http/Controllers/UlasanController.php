@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buku;
 use App\Models\Ulasan;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -33,7 +34,9 @@ class UlasanController extends Controller
 
             Ulasan::create($validateData);
 
-            return redirect()->route('buku.show')->with('success', 'Berhasil menambah data ulasan!');
+            $bukuDetail = Buku::where('buku_id', $validateData['buku_id'])->first();
+
+            return redirect()->route('buku.show', $bukuDetail->slug)->with('success', 'Berhasil menambah data ulasan!');
         }
 
         return redirect()->route('buku.show')->with('error', 'Gagal membuat ulasan!');

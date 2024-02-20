@@ -37,10 +37,17 @@
                     <div class="col-12 col-lg-4">
                         <div class="col-12">
                             <div class="card">
-                                <span class="text-success position-absolute status-aktif" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="User aktif">
-                                    <i class="bi bi-patch-check-fill"></i>
-                                </span>
+                                @if ($usersDetail->status_aktif == 'Y')
+                                    <span class="text-success position-absolute status-aktif" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="User aktif">
+                                        <i class="bi bi-patch-check-fill"></i>
+                                    </span>
+                                @else
+                                    <span class="text-danger position-absolute status-aktif" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="User tidak aktif">
+                                        <i class="bi bi-patch-exclamation-fill"></i>
+                                    </span>
+                                @endif
                                 <div class="card-body">
                                     <div
                                         class="d-flex justify-content-center align-items-center flex-column text-capitalize">
@@ -63,121 +70,45 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <table class="table table-striped table-hover" id="table1">
-                                        <thead>
-                                            <tr>
-                                                <th>Buku</th>
-                                                <th>Jumlah</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Dilan 1990</td>
-                                                <td>10 buku</td>
-                                                <td>
-                                                    <div class="modal-success me-1 mb-1 d-inline-block">
-                                                        <!-- Button trigger for Success theme modal -->
-                                                        <button type="button"
-                                                            class="btn btn-outline-success text-capitalize"
-                                                            data-bs-toggle="modal" data-bs-target="#success1">
-                                                            Dipinjam
-                                                        </button>
-                                                        <!--Success theme Modal -->
-                                                        <div class="modal fade text-left" id="success1" tabindex="-1"
-                                                            role="dialog" aria-labelledby="myModalLabel110"
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable "
-                                                                role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header bg-success">
-                                                                        <h5 class="modal-title white" id="myModalLabel110">
-                                                                            Mengubah status peminjaman
-                                                                            <span class="text-capitalize">
-                                                                                Fadli hifziansyah
-                                                                            </span>
-                                                                        </h5>
-                                                                        <button type="button" class="close"
-                                                                            data-bs-dismiss="modal" aria-label="Close">
-                                                                            <i data-feather="x"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                    <form action="" method="post">
-                                                                        @method('PUT')
-                                                                        @csrf
-                                                                        <div class="modal-body">
-                                                                            <div class="col-12">
-                                                                                <div class="form-group">
-                                                                                    <label for="status1">Status
-                                                                                        Peminjaman</label>
-                                                                                    <select
-                                                                                        class="choices form-select @error('status') is-invalid @enderror"
-                                                                                        id="status1" name="status"
-                                                                                        required>
-                                                                                        <option value="" selected
-                                                                                            disabled>
-                                                                                            Pilih
-                                                                                            Status Peminjaman</option>
-                                                                                        <option value="dikembalikan"
-                                                                                            {{ 'status' == 'dikembalikan' ? 'selected' : '' }}>
-                                                                                            Dikembalikan
-                                                                                        </option>
-                                                                                        <option value="terlambat"
-                                                                                            {{ 'status' == 'terlambat' ? 'selected' : '' }}>
-                                                                                            Terlambat
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <small class="text-danger">
-                                                                                        @error('status')
-                                                                                            {{ $message }}
-                                                                                        @enderror
-                                                                                    </small>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-light-secondary "
-                                                                                data-bs-dismiss="modal"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top" title="Close modal">
-                                                                                <i class="bi bi-x-circle me-1"></i> Close
-                                                                            </button>
-
-                                                                            <button type="submit"
-                                                                                class="btn btn-light-success "
-                                                                                data-bs-dismiss="modal"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                title="Simpan data perubahan">
-                                                                                <i
-                                                                                    class="bi bi-check-circle-fill me-1"></i>
-                                                                                Simpan
-                                                                            </button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        @if ($usersDetail->roles == 'peminjam')
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table table-striped table-hover" id="table1">
+                                            <thead>
+                                                <tr>
+                                                    <th>Buku</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($peminjamanList as $peminjaman)
+                                                    <tr>
+                                                        <td>{{ $peminjaman->buku->judul }}</td>
+                                                        <td>{{ $peminjaman->jumlah_pinjam }}</td>
+                                                        <td>
+                                                            <button
+                                                                class="disabled btn btn-outline-{{ $peminjaman->status == 'dikembalikan' ? 'success' : 'warning' }} text-capitalize"
+                                                                data-bs-toggle="modal" data-bs-target="#success1">
+                                                                Dipinjam
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                     <div class="col-12 col-lg-8">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div>
                                     <a href="/users" class="position-absolute" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="Kembali"><i
-                                            class="bi bi-arrow-left-circle"></i></a>
+                                        data-bs-placement="top" title="Kembali"><i class="bi bi-arrow-left-circle"></i></a>
                                     <h4 class="card-title card-title-action ms-4 ">Form Detail Data Users
                                     </h4>
                                 </div>
@@ -195,8 +126,8 @@
                                                     href="{{ route('users.edit', $usersDetail->slug) }}"><i
                                                         class="bi bi-pen-fill me-2"></i>
                                                     Edit</a>
-                                                <form action="{{ route('users.destroy', $usersDetail->slug) }}"
-                                                    method="post" class="form-destroy">
+                                                <form action="{{ route('users.destroy', $usersDetail->slug) }}" method="post"
+                                                    class="form-destroy">
                                                     @method('DELETE')
                                                     @csrf
                                                     <a class="dropdown-item text-danger btn-destroy" href="#">

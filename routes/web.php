@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\KoleksiController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
@@ -15,7 +17,6 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardPetugasController;
 use App\Http\Controllers\DashboardPeminjamController;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,4 +96,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ulasan-search', [UlasanController::class, 'search'])->name('ulasan.search');
     Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
     Route::post('/ulasan-destroy/{slug}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile-change', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile-update/{slug}', [ProfileController::class, 'update'])->name('profile.update');
 });

@@ -295,6 +295,13 @@ th {
     z-index: 3;
 }
 
+/* ulasan */
+
+.wrapper-ulasan-buku{
+    max-height: 150px;
+    max-width: 150px;
+}
+
 /* footer */
 
 #footer {

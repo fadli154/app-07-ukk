@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UserRequest;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -73,11 +74,13 @@ class UserController extends Controller
     public function show(string $slug)
     {
         $user = User::where('slug', $slug)->firstOrFail();
+        $peminjamanList = Peminjaman::where('user_id', $user->user_id)->get();
 
         return view('dashboard.admin.users.users-show', [
             'title' => 'Users Show',
             'active' => 'users',
             'usersDetail' => $user,
+            'peminjamanList' => $peminjamanList,
         ]);
     }
 
