@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class DashboardAdminController extends Controller
 {
-    public function index(StatistikPeminjaman $chart)
+    public function index()
     {
         $getAllCountPeminjam = User::where('roles', 'peminjam')->count();
         $getAllCountPetugas = User::where('roles', 'petugas')->count();
@@ -21,6 +21,9 @@ class DashboardAdminController extends Controller
         $getNewstUser = User::orderBy('created_at', 'desc')->limit(5)->get();
 
         $ulasanList = Ulasan::limit(5)->paginate(6);
+
+        $dataBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
         return view('dashboard.dashboard-admin', [
             'title' => 'Dashboard Admin',
             'active' => 'dashboard',
@@ -30,7 +33,6 @@ class DashboardAdminController extends Controller
             'getAllCountPeminjaman' => $getAllCountPeminjaman,
             'getNewstUser' => $getNewstUser,
             'ulasanList' => $ulasanList,
-            'chart' => $chart->build(),
         ]);
     }
 }

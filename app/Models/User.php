@@ -61,4 +61,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ulasan::class, 'user_id', 'user_id');
     }
+
+    /**
+     * Get all of the peminjaman for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function peminjaman(): HasMany
+    {
+        return $this->hasMany(Peminjaman::class, 'user_id', 'user_id');
+    }
 }
