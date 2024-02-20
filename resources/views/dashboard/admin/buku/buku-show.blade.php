@@ -55,10 +55,12 @@
                                             <i class="bi bi-wrench-adjustable me-2"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIcon">
-                                            <a class="dropdown-item text-warning" href="{{ route('buku.edit', $bukuDetail->slug) }}"><i
+                                            <a class="dropdown-item text-warning"
+                                                href="{{ route('buku.edit', $bukuDetail->slug) }}"><i
                                                     class="bi bi-pen-fill me-2"></i>
                                                 Edit</a>
-                                            <form action="{{ route('buku.destroy', $bukuDetail->slug) }}" method="post" class="form-destroy">
+                                            <form action="{{ route('buku.destroy', $bukuDetail->slug) }}" method="post"
+                                                class="form-destroy">
                                                 @method('DELETE')
                                                 @csrf
                                                 <a class="dropdown-item text-danger btn-destroy" href="#">
@@ -152,29 +154,32 @@
                     <div class="col-12 col-lg-4">
                         <div class="card">
                             <div class="card-body position-relative">
-                                <form action="" method="post" class="form-koleksi">
-                                    @csrf
-                                    <input type="hidden" name="buku_id" value="">
-                                    <a href="#" class="position-absolute btn-koleksi btn-kolek"
-                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Tambah ke koleksi pribadi">
-                                        <i class="bi bi-bookmark-plus btn-kolek text-warning fs-3"></i>
-                                    </a>
-                                </form>
-                                <form action="" method="post" class="form-unkolek">
-                                    @method('DELETE')
-                                    @csrf
-                                    <a href="#" class="position-absolute btn-koleksi btn-unkolek"
-                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Hapus dari koleksi pribadi">
-                                        <i class="bi bi-bookmark-heart-fill btn-unkolek text-warning fs-3"></i>
-                                    </a>
-                                </form>
+                                @if ($bukuDetail->koleksi->where('user_id', auth()->user()->user_id)->count() == 0)
+                                    <form action="{{ route('koleksi.store') }}" method="post" class="form-koleksi">
+                                        @csrf
+                                        <input type="hidden" name="buku_id" value="{{ $bukuDetail->buku_id }}">
+                                        <a href="#" class="position-absolute btn-koleksi btn-kolek"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Tambah ke koleksi pribadi">
+                                            <i class="bi bi-bookmark-plus btn-kolek text-warning fs-2"></i>
+                                        </a>
+                                    </form>
+                                @else
+                                    <form action="{{ route('koleksi.destroy', $bukuDetail->slug) }}" method="post"
+                                        class="form-unkolek">
+                                        @csrf
+                                        <a href="#" class="position-absolute btn-koleksi btn-unkolek"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Hapus dari koleksi pribadi">
+                                            <i class="bi bi-bookmark-heart-fill btn-unkolek text-warning fs-2"></i>
+                                        </a>
+                                    </form>
+                                @endif
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
                                     <div class="wrapper-sampul-buku d-flex justify-content-center ">
                                         @if ($bukuDetail)
-                                            <img src="{{ asset('storage/sampul_buku/' . $bukuDetail->sampul_buku) }}" alt="sampul-buku"
-                                                class="w-50 rounded-3">
+                                            <img src="{{ asset('storage/sampul_buku/' . $bukuDetail->sampul_buku) }}"
+                                                alt="sampul-buku" class="w-50 rounded-3">
                                         @else
                                             <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
                                                 class="w-50 rounded-3">

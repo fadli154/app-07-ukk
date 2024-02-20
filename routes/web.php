@@ -86,4 +86,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::post('/laporan-filter', [LaporanController::class, 'filterLaporan'])->name('laporan.filter');
     Route::post('/laporan-export', [LaporanController::class, 'exportLaporan'])->name('laporan.export');
+
+    Route::get('/koleksi', [KoleksiController::class, 'index'])->name('koleksi.index');
+    Route::post('/koleksi', [KoleksiController::class, 'store'])->name('koleksi.store');
+    Route::post('/koleksi-destroy/{slug}', [KoleksiController::class, 'destroy'])->name('koleksi.destroy');
+
 });

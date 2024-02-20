@@ -2,8 +2,6 @@
 
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('assets-UKK/assets-mazer/extensions/simple-datatables/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets-UKK/assets-mazer/compiled/css/table-datatable.css') }}">
     <link rel="stylesheet" href="{{ asset('assets-UKK/modules/izitoast/css/iziToast.min.css') }}">
 @endsection
 
@@ -49,7 +47,7 @@
                                         </button>
                                     </div>
                                 </form>
-                                <a href="#" type="button" class="btn btn-primary me-2" data-bs-toggle="tooltip"
+                                <a href="{{ route('buku.index') }}" type="button" class="btn btn-primary me-2" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="Tambah koleksi">
                                     <i class="bi bi-plus-circle"></i>
                                 </a>
@@ -60,67 +58,78 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row mt-2">
-                            {{-- <div class="d-flex justify-content-center">
-                                <img src="{{ asset('assets-UKK/img/No data-rafiki.png') }}" class="w-50"
-                                    alt="no-data-img">
-                            </div> --}}
-                            <div class="col-md-4 col-sm-6">
-                                <div class="card shadow-sm position-relative card-action overflow-hidden"
-                                    style="max-width: 18rem;">
-                                    <span class="position-absolute count-rating-buku" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="Total rating buku">
-                                        <span class="text-white">
-                                            <i class="fas fa-star text-warning"></i> 5
-                                        </span>
-                                    </span>
-
-                                    <a class="sampul_buku" href="#">
-                                        <img src="{{ asset('assets-UKK/img/no-image.png') }}" class="card-img-top"
-                                            alt="">
-                                        <div class="icon-detail-buku">
-                                            <i class="bi bi-book-fill"></i>
-                                        </div>
-                                    </a>
-
-                                    <div class="card-body">
-                                        <h6 class="card-title">Dilan 1990 | <span data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Tahun terbit">2015</span>
-                                        </h6>
-                                        <div class="sinopsis">
-                                            <p>
-                                                {!! strip_tags(
-                                                    Str::limit('lorem ipsum dolor sit amet consectetur adipisicing elit modi expedita adipisci dignissimos', 70),
-                                                ) !!}
-                                            </p>
-                                        </div>
-                                        <div class="btn-action-group">
-                                            <a class="btn btn-info btn-detail text-white" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Detail data buku" href=""><i
-                                                    class="fas fa-eye ms-2"></i>
+                            @if ($koleksiList->count() != 0)
+                                @foreach ($koleksiList as $koleksi)
+                                    <div class="col-md-4 col-sm-6">
+                                        <div class="card shadow-sm position-relative card-action" style="max-width: 18rem;">
+                                            <span class="position-absolute count-rating-buku" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Total rating buku">
+                                                <span class="text-white">
+                                                    <i class="fas fa-star text-warning"></i> 5
+                                                </span>
+                                            </span>
+                                            <a class="sampul_buku" href="{{ route('buku.show', $koleksi->buku->slug) }}">
+                                                @if ($koleksi->buku->sampul_buku)
+                                                    <img src="{{ asset('storage/sampul_buku/' . $koleksi->buku->sampul_buku) }}"
+                                                        class="card-img-top" alt="">
+                                                @else
+                                                    <img src="{{ asset('assets-UKK/img/no-image.png') }}"
+                                                        class="card-img-top" alt="">
+                                                @endif
+                                                <div class="icon-detail-buku">
+                                                    <i class="bi bi-book-fill"></i>
+                                                </div>
                                             </a>
-                                            <form action="" method="post" class="form-destroy">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <input type="hidden" name="_token" value="">
-                                                <a class="btn btn-danger btn-destroy text-white btn-destroy"
-                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                    title="Hapus dari koleksi" href="#"><i
-                                                        class="bi bi-bookmark-x btn-destroy ms-2"></i>
-                                                </a>
-                                            </form>
-                                        </div>
+                                            <div class="card-body ">
+                                                <h6 class="card-title">{{ $koleksi->buku->judul }} | <span
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Tahun terbit">{{ $koleksi->buku->tahun_terbit }}</span>
+                                                </h6>
+                                                <div class="sinopsis">
+                                                    <p>
+                                                        {!! strip_tags(Str::limit($koleksi->buku->sinopsis, 70)) !!}
+                                                    </p>
+                                                </div>
+                                                <div class="btn-action-group">
+                                                    <a class="btn btn-info btn-detail text-white" data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" title="Detail data koleksi"
+                                                        href=""><i class="fas fa-eye ms-2"></i>
+                                                    </a>
+                                                    <form action="{{ route('koleksi.destroy', $koleksi->slug) }}" method="post" class="form-destroy">
+                                                        @csrf
+                                                        <a class="btn btn-danger btn-destroy text-white btn-destroy"
+                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                            title="Hapus dari koleksi" href="#"><i
+                                                                class="bi bi-bookmark-x btn-destroy ms-2"></i>
+                                                        </a>
+                                                    </form>
+                                                </div>
 
-                                        <div class="d-flex justify-content-between">
-                                            <small class="kategori-buku text-info align-self-end w-75">
-                                                Romance, Komedi, dan Sejarah
-                                            </small>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Stok buku">
-                                                <span>10</span>
-                                            </button>
+                                                <div class="d-flex justify-content-between">
+                                                    <small class="kategori-koleksi text-info align-self-end w-75">
+                                                        @foreach ($koleksi->buku->kategori as $kategori)
+                                                            {{ $loop->first ? '' : ($loop->last ? 'dan' : ',') }}
+                                                            {{ $kategori->nama_kategori }}
+                                                        @endforeach
+                                                    </small>
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Stok koleksi">
+                                                        <span>{{ $koleksi->buku->stok_buku }}</span>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                @endforeach
+
+                                {{ $koleksiList->links() }}
+                            @else
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ asset('assets-UKK/img/No data-rafiki.png') }}" class="w-50"
+                                        alt="no-data-img">
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -131,8 +140,6 @@
 
 
 @section('script')
-    <script src="{{ asset('assets-UKK/assets-mazer/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
-    <script src="{{ asset('assets-UKK/assets-mazer/static/js/pages/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets-UKK/modules/izitoast/js/iziToast.min.js') }}"></script>
 
     <script>

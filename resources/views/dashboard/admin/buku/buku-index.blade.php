@@ -2,8 +2,6 @@
 
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('assets-UKK/assets-mazer/extensions/simple-datatables/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets-UKK/assets-mazer/compiled/css/table-datatable.css') }}">
     <link rel="stylesheet" href="{{ asset('assets-UKK/modules/izitoast/css/iziToast.min.css') }}">
 @endsection
 
@@ -69,24 +67,29 @@
                                 @foreach ($bukuList as $buku)
                                     <div class="col-md-4 col-sm-6">
                                         <div class="card shadow-sm position-relative card-action" style="max-width: 18rem;">
-                                            <form action="" method="post" class="form-koleksi">
-                                                @csrf
-                                                <input type="hidden" name="buku_id" value="">
-                                                <a href="#" class="position-absolute btn-koleksi btn-kolek"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    title="Tambah ke koleksi pribadi">
-                                                    <i class="bi bi-bookmark-plus btn-kolek text-warning fs-2"></i>
-                                                </a>
-                                            </form>
-                                            <form action="" method="post" class="form-unkolek">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a href="#" class="position-absolute btn-koleksi btn-unkolek"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    title="Hapus dari koleksi pribadi">
-                                                    <i class="bi bi-bookmark-heart-fill btn-unkolek text-warning fs-2"></i>
-                                                </a>
-                                            </form>
+                                            @if ($buku->koleksi->where('user_id', auth()->user()->user_id)->count() == 0)
+                                                <form action="{{ route('koleksi.store') }}" method="post"
+                                                    class="form-koleksi">
+                                                    @csrf
+                                                    <input type="hidden" name="buku_id" value="{{ $buku->buku_id }}">
+                                                    <a href="#" class="position-absolute btn-koleksi btn-kolek"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Tambah ke koleksi pribadi">
+                                                        <i class="bi bi-bookmark-plus btn-kolek text-warning fs-2"></i>
+                                                    </a>
+                                                </form>
+                                            @else
+                                                <form action="{{ route('koleksi.destroy', $buku->slug) }}"
+                                                    method="post" class="form-unkolek">
+                                                    @csrf
+                                                    <a href="#" class="position-absolute btn-koleksi btn-unkolek"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Hapus dari koleksi pribadi">
+                                                        <i
+                                                            class="bi bi-bookmark-heart-fill btn-unkolek text-warning fs-2"></i>
+                                                    </a>
+                                                </form>
+                                            @endif
                                             <span class="position-absolute count-rating-buku" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Total rating buku">
                                                 <span class="text-white">
@@ -106,8 +109,8 @@
                                                 </div>
                                             </a>
                                             <div class="card-body ">
-                                                <h6 class="card-title">{{ $buku->judul }} | <span
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                <h6 class="card-title">{{ $buku->judul }} | <span data-bs-toggle="tooltip"
+                                                        data-bs-placement="top"
                                                         title="Tahun terbit">{{ $buku->tahun_terbit }}</span>
                                                 </h6>
                                                 <div class="sinopsis">
@@ -142,7 +145,8 @@
                                                 <div class="d-flex justify-content-between">
                                                     <small class="kategori-buku text-info align-self-end w-75">
                                                         @foreach ($buku->kategori as $kategori)
-                                                            {{ $loop->first ? '' : ($loop->last ? 'dan' : ',')  }} {{ $kategori->nama_kategori }}
+                                                            {{ $loop->first ? '' : ($loop->last ? 'dan' : ',') }}
+                                                            {{ $kategori->nama_kategori }}
                                                         @endforeach
                                                     </small>
                                                     <button type="button" class="btn btn-primary"
@@ -155,6 +159,8 @@
                                         </div>
                                     </div>
                                 @endforeach
+
+                                {{ $bukuList->links() }}
                             @else
                                 <div class="d-flex justify-content-center">
                                     <img src="{{ asset('assets-UKK/img/No data-rafiki.png') }}" class="w-50"
@@ -171,8 +177,6 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('assets-UKK/assets-mazer/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
-    <script src="{{ asset('assets-UKK/assets-mazer/static/js/pages/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets-UKK/modules/izitoast/js/iziToast.min.js') }}"></script>
 
     <script>

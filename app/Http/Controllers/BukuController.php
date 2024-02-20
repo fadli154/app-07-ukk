@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use App\Models\Ulasan;
+use App\Models\Koleksi;
 use App\Models\Kategori;
 use App\Models\KategoriBuku;
 use Illuminate\Http\Request;
@@ -19,13 +20,13 @@ class BukuController extends Controller
      */
     public function index()
     {
-        $bukuList = Buku::paginate(6);
+        $bukuList = Buku::with('koleksi')->paginate(6);
 
         return view('dashboard.admin.buku.buku-index', [
             'title' => 'Buku Index',
             'active1' => 'buku',
             'active' => 'buku',
-            'bukuList' => $bukuList
+            'bukuList' => $bukuList,
         ]);
     }
 

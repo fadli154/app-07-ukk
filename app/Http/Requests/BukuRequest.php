@@ -29,6 +29,7 @@ class BukuRequest extends FormRequest
             'sinopsis' => 'required',
             'tahun_terbit' => 'required',
             'stok_buku' => 'required',
+            'kategori_id' => 'required',
             'sampul_buku' => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
         ];
     }
@@ -50,6 +51,7 @@ class BukuRequest extends FormRequest
             'tahun_terbit.required' => 'Tahun terbit tidak boleh kosong.',
             'stok_buku.required' => 'Stok buku tidak boleh kosong.',
             'sinopsis.required' => 'Sinopsis buku tidak boleh kosong.',
+            'kategori_id.required' => 'Kategori buku tidak boleh kosong.',
 
             'sampul_buku.required' => 'Sampul buku tidak boleh kosong.',
             'sampul_buku.image' => 'Harap masukkan foto.',

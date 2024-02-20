@@ -64,11 +64,11 @@
                                         <td>{{ $peminjaman->jumlah_pinjam }} buku</td>
                                         <td>
                                             <div class="modal-success me-1 mb-1 d-inline-block">
-                                                @if ($peminjaman->status == 'dikembalikan')
+                                                @if ($peminjaman->status != 'dipinjam')
                                                     <button type="button"
-                                                        class="btn btn-outline-success text-capitalize disabled"
+                                                        class="btn btn-outline-warning text-capitalize disabled"
                                                         data-bs-toggle="modal" data-bs-target="#success1">
-                                                        dikembalikan
+                                                        {{ $peminjaman->status }}
                                                     </button>
                                                 @else
                                                     <!-- Button trigger for Success theme modal -->
