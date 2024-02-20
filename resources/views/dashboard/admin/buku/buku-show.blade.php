@@ -343,6 +343,10 @@
                                                 </small>
                                                 @if ($ulasan->user->user_id == auth()->user()->user_id)
                                                     <div class="comment-actions mt-2">
+                                                        <button class="btn icon icon-left btn-primary me-2 text-nowrap"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalShow{{ $ulasan->slug }}"><i
+                                                                class="bi bi-eye"></i> Show</button>
                                                         <button class="btn icon icon-left btn-warning me-2 text-nowrap"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalEdit{{ $ulasan->slug }}"><i
@@ -397,7 +401,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('ulasan.update', $ulasan->slug) }}" enctype="multipart/form-data" method="post">
+                        <form action="{{ route('ulasan.update', $ulasan->slug) }}" enctype="multipart/form-data"
+                            method="post">
                             @csrf
                             <input type="hidden" name="buku_id" value="{{ $bukuDetail->buku_id }}">
                             <input type="hidden" name="old_foto" value="{{ $ulasan->foto_ulasan }}">
@@ -426,7 +431,8 @@
                             </div>
                             <label for="rating" class="form-label title-label">Rating buku Dilan 1990</label>
                             <div class="rating mt-2 position-absolute left-0">
-                                <input type="radio" id="star-1{{ $ulasan->slug }}" name="rating" value="5">
+                                <input type="radio" id="star-1{{ $ulasan->slug }}" name="rating" value="5"
+                                    {{ $ulasan->rating == 5 ? 'checked' : '' }}>
                                 <label for="star-1{{ $ulasan->slug }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path pathLength="360"
@@ -434,7 +440,8 @@
                                         </path>
                                     </svg>
                                 </label>
-                                <input type="radio" id="star-2{{ $ulasan->slug }}" name="rating" value="4">
+                                <input type="radio" id="star-2{{ $ulasan->slug }}" name="rating" value="4"
+                                    {{ $ulasan->rating == 4 ? 'checked' : '' }}>
                                 <label for="star-2{{ $ulasan->slug }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path pathLength="360"
@@ -442,7 +449,8 @@
                                         </path>
                                     </svg>
                                 </label>
-                                <input type="radio" id="star-3{{ $ulasan->slug }}" name="rating" value="3">
+                                <input type="radio" id="star-3{{ $ulasan->slug }}" name="rating" value="3"
+                                    {{ $ulasan->rating == 3 ? 'checked' : '' }}>
                                 <label for="star-3{{ $ulasan->slug }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path pathLength="360"
@@ -450,7 +458,8 @@
                                         </path>
                                     </svg>
                                 </label>
-                                <input type="radio" id="star-4{{ $ulasan->slug }}" name="rating" value="2">
+                                <input type="radio" id="star-4{{ $ulasan->slug }}" name="rating" value="2"
+                                    {{ $ulasan->rating == 2 ? 'checked' : '' }}>
                                 <label for="star-4{{ $ulasan->slug }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path pathLength="360"
@@ -458,7 +467,8 @@
                                         </path>
                                     </svg>
                                 </label>
-                                <input type="radio" id="star-5{{ $ulasan->slug }}" name="rating" value="1">
+                                <input type="radio" id="star-5{{ $ulasan->slug }}" name="rating" value="1"
+                                    {{ $ulasan->rating == 1 ? 'checked' : '' }}>
                                 <label for="star-5{{ $ulasan->slug }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path pathLength="360"
@@ -470,7 +480,109 @@
                             <div class="modal-footer mt-5">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-success " data-bs-dismiss="modal"
-                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Simpan data perubahan">Simpan</button>
+                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Simpan data perubahan">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    @foreach ($ulasanList as $ulasan)
+        <!-- Modal -->
+        <div class="modal fade" id="modalShow{{ $ulasan->slug }}" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Ulasan</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('ulasan.update', $ulasan->slug) }}" enctype="multipart/form-data"
+                            method="post">
+                            @csrf
+                            <input type="hidden" name="buku_id" value="{{ $bukuDetail->buku_id }}">
+                            <input type="hidden" name="old_foto" value="{{ $ulasan->foto_ulasan }}">
+                            <div class="col-sm-12 mb-1">
+                                <div class="form-group">
+                                    <textarea class="form-control summernote-disabled" placeholder="Tuliskan Ulasan" id="ulasan{{ $ulasan->slug }}"
+                                        cols="30" rows="10" name="ulasan">{{ $ulasan->ulasan }}</textarea>
+                                    <small class="text-danger">
+                                        @error('ulasan')
+                                        @enderror
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mb-1">
+                                <div class="form-group d-flex justify-content-center">
+                                    @if ($ulasan->foto_ulasan)
+                                        <a href="#">
+                                            <img src="{{ asset('storage/foto_ulasan/' . $ulasan->foto_ulasan) }}"
+                                                alt="sampul-buku" class="w-25 rounded-3" data-bs-toggle="modal"
+                                                data-bs-target="#modalUlasan{{ $ulasan->slug }}">
+                                        </a>
+                                    @else
+                                        <a href="#">
+                                            <img src="{{ asset('assets-UKK/img/no-image.png') }}" alt="sampul-buku"
+                                                class="w-25 rounded-3" data-bs-toggle="modal"
+                                                data-bs-target="#modalUlasan{{ $ulasan->slug }}">
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                            <label for="rating" class="form-label title-label">Rating buku Dilan 1990</label>
+                            <div class="rating mt-2 position-absolute left-0">
+                                <input type="radio" id="star-1{{ $ulasan->slug }}" name="rating" value="5"
+                                    {{ $ulasan->rating == 5 ? 'checked' : '' }}>
+                                <label for="star-1{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                                <input type="radio" id="star-2{{ $ulasan->slug }}" name="rating" value="4"
+                                    {{ $ulasan->rating == 4 ? 'checked' : '' }}>
+                                <label for="star-2{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                                <input type="radio" id="star-3{{ $ulasan->slug }}" name="rating" value="3"
+                                    {{ $ulasan->rating == 3 ? 'checked' : '' }}>
+                                <label for="star-3{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                                <input type="radio" id="star-4{{ $ulasan->slug }}" name="rating" value="2"
+                                    {{ $ulasan->rating == 2 ? 'checked' : '' }}>
+                                <label for="star-4{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                                <input type="radio" id="star-5{{ $ulasan->slug }}" name="rating" value="1"
+                                    {{ $ulasan->rating == 1 ? 'checked' : '' }}>
+                                <label for="star-5{{ $ulasan->slug }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path pathLength="360"
+                                            d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
+                                        </path>
+                                    </svg>
+                                </label>
+                            </div>
+                            <div class="modal-footer mt-5">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
