@@ -88,7 +88,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/laporan-export', [LaporanController::class, 'exportLaporan'])->name('laporan.export');
 
     Route::get('/koleksi', [KoleksiController::class, 'index'])->name('koleksi.index');
+    Route::get('/koleksi-search', [KoleksiController::class, 'search'])->name('koleksi.search');
     Route::post('/koleksi', [KoleksiController::class, 'store'])->name('koleksi.store');
     Route::post('/koleksi-destroy/{slug}', [KoleksiController::class, 'destroy'])->name('koleksi.destroy');
-
 });

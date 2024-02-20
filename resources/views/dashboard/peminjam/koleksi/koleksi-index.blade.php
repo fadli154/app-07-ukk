@@ -35,7 +35,8 @@
                                 Data Card Koleksi
                             </h5>
                             <div class="col-sm-12 col-md-8 d-flex justify-content-end pe-0">
-                                <form action="#" method="get" class="w-75">
+                                <form action="{{ route('koleksi.search') }}" method="get" class="w-75">
+                                    @csrf
                                     <div class="d-flex">
                                         <input type="text"
                                             class="form-control input-search @error('search') is-invalid @enderror"
