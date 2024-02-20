@@ -202,9 +202,9 @@
                                 <label for="ulasan" class="form-label title-label">Buat ulasan</label>
                             </div>
                             <div class="card-body">
-                                <form action="" enctype="multipart/form-data" method="post">
+                                <form action="{{ route('ulasan.store') }}" enctype="multipart/form-data" method="post">
                                     @csrf
-                                    <input type="hidden" name="buku_id" value="">
+                                    <input type="hidden" name="buku_id" value="{{ $bukuDetail->buku_id }}">
                                     <div class="col-sm-12 mb-1">
                                         <div class="form-group">
                                             <textarea class="form-control summernote" placeholder="Tuliskan Ulasan" id="ulasan" cols="30"
@@ -289,24 +289,36 @@
                                     Dilan 1990</label>
                             </div>
                             <div class="card-body position-relative">
-                                <div class="ulasan-user">
-                                    <div class="d-flex">
-                                        <div class="avatar avatar-lg avatar-ulasan">
-                                            <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
+                                @foreach ($ulasanList as $ulasan)
+                                    <div class="ulasan-user">
+                                        <div class="d-flex">
+                                            <div class="avatar avatar-lg avatar-ulasan">
+                                                @if ($ulasan->user->foto_user)
+                                                    <img src="{{ asset('storage/foto_user/' . $ulasan->user->foto_user) }}">
+                                                @else
+                                                    <img src="{{ asset('assets-UKK/img/no-foto-man.png') }}">
+                                                @endif
+                                            </div>
+                                            <div class="align-self-center text-capitalize mt-2">
+                                                <h6 class="mb-0">{{ $ulasan->user->name }}</h6>
+                                                <p class="mb-0 text-sm text-primary">{{ $ulasan->user->roles }}</p>
+                                            </div>
                                         </div>
-                                        <div class="align-self-center text-capitalize mt-2">
-                                            <h6 class="mb-0">Fadli Hifziansyah</h6>
-                                            <p class="mb-0 text-sm text-primary">Admin</p>
+                                        <div class="d-block p-4">
+                                            @for ($i = 0; $i < $ulasan->rating; $i++)
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                            @endfor
+                                            <p class="card-text mt-3">
+                                                {!! strip_tags(Str::limit($ulasan->ulasan, 30)) !!}
+                                            </p>
+                                            <small>
+                                                {{ date('m-D-Y', strtotime($ulasan->created_at)) }}
+                                            </small>
                                         </div>
                                     </div>
-                                    <div class="d-block p-4">
-                                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                            Molestias error nostrum at possimus voluptatem porro pariatur quos eos magnam
-                                            dolorum?</p>
-                                        <small>12-12-2022</small>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
+                            {{ $ulasanList->links() }}
                         </div>
                     </div>
             </section>

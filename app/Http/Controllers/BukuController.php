@@ -114,18 +114,17 @@ class BukuController extends Controller
      */
     public function show(string $slug)
     {
-        // $bukuDetail = buku::where('slug', $slug)->with('koleksi')->get();
-        $bukuDetail = buku::where('slug', $slug)->get();
+        $bukuDetail = Buku::where('slug', $slug)->with('koleksi', 'ulasan')->first();
         $kategoriList = Kategori::get();
-        // $ulasanList = Ulasan::where('buku_id', $bukuDetail[0]->buku_id)->get();
+        $ulasanList = Ulasan::where('buku_id', $bukuDetail->buku_id)->paginate(6);
 
         return view('dashboard.admin.buku.buku-show', [
             'title' => 'Buku Show',
             'active1' => 'buku',
             'active' => 'buku',
-            'bukuDetail' => $bukuDetail[0],
+            'bukuDetail' => $bukuDetail,
             'kategoriList' => $kategoriList,
-            // 'ulasanList' => $ulasanList,
+            'ulasanList' => $ulasanList,
         ]);
     }
 

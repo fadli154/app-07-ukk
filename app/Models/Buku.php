@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ulasan;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -53,4 +54,15 @@ class Buku extends Model
     {
         return $this->hasMany(Koleksi::class, 'buku_id', 'buku_id');
     }
+
+    /**
+     * Get all of the koleksi for the Buku
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ulasan(): HasMany
+    {
+        return $this->hasMany(Ulasan::class, 'buku_id', 'buku_id');
+    }
+
 }

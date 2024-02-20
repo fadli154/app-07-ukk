@@ -91,4 +91,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/koleksi-search', [KoleksiController::class, 'search'])->name('koleksi.search');
     Route::post('/koleksi', [KoleksiController::class, 'store'])->name('koleksi.store');
     Route::post('/koleksi-destroy/{slug}', [KoleksiController::class, 'destroy'])->name('koleksi.destroy');
+
+    Route::get('/ulasan-search', [UlasanController::class, 'search'])->name('ulasan.search');
+    Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
+    Route::post('/ulasan-destroy/{slug}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
 });

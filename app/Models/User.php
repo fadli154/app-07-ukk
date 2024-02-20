@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Koleksi::class, 'user_id', 'user_id');
     }
+
+    /**
+     * Get all of the koleksi for the Buku
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ulasan(): HasMany
+    {
+        return $this->hasMany(Ulasan::class, 'user_id', 'user_id');
+    }
 }
