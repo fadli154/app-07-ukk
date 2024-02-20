@@ -97,7 +97,7 @@
                                             <span class="position-absolute count-rating-buku" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Total rating buku">
                                                 <span class="text-white">
-                                                    <i class="fas fa-star text-warning"></i> 5
+                                                    <i class="fas fa-star text-warning"></i> {{ number_format($buku->rating, 1) }}
                                                 </span>
                                             </span>
                                             <a class="sampul_buku" href="{{ route('buku.show', $buku->slug) }}">

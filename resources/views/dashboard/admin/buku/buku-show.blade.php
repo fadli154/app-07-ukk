@@ -178,6 +178,12 @@
                                         </a>
                                     </form>
                                 @endif
+                                <span class="position-absolute count-rating-buku top-0" style="left: 0;" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="Total rating buku">
+                                    <span class="text-white">
+                                        <i class="fas fa-star text-warning"></i> {{ number_format($bukuDetail->rating, 1) }}
+                                    </span>
+                                </span>
                                 <div class="d-flex justify-content-center align-items-center flex-column text-capitalize">
                                     <div class="wrapper-sampul-buku d-flex justify-content-center ">
                                         @if ($bukuDetail->sampul_buku)

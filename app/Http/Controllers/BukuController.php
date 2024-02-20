@@ -20,7 +20,12 @@ class BukuController extends Controller
      */
     public function index()
     {
-        $bukuList = Buku::with('koleksi')->paginate(6);
+        $bukuList = Buku::with('koleksi', 'ulasan')->paginate(6);
+
+        // menghitung rata rata rating buku
+        foreach ($bukuList as $buku) {
+            $buku->rating = $buku->ulasan->avg('rating');
+        }
 
         return view('dashboard.admin.buku.buku-index', [
             'title' => 'Buku Index',
@@ -52,6 +57,11 @@ class BukuController extends Controller
             }
         } else {
             $bukuList = Buku::paginate(6);
+        }
+
+        // menghitung rata rata rating buku
+        foreach ($bukuList as $buku) {
+            $buku->rating = $buku->ulasan->avg('rating');
         }
 
         return view('dashboard.admin.buku.buku-index', [
@@ -121,6 +131,9 @@ class BukuController extends Controller
         $bukuDetail = Buku::where('slug', $slug)->with('koleksi', 'ulasan')->first();
         $kategoriList = Kategori::get();
         $ulasanList = Ulasan::where('buku_id', $bukuDetail->buku_id)->paginate(6);
+
+        // menghitung rata rata rating buku
+        $bukuDetail->rating = $bukuDetail->ulasan->avg('rating');
 
         return view('dashboard.admin.buku.buku-show', [
             'title' => 'Buku Show',

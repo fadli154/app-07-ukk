@@ -48,8 +48,8 @@
                                         </button>
                                     </div>
                                 </form>
-                                <a href="{{ route('buku.index') }}" type="button" class="btn btn-primary me-2" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Tambah koleksi">
+                                <a href="{{ route('buku.index') }}" type="button" class="btn btn-primary me-2"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah koleksi">
                                     <i class="bi bi-plus-circle"></i>
                                 </a>
                             </div>
@@ -66,7 +66,8 @@
                                             <span class="position-absolute count-rating-buku" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Total rating buku">
                                                 <span class="text-white">
-                                                    <i class="fas fa-star text-warning"></i> 5
+                                                    <i
+                                                        class="fas fa-star text-warning"></i>{{ number_format($koleksi->buku->rating, 1) }}
                                                 </span>
                                             </span>
                                             <a class="sampul_buku" href="{{ route('buku.show', $koleksi->buku->slug) }}">
@@ -96,7 +97,8 @@
                                                         data-bs-placement="top" title="Detail data koleksi"
                                                         href=""><i class="fas fa-eye ms-2"></i>
                                                     </a>
-                                                    <form action="{{ route('koleksi.destroy', $koleksi->slug) }}" method="post" class="form-destroy">
+                                                    <form action="{{ route('koleksi.destroy', $koleksi->slug) }}"
+                                                        method="post" class="form-destroy">
                                                         @csrf
                                                         <a class="btn btn-danger btn-destroy text-white btn-destroy"
                                                             data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -113,9 +115,8 @@
                                                             {{ $kategori->nama_kategori }}
                                                         @endforeach
                                                     </small>
-                                                    <button type="button" class="btn btn-primary"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Stok koleksi">
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" title="Stok koleksi">
                                                         <span>{{ $koleksi->buku->stok_buku }}</span>
                                                     </button>
                                                 </div>

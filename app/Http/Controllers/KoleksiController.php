@@ -12,8 +12,17 @@ class KoleksiController extends Controller
 {
     public function index()
     {
-
         $koleksiList = Koleksi::where('user_id', auth()->user()->user_id)->with('buku', 'user')->paginate(6);
+
+        // menghitung rata rata rating buku dari koleksi
+        // Calculate the average book rating from the collection
+        $averageRating = $koleksiList->avg(function ($koleksi) {
+            return $koleksi->buku->ulasan->avg('rating');
+        });
+
+        $koleksiList->each(function ($koleksi) use ($averageRating) {
+            $koleksi->buku->rating = $averageRating;
+        });
 
         return view('dashboard.peminjam.koleksi.koleksi-index', [
             'title' => 'Koleksi Index',
