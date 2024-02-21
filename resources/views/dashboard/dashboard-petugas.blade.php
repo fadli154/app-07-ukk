@@ -256,9 +256,6 @@
 
     {{-- statistik dashboard --}}
     <script>
-        const dataBulans = {!! json_encode($dataBulan) !!}
-        const getAllCountPeminjaman = {!! json_encode($getAllCountPeminjaman) !!}
-
         var peminjamanData = {
             annotations: {
                 position: "back",
@@ -276,11 +273,11 @@
             plotOptions: {},
             series: [{
                 name: "Peminjaman",
-                data: [getAllCountPeminjaman],
+                data: {!! json_encode($peminjaman_count) !!},
             }, ],
             colors: "#435ebe",
             xaxis: {
-                categories: dataBulans,
+                categories: {!! json_encode($dataBulan) !!},
             },
         };
 

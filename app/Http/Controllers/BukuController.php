@@ -130,7 +130,7 @@ class BukuController extends Controller
     {
         $bukuDetail = Buku::where('slug', $slug)->with('koleksi', 'ulasan')->first();
         $kategoriList = Kategori::get();
-        $ulasanList = Ulasan::where('buku_id', $bukuDetail->buku_id)->paginate(6);
+        $ulasanList = Ulasan::where('buku_id', $bukuDetail->buku_id)->paginate(2);
 
         // menghitung rata rata rating buku
         $bukuDetail->rating = $bukuDetail->ulasan->avg('rating');

@@ -63,7 +63,8 @@
 
                                         <div class="text-center">
                                             <h3 class="mt-3">{{ $profileDetail->name }}</h3>
-                                            <p class="text-small">{{ $profileDetail->username }} | {{ $profileDetail->roles }}</p>
+                                            <p class="text-small">{{ $profileDetail->username }} |
+                                                {{ $profileDetail->roles }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -88,9 +89,9 @@
                                                         <td>{{ $peminjaman->jumlah_pinjam }}</td>
                                                         <td>
                                                             <button
-                                                                class="disabled btn btn-outline-{{ $peminjaman->status == 'dikembalikan' ? 'success' : 'warning' }} text-capitalize"
+                                                                class="disabled btn btn-outline-{{ $peminjaman->status == 'dipinjam' ? 'success' : 'warning' }} text-capitalize"
                                                                 data-bs-toggle="modal" data-bs-target="#success1">
-                                                                Dipinjam
+                                                                {{ $peminjaman->status }}
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -175,10 +176,12 @@
                                                 <select class="choices form-select @error('jk') is-invalid @enderror"
                                                     id="jk" name="jk" disabled>
                                                     <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                                    <option value="L" disabled {{  $profileDetail->jk  == 'L' ? 'selected' : '' }}>
+                                                    <option value="L" disabled
+                                                        {{ $profileDetail->jk == 'L' ? 'selected' : '' }}>
                                                         Laki-laki
                                                     </option>
-                                                    <option value="P" disabled {{  $profileDetail->jk  == 'P' ? 'selected' : '' }}>
+                                                    <option value="P" disabled
+                                                        {{ $profileDetail->jk == 'P' ? 'selected' : '' }}>
                                                         Perempuan
                                                     </option>
                                                 </select>
@@ -195,14 +198,14 @@
                                                     id="roles" name="roles" disabled>
                                                     <option value="" selected disabled>Pilih Roles Users</option>
                                                     <option value="admin" disabled
-                                                        {{  $profileDetail->roles == 'admin' ? 'selected' : '' }}>Admin
+                                                        {{ $profileDetail->roles == 'admin' ? 'selected' : '' }}>Admin
                                                     </option>
                                                     <option value="petugas" disabled
-                                                        {{  $profileDetail->roles == 'petugas' ? 'selected' : '' }}>
+                                                        {{ $profileDetail->roles == 'petugas' ? 'selected' : '' }}>
                                                         Petugas
                                                     </option>
                                                     <option value="peminjam" disabled
-                                                        {{  $profileDetail->roles == 'peminjam' ? 'selected' : '' }}>
+                                                        {{ $profileDetail->roles == 'peminjam' ? 'selected' : '' }}>
                                                         Peminjam
                                                     </option>
                                                 </select>
@@ -216,7 +219,7 @@
                                             <div class="form-group has-icon-left">
                                                 <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
                                                 <div class="position-relative">
-                                                    <input type="text" value="{{  $profileDetail->tanggal_lahir  }}"
+                                                    <input type="text" value="{{ $profileDetail->tanggal_lahir }}"
                                                         class="form-control @error('tanggal_lashir') is-invalid @enderror"
                                                         id="tanggal_lahir" name="tanggal_lahir"
                                                         placeholder="ex: 0878-2730-33278" disabled>
@@ -233,7 +236,7 @@
                                         <div class="col-sm-12 mb-1">
                                             <div class="form-group">
                                                 <label for="alamat">Alamat</label>
-                                                <textarea class="form-control" id="alamat" rows="3" name="alamat" disabled>{{  $profileDetail->alamat  }}</textarea>
+                                                <textarea class="form-control" id="alamat" rows="3" name="alamat" disabled>{{ $profileDetail->alamat }}</textarea>
                                                 <small class="text-danger">
                                                     @error('alamat')
                                                     @enderror
@@ -305,7 +308,7 @@
         </script>
     @endif
 
-     @if (Session::has('success'))
+    @if (Session::has('success'))
         <script>
             $(document).ready(function() {
                 iziToast.success({

@@ -47,7 +47,7 @@ route::middleware(['guest'])->group(function () {
 
 Route::post('/logout', [LoginController::class, 'logoutAction'])->name('logout.action');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'statusaktif'])->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::get('/dashboard-admin', [DashboardAdminController::class, 'index'])->name('dashboard.admin.index');
     });

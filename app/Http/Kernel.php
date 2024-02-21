@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PeminjamMiddleware;
 use App\Http\Middleware\PetugasMiddleware;
+use App\Http\Middleware\StatusAktifMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -70,5 +71,6 @@ class Kernel extends HttpKernel
         'admin' => AdminMiddleware::class,
         'petugas' => PetugasMiddleware::class,
         'peminjam' => PeminjamMiddleware::class,
+        'statusaktif' => StatusAktifMiddleware::class,
     ];
 }

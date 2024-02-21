@@ -28,13 +28,13 @@ class SetNonActiveUser extends Command
     {
         $this->info('Mulai mengubah');
 
-        $userList = User::with('peminjaman')->all();
+        $selectUserLate = User::whereHas('peminjaman', function ($query) {
+            $query->where('status', 'terlambat');
+        })->get();
 
-        foreach ($userList as $user) {
-            if ($user->peminjaman->where('status', 'terlambat')->count() > 0) {
-                $user->status_aktif = 'N';
-                $user->save();
-            }
+        foreach ($selectUserLate as $user) {
+            $user->status = 'N';
+            $user->save();
         }
 
         $this->info('Selesai mengubah');

@@ -134,7 +134,7 @@
                     <div class="col-md-12 col-lg-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Statistik data peminjaman</h4>
+                                <h4>Statistik data peminjaman anda</h4>
                             </div>
                             <div class="card-body">
                                 <div id="chart-peminjaman"></div>
@@ -162,9 +162,9 @@
                                                 <td>{{ $peminjaman->jumlah_pinjam }}</td>
                                                 <td>
                                                     <button
-                                                        class="disabled btn btn-outline-{{ $peminjaman->status == 'dikembalikan' ? 'success' : 'warning' }} text-capitalize"
+                                                        class="disabled btn btn-outline-{{ $peminjaman->status == 'dipinjam' ? 'success' : 'warning' }} text-capitalize"
                                                         data-bs-toggle="modal" data-bs-target="#success1">
-                                                        Dipinjam
+                                                        {{ $peminjaman->status }}
                                                     </button>
                                                 </td>
                                             </tr>
@@ -189,9 +189,6 @@
 
     {{-- statistik dashboard --}}
     <script>
-        const dataBulans = {!! json_encode($dataBulan) !!}
-        const getAllCountPeminjaman = {!! json_encode($getAllCountPeminjaman) !!}
-
         var peminjamanData = {
             annotations: {
                 position: "back",
@@ -208,12 +205,12 @@
             },
             plotOptions: {},
             series: [{
-                name: "sales",
-                data: [getAllCountPeminjaman],
+                name: "Peminjaman",
+                data: {!! json_encode($peminjaman_count) !!},
             }, ],
             colors: "#435ebe",
             xaxis: {
-                categories: dataBulans,
+                categories: {!! json_encode($dataBulan) !!},
             },
         };
 

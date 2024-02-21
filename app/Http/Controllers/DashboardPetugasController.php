@@ -17,31 +17,44 @@ class DashboardPetugasController extends Controller
         $getAllCountBuku = Buku::count();
         $getAllCountPeminjaman = Peminjaman::count();
 
-        $getNewstUser = User::orderBy('created_at', 'desc')->limit(5)->get();
+        $getNewstUser = User::orderBy('created_at', 'desc')->limit(4)->get();
 
-        $ulasanList = Ulasan::limit(5)->paginate(6);
+        $ulasanList = Ulasan::limit(1)->paginate(1);
 
         $dataBulan = [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
+            "January",
+            "February",
+            "March",
+            "April",
             "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
         ];
 
-        $getUserFemale = User::where('jk', 'P')->count();
-        $getUserMale = User::where('jk', 'L')->count();
+        $selectPeminjamanChart = Peminjaman::selectRaw('DATE_FORMAT(created_at, "%M") as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->get();
 
-        return view('dashboard.dashboard-petugas', [
-            'title' => 'Dashboard Petugas',
+        $peminajamanData = [];
+
+        foreach ($dataBulan as $month) {
+            $peminjamanData[$month] = $selectPeminjamanChart->where('month', $month)->first()->count ?? 0;
+        }
+
+        $peminjaman_count = array_values($peminjamanData);
+
+        $getUserFemale = User::where('roles', 'peminjam')->where('jk', 'P')->count();
+        $getUserMale = User::where('roles', 'peminjam')->where('jk', 'L')->count();
+
+        return view('dashboard.dashboard-admin', [
+            'title' => 'Dashboard Admin',
             'active' => 'dashboard',
+            'peminjaman_count' => $peminjaman_count,
             'getAllCountPeminjam' => $getAllCountPeminjam,
             'getAllCountPetugas' => $getAllCountPetugas,
             'getAllCountBuku' => $getAllCountBuku,
@@ -50,7 +63,7 @@ class DashboardPetugasController extends Controller
             'ulasanList' => $ulasanList,
             'dataBulan' => $dataBulan,
             'getUserFemale' => $getUserFemale,
-            'getUserMale' => $getUserMale
+            'getUserMale' => $getUserMale,
         ]);
     }
 }

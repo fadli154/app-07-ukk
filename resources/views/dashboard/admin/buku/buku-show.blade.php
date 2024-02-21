@@ -371,8 +371,8 @@
                                         </div>
                                     @endforeach
                                 @endif
+                                {{ $ulasanList->links() }}
                             </div>
-                            {{ $ulasanList->links() }}
                         </div>
                     </div>
             </section>

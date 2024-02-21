@@ -11,25 +11,37 @@ class DashboardPeminjamController extends Controller
 {
     public function index()
     {
-        $getAllCountPeminjaman = Peminjaman::where('user_id', auth()->user()->id)->count();
-        $getAllCountUlasan = Ulasan::where('user_id', auth()->user()->id)->count();
-        $getAllCountkoleksi = Koleksi::where('user_id', auth()->user()->id)->count();
+        $getAllCountPeminjaman = Peminjaman::where('user_id', auth()->user()->user_id)->count();
+        $getAllCountUlasan = Ulasan::where('user_id', auth()->user()->user_id)->count();
+        $getAllCountkoleksi = Koleksi::where('user_id', auth()->user()->user_id)->count();
         $peminjamanList = Peminjaman::with('user')->where('user_id', auth()->user()->user_id)->get();
 
         $dataBulan = [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
+            "January",
+            "February",
+            "March",
+            "April",
             "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
         ];
+
+        $selectPeminjamanChart = Peminjaman::where('user_id', auth()->user()->user_id)->selectRaw('DATE_FORMAT(created_at, "%M") as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->get();
+
+        $peminajamanData = [];
+
+        foreach ($dataBulan as $month) {
+            $peminjamanData[$month] = $selectPeminjamanChart->where('month', $month)->first()->count ?? 0;
+        }
+
+        $peminjaman_count = array_values($peminjamanData);
 
         return view('dashboard.dashboard-peminjam', [
             'title' => 'Dashboard Peminjam',
@@ -39,6 +51,7 @@ class DashboardPeminjamController extends Controller
             'getAllCountkoleksi' => $getAllCountkoleksi,
             'peminjamanList' => $peminjamanList,
             'dataBulan' => $dataBulan,
+            'peminjaman_count' => $peminjaman_count
         ]);
     }
 }

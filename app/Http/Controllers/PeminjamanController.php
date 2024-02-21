@@ -17,9 +17,13 @@ class PeminjamanController extends Controller
     public function index()
     {
         if (auth()->user()->roles == 'admin' || auth()->user()->roles == 'petugas') {
-            $peminjamanList = Peminjaman::with('user')->get();
+            $peminjamanList = Peminjaman::with(['user', 'buku', function ($query) {
+                $query->withTrashed();
+            }])->get();
         } else {
-            $peminjamanList = Peminjaman::with('user')->where('user_id', auth()->user()->user_id)->get();
+            $peminjamanList = Peminjaman::with(['user', 'buku', function ($query) {
+                $query->withTrashed();
+            }])->where('user_id', auth()->user()->user_id)->get();
         }
 
         return view('dashboard.admin.peminjaman.peminjaman-index', [
@@ -115,9 +119,13 @@ class PeminjamanController extends Controller
     public function show(string $slug)
     {
         if (auth()->user()->roles == 'admin' || auth()->user()->roles == 'petugas') {
-            $peminjamanDetail = Peminjaman::where('slug', $slug)->with('user', 'buku')->get();
+            $peminjamanDetail = Peminjaman::where('slug', $slug)->with(['user', 'buku', function ($query) {
+                $query->withTrashed();
+            }])->get();
         } else {
-            $peminjamanDetail = Peminjaman::where('slug', $slug)->where('user_id', auth()->user()->user_id)->with('user', 'buku')->get();
+            $peminjamanDetail = Peminjaman::where('slug', $slug)->where('user_id', auth()->user()->user_id)->with(['user', 'buku', function ($query) {
+                $query->withTrashed();
+            }])->get();
         }
 
         $created_by_id = $peminjamanDetail[0]->created_by;
@@ -143,7 +151,9 @@ class PeminjamanController extends Controller
     {
         $this->authorize('admin-petugas');
 
-        $peminjamanEdit = Peminjaman::where('slug', $slug)->with('user', 'buku')->get();
+        $peminjamanEdit = Peminjaman::where('slug', $slug)->with(['user', 'buku', function ($query) {
+            $query->withTrashed();
+        }])->get();
         $userList = User::where('roles', 'peminjam')->get();
         $bukuList = Buku::get();
 

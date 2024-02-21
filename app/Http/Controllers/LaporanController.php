@@ -16,7 +16,9 @@ class LaporanController extends Controller
     {
         $this->authorize('admin-petugas');
 
-        $laporanList = Peminjaman::with('user', 'buku')->get();
+        $laporanList = Peminjaman::with(['user', 'buku', function ($query) {
+            $query->withTrashed();
+        }])->get();
 
         return view('dashboard.admin.laporan.laporan-index', [
             'title' => 'Laporan Index',

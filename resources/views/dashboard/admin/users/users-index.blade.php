@@ -13,8 +13,14 @@
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Data Users</h3>
+                        @can('admin')
                         <p class="text-subtitle text-muted">Interface untuk melihat, menambah, mengubah, dan menghapus data
                             users.</p>
+                        @endcan
+                        @can('peminjam')
+                            <p class="text-subtitle text-muted">Interface untuk melihat data
+                            users.</p>
+                        @endcan
                         <hr>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">

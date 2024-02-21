@@ -191,7 +191,7 @@
                                                         value="{{ $peminjamanDetail->tanggal_kembali_fisik }}"
                                                         class="form-control @error('tanggal_kembali_fisik') is-invalid @enderror"
                                                         id="tanggal_kembali_fisik" name="tanggal_kembali_fisik"
-                                                        placeholder="ex: 0878-2730-33278" disabled>
+                                                        placeholder="ex: 11-11-2022" disabled>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-calendar-date"></i>
                                                     </div>
