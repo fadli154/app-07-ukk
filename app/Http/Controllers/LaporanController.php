@@ -16,7 +16,7 @@ class LaporanController extends Controller
     {
         $this->authorize('admin-petugas');
 
-        $laporanList = Peminjaman::with(['user', 'buku', function ($query) {
+        $laporanList = Peminjaman::with(['user', 'buku' => function ($query) {
             $query->withTrashed();
         }])->get();
 
